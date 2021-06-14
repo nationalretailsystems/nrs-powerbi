@@ -1,3 +1,9 @@
+# Note by Sean:
+This README.md has not been updated form the default eradani-connect-template README.md file.
+Two Notes:
+- TypeDoc errors when making documentation
+- There is currently 1 high risk issue found by `npm audit`
+
 # Template API
 
 This server provides a Template API, using Eradani Connect to access the required IBM i resources. 

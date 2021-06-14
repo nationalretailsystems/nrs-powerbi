@@ -1,0 +1,83 @@
+{
+    "app": {
+        "port": 3001
+    },
+
+    "debug": true,
+
+    "jwt": {
+        "expiresIn": "1h"
+    },
+
+    "protectedFields": ["password", "username"],
+
+    "logger": {
+        "maxLoggingLevel": "silly",
+        "disableConsole": false,
+        "maxStringifyDepth": 10
+    },
+
+    "icndb": {
+        "baseURL": "https://api.icndb.com",
+        "responseType": "json"
+    },
+
+    "weather": {
+        "baseURL": "https://api.openweathermap.org/data/2.5/",
+        "responseType": "json",
+        "apikey": "00000000000000000000000000000000"
+    },
+
+    "vehicle": {
+        "baseURL": "https://vpic.nhtsa.dot.gov/api",
+        "responseType": "json"
+    },
+
+    "traffic": {
+        "baseURL": "https://traffic.ls.hereapi.com",
+        "responseType": "json",
+        "apiKey": "0000000000000000000000000000000000000000000"
+    },
+
+    "eradaniConnect": {
+        "xml": {
+            "host": "localhost",
+            "port": 47700,
+            "path": "/cgi-bin/xmlcgi.pgm",
+            "usePOST": true,
+            "debug": true
+        },
+        "odbc": "DSN=*LOCAL;NAM=1;CCSID=1208",
+        "odbcOptions": {
+            "debug": true,
+            "noPool": false,
+            "pool": {
+                "initialSize": 10,
+                "maxSize": 10,
+                "incrementSize": 1
+            }
+        },
+        "credentials": {
+            "username": "ECNCT",
+            "password": "password"
+        },
+        "native": {
+            "templateLib": "ECNCTAPP",
+            "templateDataLib": "QIWS"
+        }
+    },
+
+    "ecclient": {
+        "appLibrary": "LIBRARY",
+        "responseLen": 256,
+        "requestLen": 256,
+        "debug": false,
+        "pooling": false,
+        "connectionString": "DSN=*LOCAL;NAM=1;",
+        "useIbmiServices": false
+    },
+
+    "defaults": {
+        
+    }
+}

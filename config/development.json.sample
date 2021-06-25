@@ -68,7 +68,7 @@
     },
 
     "ecclient": {
-        "appLibrary": "LIBRARY",
+        "appLibrary": "ECNCTAPP",
         "responseLen": 256,
         "requestLen": 256,
         "debug": false,

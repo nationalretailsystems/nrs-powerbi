@@ -1,0 +1,57 @@
+      ************************************
+      * Module: icndbapi
+      * Generated RPG data structures
+      * and prototypes
+      * Do not modify
+      ************************************
+
+      ************************************
+      * ReqData data structure
+      * Record length: 15
+      ************************************
+     DReqDataLen       C                   15
+     DReqData          DS                  Qualified
+     D                                     Template
+     DCategory                       15A
+
+      ************************************
+      * Convert ReqData to buffer
+      ************************************
+     DReqDataToBuf     PR
+     DDataStruct                           LikeDS(ReqData)
+     D                                     Const
+     DBuffer                        500A
+
+      ************************************
+      * EccResult data structure
+      * Record length: 80
+      ************************************
+     DEccResultLen     C                   80
+     DEccResult        DS                  Qualified
+     D                                     Template
+     DMsgId                           7A
+     DMsgTime                        23Z
+     DMsgDesc                        50A
+
+      ************************************
+      * Convert buffer to EccResult
+      ************************************
+     DBufToEccResult   PR
+     DBuffer                        500A
+     DDataStruct                           LikeDS(EccResult)
+
+      ************************************
+      * ResData data structure
+      * Record length: 80
+      ************************************
+     DResDataLen       C                   80
+     DResData          DS                  Qualified
+     D                                     Template
+     DJoke                           80A
+
+      ************************************
+      * Convert buffer to ResData
+      ************************************
+     DBufToResData     PR
+     DBuffer                        500A
+     DDataStruct                           LikeDS(ResData)

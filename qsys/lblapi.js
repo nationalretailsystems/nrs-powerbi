@@ -38,9 +38,15 @@ exports.convertObjectToShipInfo = function convertObjectToShipInfo(dataIn) {
     dataOut += dataIn.labelStatus.substring(0, 10).padEnd(10);
     dataOut += dataIn.shipmentId.substring(0, 11).padEnd(11);
     dataOut += dataIn.labelId.substring(0, 11).padEnd(11);
-    dataOut += dataIn.shipmentCost.toFixed(2).substring(0, 12).padEnd(12);
+    dataOut += dataIn.shipmentCost
+        .toFixed(2)
+        .substring(0, 12)
+        .padEnd(12);
     dataOut += dataIn.shipmentCostCurrency.substring(0, 3).padEnd(3);
-    dataOut += dataIn.insuranceCost.toFixed(2).substring(0, 12).padEnd(12);
+    dataOut += dataIn.insuranceCost
+        .toFixed(2)
+        .substring(0, 12)
+        .padEnd(12);
     dataOut += dataIn.insuranceCostCurrency.substring(0, 3).padEnd(3);
 
     // Return the response record as a string

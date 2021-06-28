@@ -26,7 +26,7 @@
         "package:release": "npm run clean && npm run format && npm run build:release && npm run build-native && npm run copy:release && npm run config && npm run install-npm && npm run test && npm run docs",
         "build:dev": "tsc",
         "build:release": "tsc --sourceMap false",
-        "build-native": "(export LIB=ECNCTAPP && cd native && gmake init && gmake clean && gmake && cd ..) || echo \"IBM i Asset Build Failed\"",
+        "build-native": "(make -C qsys init && make -C qsys clean && make -C qsys && cd ..) || echo \"IBM i Asset Build Failed\"",
         "update-native": "git pull && npm run build",
         "format": "prettier --write \"./**/*.ts\" \"./**/*.js\" \"./**/*.json\"",
         "lint": "eslint \"src/**\"",
@@ -34,6 +34,7 @@
         "copy:release": "shx mkdir dist/logs && shx cp -r tests native LICENSE README.md package.json dist",
         "config": "shx cp -r config dist",
         "generate-config": "ssh-keygen -f ./config/keys/jwt-private.key -P '' && mv ./config/keys/jwt-private.key.pub ./config/keys/jwt-public.key && cp ./config/development.json.sample ./config/development.json && cp ./config/development.json ./config/production.json && echo {} > ./config/testing.json",
+        "generate-interfaces": "make -C qsys generatedtssrc -i",
         "bump-version": "npm version -m \"chore(Version): Increment to %s\"",
         "view-docs": "start docs/index.html"
     },

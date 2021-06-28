@@ -13,7 +13,8 @@ MODS = dspjk \
        dsptrfc \
        dspvhcl \
        dspwf \
-       prtlbl
+       prtlbl \
+       simplecalc
 
 GENMODS = icndbapi \
             lblapi \
@@ -34,7 +35,7 @@ PGMS = dspjk \
        dspvhcl \
        dspwf \
        prtlbl \
-	   simplecalc
+       simplecalc
 
 CMDS = dspjk \
        dsptrfc \
@@ -85,16 +86,19 @@ FQTSGENSRC = $(foreach src, $(GENMODS), ../src/interfaces/$(src).ts)
 # Rules
 #
 
-all: $(FQCMDS)
-
+all: $(FQCMDS) \
+        $(FQPGMS)
 
 # Command, program and module recipes
 $(libdir)/%.cmd: $(libdir)/qcmdsrc.file/%.mbr  $(libdir)/%.pgm
 	system "CRTCMD CMD($(LIB)/$(basename $(@F))) PGM($(LIB)/$(basename $(@F))) SRCFILE($(LIB)/QCMDSRC)"
 
-$(libdir)/simplecalc.pgm: simplecalc.rpgle
-	system "CHGATR OBJ('$(rootdir)/simplecalc.rpgle') ATR(*CCSID) VALUE(819)"
-	system "CRTBNDRPG PGM($(LIB)/SIMPLECALC) SRCSTMF('$<')"
+#$(libdir)/simplecalc.pgm: simplecalc.rpgle
+#	system "CHGATR OBJ('$(rootdir)/simplecalc.rpgle') ATR(*CCSID) VALUE(819)"
+#	system "CRTBNDRPG PGM($(LIB)/SIMPLECALC) SRCSTMF('$<')"
+
+$(libdir)/simplecalc.pgm: $(libdir)/simplecalc.module
+	system "CRTPGM PGM($(LIB)/$(basename $(@F))) MODULE(*PGM)"
 
 $(libdir)/dspjk.pgm: $(libdir)/dspjk.module $(libdir)/ecctmpgen.srvpgm
 	system "CRTPGM PGM($(LIB)/$(basename $(@F))) MODULE(*PGM) BNDSRVPGM((ECCTMPGEN) (ECNCTC))"

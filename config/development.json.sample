@@ -1,0 +1,61 @@
+{
+    "app": {
+        "port": 3001
+    },
+
+    "debug": true,
+
+    "jwt": {
+        "expiresIn": "1h"
+    },
+
+    "credentials": {
+        "username": "usrprf",
+        "password": "password"
+    },
+
+    "protectedFields": ["password", "username"],
+
+    "logger": {
+        "maxLoggingLevel": "silly",
+        "disableConsole": false,
+        "maxStringifyDepth": 10
+    },
+
+    "swagger": {
+        "disableDashboard": false,
+        "generate": false
+    },
+
+    "eradaniConnect": {
+        "xml": {
+            "host": "localhost",
+            "port": 47700,
+            "path": "/cgi-bin/xmlcgi.pgm",
+            "usePOST": true,
+            "debug": true
+        },
+        "odbc": "DSN=*LOCAL;NAM=1;CCSID=1208",
+        "odbcOptions": {
+            "debug": true,
+            "noPool": false,
+            "pool": {
+                "initialSize": 10,
+                "maxSize": 10,
+                "incrementSize": 1
+            }
+        },
+        "credentials": {
+            "username": "ECNCT",
+            "password": "ecnctpassword"
+        },
+        "native": {
+            "templateLib": "ECNCTAPP",
+            "templateDataLib": "QIWS"
+        }
+    },
+
+    "defaults": {
+        
+    }
+}

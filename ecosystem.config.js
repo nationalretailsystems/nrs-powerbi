@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: 'eradani-connect-template',
+            name: 'nrs-inbound',
             script: 'dist/src/app.js',
 
             // Options reference: https://pm2.keymetrics.io/docs/usage/application-declaration/

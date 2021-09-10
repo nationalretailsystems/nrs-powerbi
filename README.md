@@ -163,7 +163,7 @@ First, open an SSH session (PuTTY) into the PASE environment on your IBM i.
 
 Once there, move to the directory where the application source code resides:
 ```sh
-$ cd /opt/eradani/eradani-connect-template
+$ cd /opt/eradani/nrs-inbound
 ```
 
 Then, tell Git to pull down the latest code from the cloud-hosted repository:
@@ -177,11 +177,11 @@ Once the command finishes, the code on the server will be updated.
 
 ### Updating the application's configuration files
 
-All of the application's configuration files are available on your IBM i at `/opt/eradani/eradani-connect-template/config`. By default, configuration files are automatically ignored by Git because they often include sensitive data such as API keys and passwords. So, if you have made changes to the configuration files in your development environment, you will also need to change them directly on the IBM i to make them match.
+All of the application's configuration files are available on your IBM i at `/opt/eradani/nrs-inbound/config`. By default, configuration files are automatically ignored by Git because they often include sensitive data such as API keys and passwords. So, if you have made changes to the configuration files in your development environment, you will also need to change them directly on the IBM i to make them match.
 
 The main configuration file is `development.json`. You can edit it with the following command:
 ```sh
-nano /opt/eradani-connect-template/config/development.json
+nano /opt/nrs-inbound/config/development.json
 ```
 
 Once you make your changes and save the file, you're done with this section!
@@ -210,7 +210,7 @@ This application is managed by an open-source tool called PM2. PM2 is a Process 
 
 To perform a zero-downtime reload of the application, use the following command:
 ```sh
-$ pm2 reload eradani-connect-template
+$ pm2 reload nrs-inbound
 ```
 
 We recommend checking the application logs to make sure it restarts successfully. You can do that with the following command:

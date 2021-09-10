@@ -2,7 +2,7 @@
     "definitions": {},
     "host": "localhost:3001",
     "info": {
-        "title": "eradani-connect-template",
+        "title": "nrs-inbound",
         "version": "2.5.2",
         "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3).\n\nEradani Connect Template Application"
     },

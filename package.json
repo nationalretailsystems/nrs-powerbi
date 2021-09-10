@@ -31,10 +31,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/eradani-inc/eradani-inout-template.git"
+        "url": "git+https://github.com/mcorbo/nrs-powerbi.git"
     },
     "author": "Eradani",
-    "homepage": "https://github.com/eradani-inc/eradani-inout-template#readme",
+    "homepage": "https://github.com/mcorbo/nrs-powerbi#readme",
     "dependencies": {
         "@eradani-inc/ec-client": "^3.6.3",
         "@eradani-inc/ecc-router": "^0.6.5",

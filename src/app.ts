@@ -4,6 +4,8 @@ const config = configService.get();
 import * as outbound from 'src/outbound';
 import * as inbound from 'src/inbound';
 
+import { shutdown, killImmediate } from 'src/services/shutdown';
+
 import createLogger from 'src/services/logger';
 const logger = createLogger('app');
 
@@ -27,5 +29,7 @@ const startup = Promise.all(modules)
     });
 
 module.exports = {
-    startup
+    startup,
+    shutdown,
+    killImmediate
 };

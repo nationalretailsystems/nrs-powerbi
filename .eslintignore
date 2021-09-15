@@ -1,0 +1,6 @@
+src/config/**
+!src/config/index.ts
+qsys/**
+src/interfaces/**
+dist/**
+*.js

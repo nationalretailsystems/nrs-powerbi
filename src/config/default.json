@@ -1,4 +1,83 @@
 {
+    "app": {
+        "port": 3001,
+        "host": "0.0.0.0",
+        "shutdownTimeout": 3000,
+        "inbound": true,
+        "outbound": true
+    },
+
+    "debug": true,
+
+    "jwt": {
+        "expiresIn": "1h"
+    },
+
+    "apiDefaultCredentials": {
+        "username": "usrprf",
+        "password": "password"
+    },
+
+    "protectedFields": ["password", "username"],
+
+    "swagger": {
+        "disableDashboard": false,
+        "generate": false
+    },
+
+    "ec": {
+        "xml": {
+            "host": "localhost",
+            "port": 47700,
+            "path": "/cgi-bin/xmlcgi.pgm",
+            "usePOST": true,
+            "debug": true
+        },
+        "odbc": "DSN=*LOCAL;NAM=1;CCSID=1208",
+        "odbcOptions": {
+            "debug": true,
+            "noPool": false,
+            "pool": {
+                "initialSize": 10,
+                "maxSize": 10,
+                "incrementSize": 1
+            }
+        },
+        "ecServerCredentials": {
+            "username": "ECNCT",
+            "password": "ecnctpassword"
+        },
+        "native": {
+            "templateLib": "ECNCTAPP",
+            "templateDataLib": "QIWS"
+        }
+    },
+
+    "ecclient": {
+        "appLibrary": "ECNCTAPP",
+        "responseLen": 1024,
+        "requestLen": 1024,
+        "debug": false,
+        "pooling": false,
+        "useIbmiServices": false
+    },
+
+    "defaults": {},
+
+    "logger": {
+        "maxLoggingLevel": "debug",
+        "disableConsole": false
+    },
+
+    "proxy": {
+        "enabled": false,
+        "protocol": "http",
+        "auth": "",
+        "host": "localhost",
+        "port": 8080,
+        "rejectUnauthorized": true
+    },
+
     "icndb": {
         "baseURL": "https://api.icndb.com",
         "responseType": "json"
@@ -36,29 +115,5 @@
             "country_code": "US",
             "address_residential_indicator": "no"
         }
-    },
-
-    "logger": {
-        "maxLoggingLevel": "debug",
-        "disableConsole": false
-    },
-
-    "proxy": {
-        "enabled": false,
-        "protocol": "http",
-        "auth": "",
-        "host": "localhost",
-        "port": 8080,
-        "rejectUnauthorized": true
-    },
-
-    "ecclient": {
-        "appLibrary": "ECNCTAPP",
-        "responseLen": 1024,
-        "requestLen": 1024,
-        "debug": false,
-        "pooling": false,
-        "connectionString": "DSN=*LOCAL;NAM=1;CCSID=1208",
-        "useIbmiServices": false
     }
 }

@@ -3,15 +3,15 @@ import { ECClient } from '@eradani-inc/ec-client';
 
 import config from 'config';
 import createLogger from 'src/services/logger';
-const { ecclient, debug } = config;
+const { ecclient, debug, ec } = config;
 import registerCommands from 'src/commands';
 
 const logger = createLogger('app');
-const requestLogger = createLogger('requests');
+const requestLogger = createLogger('commands');
 let router: ECCRouter;
 
 export async function start() {
-    const ecc = new ECClient(ecclient);
+    const ecc = new ECClient({ ...ecclient, connectionString: ecclient.connectionString || ec.odbc });
     router = new ECCRouter(ecc, { logger: requestLogger, debug });
 
     await registerCommands(router);

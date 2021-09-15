@@ -1,11 +1,15 @@
 process.env.NODE_CONFIG_DIR = process.env.NODE_CONFIG_DIR || __dirname;
 
+import keys from './keys';
+
 import { JSONObject } from 'src/types';
 const configModule = require('../../node_modules/config');
 
 function init(): JSONObject {
     // Arbitrary custom logic can be placed here to modify config.
     // For example:   configModule.port = 3001;
+
+    configModule.keys = keys;
 
     // Config is globally immutable after this function completes.
     lockConfig();

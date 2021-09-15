@@ -30,3 +30,4 @@ qsys/*.clleinc
 qsys/*.rpgleinc
 qsys/*.js
 qsys/*.ts
+qsys/*api.rpgle

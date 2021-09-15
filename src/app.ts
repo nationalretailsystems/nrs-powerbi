@@ -1,10 +1,9 @@
-import configService from 'config';
-const config = configService.get();
+import config from 'config';
 
 import * as outbound from 'src/outbound';
 import * as inbound from 'src/inbound';
 
-import { shutdown, killImmediate } from 'src/services/shutdown';
+export { shutdown, killImmediate } from 'src/services/shutdown';
 
 import createLogger from 'src/services/logger';
 const logger = createLogger('app');
@@ -18,7 +17,7 @@ if (config.app.outbound) {
     modules.push(outbound.start());
 }
 
-const startup = Promise.all(modules)
+export const startup = Promise.all(modules)
     .then(() => {
         logger.info('App Startup Complete!');
     })
@@ -28,8 +27,6 @@ const startup = Promise.all(modules)
         process.exit(0);
     });
 
-module.exports = {
-    startup,
-    shutdown,
-    killImmediate
-};
+process.on('unhandledRejection', (err) => {
+    logger.error('Unhandled Promise Rejection Received', err);
+});

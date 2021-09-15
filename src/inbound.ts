@@ -1,6 +1,6 @@
 import http from 'http';
 import express from 'express';
-import configService from 'config';
+import config from 'config';
 import createLogger, { requestLogger } from 'src/services/logger';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
@@ -12,7 +12,6 @@ import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
 // If you want realtime services: import socketIO from 'socket.io';
-const config = configService.get();
 const logger = createLogger('app');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 

@@ -1,10 +1,10 @@
 import { Response, NextFunction } from 'express';
 import safeJSONStringify from 'safe-json-stringify';
 import createLogger from 'src/services/logger';
-import configService from 'config';
+import config from 'config';
 import APIError from 'src/APIError';
 import { RedirectResponse } from 'src/types';
-const protectedFields = configService.get().protectedFields;
+const protectedFields = config.protectedFields;
 const logger = createLogger('middlewares/respond');
 
 /**

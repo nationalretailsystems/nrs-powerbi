@@ -11,7 +11,7 @@ const requestLogger = createLogger('commands');
 let router: ECCRouter;
 
 export async function start() {
-    const ecc = new ECClient({ ...ecclient, connectionString: ecclient.connectionString || ec.odbc });
+    const ecc = new ECClient({ connectionString: ec.odbc, ...ecclient });
     router = new ECCRouter(ecc, { logger: requestLogger, debug });
 
     await registerCommands(router);

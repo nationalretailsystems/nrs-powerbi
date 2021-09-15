@@ -1,5 +1,4 @@
-import configService from 'config';
-const config = configService.get();
+import config from 'config';
 const defaultTimeout = config?.app?.shutdownTimeout || 3000;
 import createLogger from 'src/services/logger';
 const logger = createLogger('services/shutdown');

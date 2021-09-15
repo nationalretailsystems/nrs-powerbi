@@ -1,5 +1,5 @@
 import config from 'config';
-const DEBUG = config.get().debug;
+const DEBUG = config.debug;
 
 /**
  * Run the given function if and only if the DEBUG configuration value is TRUE.

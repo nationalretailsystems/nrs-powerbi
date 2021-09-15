@@ -1,6 +1,5 @@
 import * as jwt from 'src/services/jwt';
-import * as configService from 'config';
-const config = configService.get();
+import * as config from 'config';
 const credentials = config.credentials;
 import APIError from 'src/APIError';
 import { JWTUserData } from 'src/types';

@@ -23,7 +23,7 @@ export async function shutdown(timeout: number = defaultTimeout) {
     for (let service of services) {
         try {
             await service.instance.close();
-        } catch(err) {
+        } catch (err) {
             try {
                 logger.error('Error cleaning up service', { service, err });
             } catch {}

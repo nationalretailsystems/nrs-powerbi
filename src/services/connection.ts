@@ -4,19 +4,25 @@ import _ from 'lodash/fp';
 import createLogger from 'src/services/logger';
 const logger = createLogger('eradani-inc/eradani-connect');
 
-const transport = new eradaniConnect.transports.Odbc(config.ec.odbc, {
+const odbcTransport = new eradaniConnect.transports.Odbc(config.ec.odbc, {
     ..._.cloneDeep(config.get('ec.odbcOptions')),
     logger
 });
 
-/* Disabled XML Transport
 const credentials = config.ec.credentials;
-const transport = new eradaniConnect.transports.Xml(
-    '*LOCAL',
-    credentials.username,
-    credentials.password,
-    { ...config.ec.xml, logger }
-);
-*/
+export const xmlTransport = new eradaniConnect.transports.Xml('*LOCAL', credentials.username, credentials.password, {
+    ...config.ec.xml,
+    logger
+});
 
-export default transport;
+let idbTransport;
+try {
+    idbTransport = new eradaniConnect.transports.Idb(config.idb);
+} catch (e) {
+    logger.warn('Idb transport initialization failed. Idb is not available off of IBM i', e);
+    idbTransport = odbcTransport;
+}
+export { idbTransport };
+
+// Default transport is ODBC-based
+export default odbcTransport;

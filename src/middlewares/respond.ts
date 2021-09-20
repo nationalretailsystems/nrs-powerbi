@@ -1,5 +1,4 @@
 import { Response, NextFunction } from 'express';
-import safeJSONStringify from 'safe-json-stringify';
 import createLogger from 'src/services/logger';
 import config from 'config';
 import APIError from 'src/APIError';
@@ -71,7 +70,7 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
                     logger.error(error.message, {
                         status: error.status,
                         errorData: {
-                            rawError: _stringifyError(error),
+                            rawError: error,
                             route: req.originalUrl.split('?')[0],
                             data: {
                                 query: Object.keys(req.query).length ? req.query : 'No Query Data',
@@ -85,7 +84,7 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
                     logger.debug(error.message, {
                         status: error.status,
                         errorData: {
-                            rawError: _stringifyError(error),
+                            rawError: error,
                             route: req.originalUrl.split('?')[0],
                             data: {
                                 query: Object.keys(req.query).length ? req.query : 'No Query Data',
@@ -105,7 +104,7 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
                 logger.error(error.message || 'Unknown Error', {
                     status: error.status || error.statusCode || 500,
                     additionalData: {
-                        rawError: _stringifyError(error),
+                        rawError: error,
                         route: req.originalUrl.split('?')[0],
                         data: {
                             query: Object.keys(req.query).length ? req.query : 'No Query Data',
@@ -137,19 +136,5 @@ function _filterProtectedFields(req: any) {
         if (req.params[field]) {
             req.params[field] = '**PROTECTED FIELD**';
         }
-    }
-}
-
-/**
- * Null-safe conversion of Error into string representation
- * @param {Error} error
- */
-function _stringifyError(error: any) {
-    if (error.toJSON) {
-        return safeJSONStringify(error.toJSON());
-    } else if (error instanceof Error) {
-        return safeJSONStringify({ stack: error.stack || error.toString() });
-    } else {
-        return safeJSONStringify(error);
     }
 }

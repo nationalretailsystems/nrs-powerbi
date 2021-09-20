@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import respond from 'src/middlewares/respond';
 import mountRPG from './rpg';
 import mountSQL from './sql';
-import { getStatus } from 'src/services/health-check';
+import * as healthCheckService from 'src/services/health-check';
 
 export default function mountAPI(router: Router) {
     // You can set auth requirements on a whole API section by putting `router.use(requireAuth);` here instead of on individual route definitions
@@ -18,6 +18,12 @@ export default function mountAPI(router: Router) {
     // API health check
     router.get(
         '/',
-        respond(() => getStatus())
+        respond(async (_, res) => {
+            let status = await healthCheckService.getStatus();
+            if (status.status === healthCheckService.Status.error) {
+                res.status(500);
+            }
+            return status;
+        })
     );
 }

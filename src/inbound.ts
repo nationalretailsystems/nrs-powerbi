@@ -13,6 +13,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as shutdownService from 'src/services/shutdown';
 import helmet from 'helmet';
+import * as healthCheckService from 'src/services/health-check';
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('app');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
@@ -48,6 +49,9 @@ async function loadSwagger() {
 function startServer(app: Express.Application) {
     const server = http.createServer(app);
     shutdownService.register('ec-server', server);
+    healthCheckService.register('ec-server', {
+        status: () => ({ status: server.listening ? healthCheckService.Status.ok : healthCheckService.Status.error })
+    });
 
     server.on('error', function (err: any) {
         // If the address is already in use

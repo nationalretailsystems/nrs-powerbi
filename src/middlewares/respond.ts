@@ -61,7 +61,7 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
                 if (result && result.responseIsRedirect) {
                     res.redirect(result.redirectTo);
                 } else {
-                    res.status(200).json(result);
+                    res.json(result);
                 }
             })
             .catch((error) => {

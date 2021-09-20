@@ -45,9 +45,9 @@ export async function getStatus(timeout: number = defaultTimeout) {
     }
 
     const fullReport = {
-        uptime: process.uptime(),
-        timestamp: Date.now(),
         status: _getOverallStatus(results),
+        timestamp: Date.now(),
+        uptime: process.uptime(),
         services: results
     };
 
@@ -57,7 +57,7 @@ export async function getStatus(timeout: number = defaultTimeout) {
 
 export function getServiceStatus(service: WrappedService, timeout: number): Promise<StatusReport> {
     return new Promise(async (resolve) => {
-        let timer = setTimeout(() => resolve(serviceUnreachable(service, timeout)));
+        let timer = setTimeout(() => resolve(serviceUnreachable(service, timeout)), timeout);
         let result = await service.instance.status();
         clearTimeout(timer);
         resolve(result);
@@ -80,9 +80,7 @@ function _getOverallStatus(reports: Record<string, StatusReport>) {
         let report = reports[serviceName];
         if (report.status === Status.warn && overallStatus === Status.ok) {
             overallStatus = Status.warn;
-        } else if (report.status === Status.unreachable && overallStatus === Status.ok) {
-            overallStatus = Status.warn;
-        } else if (report.status === Status.error) {
+        } else if ([Status.unreachable, Status.error].includes(report.status)) {
             overallStatus = Status.error;
         }
     }

@@ -9,7 +9,7 @@ const odbcTransport = new eradaniConnect.transports.Odbc(config.ec.odbc, {
     logger
 });
 
-const credentials = config.ec.credentials;
+const credentials = config.ec.ecConnectorCredentials;
 export const xmlTransport = new eradaniConnect.transports.Xml('*LOCAL', credentials.username, credentials.password, {
     ...config.ec.xml,
     logger

@@ -21,10 +21,13 @@ export async function shutdown(timeout: number = defaultTimeout) {
     logger.warn('Shutting down application', { timeout });
 
     for (let service of services) {
-        await service.instance
-            .close()
-            .catch((err) => logger.error('Error cleaning up service', { service, err }))
-            .catch(() => {});
+        try {
+            await service.instance.close();
+        } catch(err) {
+            try {
+                logger.error('Error cleaning up service', { service, err });
+            } catch {}
+        }
     }
 
     // Exit process

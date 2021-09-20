@@ -17,9 +17,9 @@ export const xmlTransport = new eradaniConnect.transports.Xml('*LOCAL', credenti
 
 let idbTransport;
 try {
-    idbTransport = new eradaniConnect.transports.Idb(config.idb);
+    idbTransport = new eradaniConnect.transports.Idb(config.idb, { logger });
 } catch (e) {
-    logger.warn('Idb transport initialization failed. Idb is not available off of IBM i', e);
+    logger.warn('Idb transport initialization failed. ', e);
     idbTransport = odbcTransport;
 }
 export { idbTransport };

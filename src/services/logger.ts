@@ -71,11 +71,13 @@ function _clean(str: string) {
 const formatter = winston.format.combine(
     winston.format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label', 'context'] }),
     winston.format.printf((options: any) => {
+        let loggerName = options.metadata.loggerName;
+        delete options.metadata.loggerName;
         let logString =
             '' +
             `[${options.level.toUpperCase()}]`.padEnd(10, ' ') +
             `(${new Date().toISOString()})` +
-            _clean(` -- ${options.context} -- ${options.message} -- ${_stringify(options.metadata)}`);
+            _clean(` -- ${loggerName} -- ${options.message} -- ${_stringify(options.metadata)}`);
         return logString;
     })
 );
@@ -114,9 +116,9 @@ if (config.logger.disableConsole) {
     logger.remove(consoleTransport);
 }
 
-export default function createLogger(context: string) {
+export default function createLogger(loggerName: string) {
     // Set the default context of the child
-    return logger.child({ context });
+    return logger.child({ loggerName });
 }
 
 // Logger for Morgan

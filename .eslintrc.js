@@ -64,7 +64,7 @@ module.exports = {
         'no-constant-condition': 'error',
         'no-control-regex': 'warn',
         'no-duplicate-imports': 'error',
-        'no-empty': 'warn',
+        'no-empty': 'off',
         'no-eval': 'error',
         'no-extra-semi': 'warn',
         'no-fallthrough': 'warn',

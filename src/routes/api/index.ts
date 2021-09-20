@@ -1,4 +1,5 @@
 import express, { Router } from 'express';
+import respond from 'src/middlewares/respond';
 import mountRPG from './rpg';
 import mountSQL from './sql';
 
@@ -12,4 +13,9 @@ export default function mountAPI(router: Router) {
     const sql = express.Router();
     mountSQL(sql);
     router.use('/sql', sql);
+
+    router.get(
+        '/',
+        respond(() => ({ message: 'Up and running!' }))
+    );
 }

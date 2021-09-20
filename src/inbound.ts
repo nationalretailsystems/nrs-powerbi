@@ -12,6 +12,7 @@ import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import * as shutdownService from 'src/services/shutdown';
+import helmet from 'helmet';
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('app');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
@@ -95,6 +96,8 @@ function setUpAPI(swaggerSpec?: any) {
             swaggerDocumentOptions: {}
         });
     }
+
+    app.use(helmet());
 
     app.use(morgan('dev', { stream: requestLogger }));
     app.use(cors());

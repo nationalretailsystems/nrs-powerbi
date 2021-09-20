@@ -9,10 +9,12 @@ import registerCommands from 'src/commands';
 const logger = createLogger('app');
 const requestLogger = createLogger('commands');
 let router: ECCRouter;
+import * as shutdownService from 'src/services/shutdown';
 
 export async function start() {
     const ecc = new ECClient({ connectionString: ec.odbc, ...ecclient });
     router = new ECCRouter(ecc, { logger: requestLogger, debug });
+    shutdownService.register('ec-client', router);
 
     await registerCommands(router);
 

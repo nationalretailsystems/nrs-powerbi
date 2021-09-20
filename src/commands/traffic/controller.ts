@@ -56,7 +56,7 @@ export const getTrafficData: ECCHandlerFunction = async (reqkey, data, ecc) => {
             }
         }
 
-        let roads = [];
+        let roads: any[] = [];
         for (let road of intersection.FIS[0].FI) {
             roads.push({
                 rank: 0,

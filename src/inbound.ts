@@ -11,6 +11,7 @@ import swStats from 'swagger-stats';
 import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
+import * as shutdownService from 'src/services/shutdown';
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('app');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
@@ -20,9 +21,11 @@ export const start = () =>
         .then(setUpAPI)
         .then(startServer)
         .catch((err: any) => {
+            void shutdownService.shutdown();
             logger.error('ERROR ON STARTUP', err);
         })
         .catch((err: any) => {
+            void shutdownService.shutdown();
             console.log('ERROR ON STARTUP: ', err);
         });
 
@@ -43,6 +46,7 @@ async function loadSwagger() {
 
 function startServer(app: Express.Application) {
     const server = http.createServer(app);
+    shutdownService.register('ec-server', server);
 
     server.on('error', function (err: any) {
         // If the address is already in use
@@ -65,7 +69,7 @@ function startServer(app: Express.Application) {
                     '\n' +
                     '=======================================\n\n'
             );
-            process.exit(0);
+            void shutdownService.shutdown();
         } else {
             throw err;
         }

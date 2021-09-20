@@ -4,11 +4,12 @@ import * as outbound from 'src/outbound';
 import * as inbound from 'src/inbound';
 
 export { shutdown, killImmediate } from 'src/services/shutdown';
+import { shutdown } from 'src/services/shutdown';
 
 import createLogger from 'src/services/logger';
 const logger = createLogger('app');
 
-const modules = [];
+const modules: any[] = [];
 if (config.app.inbound) {
     modules.push(inbound.start());
 }
@@ -22,9 +23,8 @@ export const startup = Promise.all(modules)
         logger.info('App Startup Complete!');
     })
     .catch((err) => {
+        void shutdown();
         logger.error('App Startup Failed', err);
-        setTimeout(() => process.kill(process.pid, 'SIGKILL'), 3000);
-        process.exit(0);
     });
 
 process.on('unhandledRejection', (err) => {

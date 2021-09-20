@@ -3,11 +3,29 @@ const defaultTimeout = config?.app?.shutdownTimeout || 3000;
 import createLogger from 'src/services/logger';
 const logger = createLogger('services/shutdown');
 
+export type Service = { close: Function };
+export type WrappedService = { instance: Service; name: string };
+const services: WrappedService[] = [];
+
+export function register(name: string, instance: Service) {
+    // eslint-disable-next-line
+    if (typeof instance?.close !== 'function') {
+        logger.error('Invalid service registered to shutdown service', { name, instance });
+        throw new TypeError(`Service [${name}] must have a close() function`);
+    }
+    services.push({ name, instance });
+}
+
 export async function shutdown(timeout: number = defaultTimeout) {
     setTimeout(killImmediate, timeout);
     logger.warn('Shutting down application', { timeout });
 
-    // Custom shutdown steps
+    for (let service of services) {
+        await service.instance
+            .close()
+            .catch((err) => logger.error('Error cleaning up service', { service, err }))
+            .catch(() => {});
+    }
 
     // Exit process
     process.exit(0);

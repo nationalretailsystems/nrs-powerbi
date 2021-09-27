@@ -45,7 +45,7 @@
                 "incrementSize": 1
             }
         },
-        "ecServerCredentials": {
+        "ecConnectorCredentials": {
             "username": "ECNCT",
             "password": "ecnctpassword"
         },

@@ -1,6 +1,5 @@
 *.savf
 *.swp
-.vscode/**
 /.psa*
 /.psc*
 /.psc-package/

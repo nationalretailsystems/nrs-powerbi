@@ -15,7 +15,8 @@ export async function getViamundoWeight(inputs: JSONObject): Promise<SQLTemplate
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInput = {
         fromDate: inputs.fromDate,
-        toDate: inputs.toDate
+        toDate: inputs.toDate,
+        building: inputs.building
     };
     return transport.execute(SQLTemplate, params) as Promise<SQLTemplateOutput>;
 }

@@ -7,7 +7,7 @@ import * as validators from './validators';
 // You can set login requirements on an API endpoint by putting `requireAuth` after the URL specification
 export default function mountPOWERBI(router: Router) {
     router.get(
-        '/viamundoweight',
+        '/weight',
         validate(validators.getViamundoWeight),
         respond((req: any) => sqlController.getViamundoWeight(req.query))
     );

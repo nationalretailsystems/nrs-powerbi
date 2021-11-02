@@ -11,4 +11,10 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getViamundoWeight),
         respond((req: any) => sqlController.getViamundoWeight(req.query))
     );
+    router.get(
+        '/CCRevenue',
+        validate(validators.getCCRevenue),
+        respond((req: any) => sqlController.getCCRevenue(req.query))
+        );
 }
+

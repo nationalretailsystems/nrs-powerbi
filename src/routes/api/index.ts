@@ -16,6 +16,5 @@ export default function mountAPI(router: Router) {
 
     const powerbi = express.Router();
     mountPOWERBI(powerbi);
-    router.use('/powerbi', powerbi);
-    
+    router.use('/powerbi', powerbi)
 }

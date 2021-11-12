@@ -8,6 +8,11 @@ const transport = new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc,
     ...config.eradaniConnect.odbcOptions,
     logger
 });
+export const transport2 = new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc2, {
+    ...config.eradaniConnect.odbcOptions,
+    logger
+});
+
 
 /* Disabled XML Transport
 const credentials = config.eradaniConnect.credentials;
@@ -19,4 +24,7 @@ const transport = new eradaniConnect.transports.Xml(
 );
 */
 
+// X export default transport;
 export default transport;
+
+

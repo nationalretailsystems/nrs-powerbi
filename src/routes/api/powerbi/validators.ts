@@ -16,7 +16,7 @@ export const getCCRevenue: InputCheckChain[] = [
 export const getHours: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yyyymmdd'),
     query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yyyymmdd'),
-    query('costCenter').exists().isNumeric().isLength({ min: 3, max: 3 }).withMessage('Cost Center Must be 3 Characters Numeric')
+    query('costCenter').optional().isNumeric().isLength({ min: 3, max: 3 }).withMessage('Cost Center Must be 3 Characters Numeric')
         
 ];
 

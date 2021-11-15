@@ -3,7 +3,8 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-export default  new eradaniConnect.run.Sql(`SELECT COMPANY AS "Company", ACCT_UNIT AS "Department",
+export default new eradaniConnect.run.Sql(
+    `SELECT COMPANY AS "Company", ACCT_UNIT AS "Department",
 TRIM(CHAR(ACCOUNT)) || '-' || CHAR(SUB_ACCOUNT) AS "Account", 'Actual' AS "Version",
 ACCT_PERIOD AS "Month",
 CASE
@@ -18,32 +19,28 @@ WHERE FISCAL_YEAR = ?
    AND ACCT_PERIOD = ?
    AND DBGLGLT2_SS_SW = 'Y'
 ORDER BY COMPANY, ACCT_UNIT, R_SYSTEM, JE_TYPE, LINE_NBR, ACCOUNT, SUB_ACCOUNT, SOURCE_CODE`,
-{
-params: [
     {
-        name: 'year'
-    },
-    {
-        name: 'month'
+        params: [
+            {
+                name: 'year'
+            },
+            {
+                name: 'month'
+            }
+        ]
     }
-            
-]
-}
 );
 
 export interface SQLTemplateInput4 {
-/**
- * @description Year
- */
-year: number | string;
-/**
- * @description Month
- */
-month: number | string;
-
-};
-
-
+    /**
+     * @description Year
+     */
+    year: number | string;
+    /**
+     * @description Month
+     */
+    month: number | string;
+}
 
 /**
  * Structure of records outputted by SQLTemplate SQL query
@@ -57,4 +54,3 @@ export type SQLTemplateOutputRecord = JSONObject;
  * [[SQLTemplateOutputRecord]] elements.
  */
 export interface SQLTemplateOutput4 extends Array<SQLTemplateOutputRecord> {}
-

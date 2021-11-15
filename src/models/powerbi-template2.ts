@@ -3,8 +3,7 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-
-export default  new eradaniConnect.run.Sql(
+export default new eradaniConnect.run.Sql(
     `SELECT PRODTH, PRO##H, ACCT#H, SDESCD, NAMEAA, CONSNH, DESCRD, ORICCH, DSTCCH, ORIGNH, DESTNH, 
     TOTALD, QTYL1D, RATESD, WGTACD, MONTHNAME(PRODTH) AS PRODTH_1, YEAR(PRODTH) AS PRODTH_2,
     PRODTH + (7 - DAYOFWEEK(PRODTH)) DAY AS "W/E Date", DESCRC
@@ -32,10 +31,10 @@ export default  new eradaniConnect.run.Sql(
             },
             {
                 name: 'customer2'
-            },            
+            },
             {
                 name: 'costcenter'
-            }            
+            }
         ]
     }
 );
@@ -57,16 +56,15 @@ export interface SQLTemplateInput2 {
     /**
      * @description Cost Center
      */
-     costcenter: string | string;    
+    costcenter: string | string;
     /**
      * @description Customer Number
      */
-     customer1: number | string;
-     /**
+    customer1: number | string;
+    /**
      * @description Customer Number
      */
-     customer2: number | string;            
-          
+    customer2: number | string;
 }
 
 /**

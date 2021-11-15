@@ -15,16 +15,15 @@ export default function mountPOWERBI(router: Router) {
         '/CCRevenue',
         validate(validators.getCCRevenue),
         respond((req: any) => sqlController.getCCRevenue(req.query))
-        );
+    );
     router.get(
         '/Hours',
         validate(validators.getHours),
         respond((req: any) => sqlController.getHours(req.query))
-        );  
+    );
     router.get(
-       '/getGL',
-       validate(validators.getGL),
-       respond((req: any) => sqlController.getGL(req.query))
-       );                
+        '/getGL',
+        validate(validators.getGL),
+        respond((req: any) => sqlController.getGL(req.query))
+    );
 }
-

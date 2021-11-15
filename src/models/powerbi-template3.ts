@@ -3,7 +3,8 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-export default  new eradaniConnect.run.Sql(`SELECT 
+export default new eradaniConnect.run.Sql(
+    `SELECT 
 ALGNTIME.CSTCNTR,
 right( ALGNTIME.CCDPT, 3 ) AS CCDPT,
 ALGNTIME.DSDESC,
@@ -57,44 +58,42 @@ and CKTIMEFL.TIATIM > 20000000000000 and substring(CKDESCMS.DSKEYM,1,3) between 
 GROUP BY ALGNTIME.CSTCNTR, right( ALGNTIME.CCDPT, 3 ), ALGNTIME.DSDESC,
 ALGNTIME.GNNAME, ALGNTIME.DTSTAMP, ALGNTIME.DTSTAMP + ( 7 - dayofweek( ALGNTIME.DTSTAMP ) ) day
 order  by CSTCNTR, CCDPT`,
-{
-params: [
     {
-        name: 'fromDate'
-    },
-    {
-        name: 'toDate'
-    },
-    {
-        name: 'costCenter1'
-    },
-    {
-        name: 'costCenter2'
-    }        
-]
-}
+        params: [
+            {
+                name: 'fromDate'
+            },
+            {
+                name: 'toDate'
+            },
+            {
+                name: 'costCenter1'
+            },
+            {
+                name: 'costCenter2'
+            }
+        ]
+    }
 );
 
 export interface SQLTemplateInput3 {
-/**
- * @description From Date
- */
-fromDate: number | string;
-/**
- * @description To Date
- */
-toDate: number | string;
-/**
-* @description Cost Center
-*/
- costCenter1: string | string;
-/**
-* @description Cost Center
-*/
- costCenter2: string | string;       
-};
-
-
+    /**
+     * @description From Date
+     */
+    fromDate: number | string;
+    /**
+     * @description To Date
+     */
+    toDate: number | string;
+    /**
+     * @description Cost Center
+     */
+    costCenter1: string | string;
+    /**
+     * @description Cost Center
+     */
+    costCenter2: string | string;
+}
 
 /**
  * Structure of records outputted by SQLTemplate SQL query
@@ -108,4 +107,3 @@ export type SQLTemplateOutputRecord = JSONObject;
  * [[SQLTemplateOutputRecord]] elements.
  */
 export interface SQLTemplateOutput3 extends Array<SQLTemplateOutputRecord> {}
-

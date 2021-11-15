@@ -17,6 +17,10 @@ export const getHours: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yyyymmdd'),
     query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yyyymmdd'),
     query('costCenter').optional().isNumeric().isLength({ min: 3, max: 3 }).withMessage('Cost Center Must be 3 Characters Numeric')
-        
+];
+export const getGL: InputCheckChain[] = [
+    query('year').exists().isNumeric().isLength({ min: 4, max: 4 }).withMessage('Must be 4 numeric digits'),
+    query('month').exists().isNumeric().isLength({ min: 2, max: 2 }).withMessage('Must be 2 numeric digits')
+
 ];
 

@@ -3,7 +3,7 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-export default  new eradaniConnect.run.Sql(
+export default new eradaniConnect.run.Sql(
     `SELECT BLDG1X, TERM#H_1,  RECPT_DATE, 
     MANF_DATE,
     ICAR#H, CARRIH, INPROH, TOQTYH, TOWGTH, IPORTH,
@@ -26,7 +26,6 @@ export default  new eradaniConnect.run.Sql(
     }
 );
 
-
 /**
  * Input Structure for SQLTemplate. Includes detailed field information such as
  * field length, format, numerical precision, and default values.
@@ -43,8 +42,8 @@ export interface SQLTemplateInput {
     /**
      * @description Building Code
      */
-     building: string | string;    
-};
+    building: string | string;
+}
 export interface SQLTemplateInput3 {
     /**
      * @description From Date
@@ -55,14 +54,14 @@ export interface SQLTemplateInput3 {
      */
     toDate: number | string;
     /**
-    * @description Cost Center
-    */
-     costCenter1: string | string;
+     * @description Cost Center
+     */
+    costCenter1: string | string;
     /**
-    * @description Cost Center
-    */
-     costCenter2: string | string;       
-};
+     * @description Cost Center
+     */
+    costCenter2: string | string;
+}
 /**
  * Structure of records outputted by SQLTemplate SQL query
  *
@@ -75,4 +74,3 @@ export type SQLTemplateOutputRecord = JSONObject;
  * [[SQLTemplateOutputRecord]] elements.
  */
 export interface SQLTemplateOutput extends Array<SQLTemplateOutputRecord> {}
-

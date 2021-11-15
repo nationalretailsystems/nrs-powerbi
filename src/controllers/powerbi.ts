@@ -4,7 +4,7 @@ import SQLTemplate2, { SQLTemplateInput2, SQLTemplateOutput2 } from 'src/models/
 import SQLTemplate3, { SQLTemplateInput3, SQLTemplateOutput3 } from 'src/models/powerbi-template3';
 import SQLTemplate4, { SQLTemplateInput4, SQLTemplateOutput4 } from 'src/models/powerbi-template4';
 import { JSONObject } from 'src/types';
-import transport , { transport2 } from 'src/services/connection';
+import transport, { transport2 } from 'src/services/connection';
 import { DateTime } from 'luxon';
 
 const logger = createLogger('controllers/powerbi');
@@ -25,7 +25,7 @@ export async function getViamundoWeight(inputs: JSONObject): Promise<SQLTemplate
         building: inputs.building
     };
     return transport.execute(SQLTemplate, params) as Promise<SQLTemplateOutput>;
-};
+}
 export async function getCCRevenue(inputs: JSONObject): Promise<SQLTemplateOutput2> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInput2 = {
@@ -34,11 +34,11 @@ export async function getCCRevenue(inputs: JSONObject): Promise<SQLTemplateOutpu
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
         customer1: inputs.customer || '1',
-        customer2: inputs.customer || '99999',        
+        customer2: inputs.customer || '99999',
         costcenter: inputs.costcenter
     };
     return transport.execute(SQLTemplate2, params) as Promise<SQLTemplateOutput2>;
-};
+}
 export async function getHours(inputs: JSONObject): Promise<SQLTemplateOutput3> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInput3 = {
@@ -49,7 +49,7 @@ export async function getHours(inputs: JSONObject): Promise<SQLTemplateOutput3> 
         costCenter2: inputs.costCenter || '999'
     };
     return transport.execute(SQLTemplate3, params) as Promise<SQLTemplateOutput3>;
-};
+}
 export async function getGL(inputs: JSONObject): Promise<SQLTemplateOutput4> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInput4 = {

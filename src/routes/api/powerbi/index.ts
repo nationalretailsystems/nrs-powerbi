@@ -20,6 +20,11 @@ export default function mountPOWERBI(router: Router) {
         '/Hours',
         validate(validators.getHours),
         respond((req: any) => sqlController.getHours(req.query))
-        );        
+        );  
+    router.get(
+       '/getGL',
+       validate(validators.getGL),
+       respond((req: any) => sqlController.getGL(req.query))
+       );                
 }
 

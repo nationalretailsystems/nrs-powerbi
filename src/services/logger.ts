@@ -42,8 +42,7 @@ import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
 import safeJSONStringify from 'safe-json-stringify';
-import configService from 'config';
-const config = configService.get();
+import config from 'config';
 
 function _stringify(data: any, depth: number = 0): string {
     try {

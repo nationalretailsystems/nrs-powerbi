@@ -1,5 +1,4 @@
-import configService from 'config';
-const config = configService.get();
+import config from 'config';
 import eradaniConnect from '@eradani-inc/eradani-connect';
 import createLogger from 'src/services/logger';
 const logger = createLogger('eradani-inc/eradani-connect');

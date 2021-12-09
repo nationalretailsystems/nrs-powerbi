@@ -1,10 +1,10 @@
 import eradaniConnect from '@eradani-inc/eradani-connect';
-import configService from 'config';
+import config from 'config';
 import { JSONObject } from 'src/types';
-const config = configService.get().eradaniConnect.native;
+const configNative = config.eradaniConnect.native;
 
 export default new eradaniConnect.run.Sql(
-    `SELECT * FROM ${config.templateDataLib}.QCUSTCDT WHERE BALDUE >= ? AND BALDUE <= ?`,
+    `SELECT * FROM ${configNative.templateDataLib}.QCUSTCDT WHERE BALDUE >= ? AND BALDUE <= ?`,
     {
         params: [
             {

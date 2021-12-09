@@ -1,6 +1,5 @@
 import http from 'http';
 import express from 'express';
-import configService from 'config';
 import createLogger, { requestLogger } from 'src/services/logger';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
@@ -12,13 +11,19 @@ import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
 // If you want realtime services: import socketIO from 'socket.io';
-const config = configService.get();
 const logger = createLogger('app');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
+import ECCRouter from '@eradani-inc/ecc-router';
+import { ECClient } from '@eradani-inc/ec-client';
+import config from 'config';
+const { ecclient, debug } = config;
+import registerCommands from 'src/commands';
+let router: ECCRouter;
 
-export const startup = loadSwagger()
+const startup = loadSwagger()
     .then(setUpAPI)
     .then(startServer)
+    .then(startOutbound)
     .catch((err: any) => {
         logger.error('ERROR ON STARTUP', err);
     })
@@ -77,6 +82,21 @@ function startServer(app: Express.Application) {
     return { server };
 }
 
+async function startOutbound() {
+    const ecc = new ECClient(ecclient);
+    router = new ECCRouter(ecc, { logger: requestLogger, debug });
+
+    await registerCommands(router);
+
+    await router.listen();
+
+    logger.info('ECC App Listening for Commands');
+}
+
+async function stop() {
+    return router.close();
+}
+
 function setUpAPI(swaggerSpec?: any) {
     const app = express();
 
@@ -122,4 +142,9 @@ function setUpAPI(swaggerSpec?: any) {
     }
 
     return app;
+}
+
+module.exports = {
+    startup: startup,
+    stop
 }

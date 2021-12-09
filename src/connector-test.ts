@@ -1,6 +1,5 @@
 import eradaniConnect from '@eradani-inc/eradani-connect';
-import configService from 'config';
-const config = configService.get();
+import config from 'config';
 const credentials = config.eradaniConnect.credentials;
 
 const model = new eradaniConnect.run.Sql('select * from qiws.qcustcdt');

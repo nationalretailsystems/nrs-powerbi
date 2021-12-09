@@ -1,7 +1,7 @@
 {
-    "name": "eradani-connect-template",
-    "version": "2.6.0",
-    "description": "Eradani Connect Template Application",
+    "name": "eradani-inout-template",
+    "version": "2.0.0",
+    "description": "Eradani Connect InOut Template Application",
     "main": "dist/src/app.js",
     "scripts": {
         "start": "node dist/src/app.js",
@@ -37,11 +37,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/eradani-inc/eradani-connect-template.git"
+        "url": "git+https://github.com/eradani-inc/eradani-inout-template.git"
     },
     "author": "Eradani",
-    "homepage": "https://github.com/eradani-inc/eradani-connect-template#readme",
+    "homepage": "https://github.com/eradani-inc/eradani-inout-template#readme",
     "dependencies": {
+        "@eradani-inc/ec-client": "^3.5.1",
+        "@eradani-inc/ecc-router": "^0.5.6",
         "@eradani-inc/eradani-connect": "^2.5.2",
         "@types/cors": "^2.8.10",
         "@types/es6-promisify": "^6.0.0",
@@ -57,6 +59,10 @@
         "@typescript-eslint/eslint-plugin-tslint": "^4.28.0",
         "@typescript-eslint/parser": "^4.28.0",
         "axios": "^0.21.1",
+        "config": "^3.3.3",
+        "download": "^8.0.0",
+        "https-proxy-agent": "^5.0.0",
+        "lodash": "^4.17.20",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
         "es6-promisify": "^7.0.0",
@@ -76,14 +82,24 @@
         "winston-daily-rotate-file": "^4.5.5"
     },
     "devDependencies": {
+        "@eradani-inc/ec-generate": "^3.5.4",
         "@types/chai": "^4.2.19",
+        "@types/config": "0.0.38",
+        "@types/download": "^6.2.4",
+        "@types/lodash": "^4.14.168",
         "@types/mocha": "^8.2.2",
         "@types/node": "^15.12.4",
+        "@types/safe-json-stringify": "^1.1.2",
+        "@typescript-eslint/eslint-plugin": "^4.14.0",
+        "@typescript-eslint/eslint-plugin-tslint": "^4.14.0",
+        "@typescript-eslint/parser": "^4.14.0",
         "chai": "^4.3.4",
         "chai-http": "^4.3.0",
         "eslint": "^7.29.0",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-config-prettier": "^8.3.0",
+        "eslint-import-resolver-typescript": "^2.3.0",
+        "eslint-plugin-filenames": "^1.3.2",
         "eslint-plugin-import": "^2.23.4",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-promise": "^5.1.0",
@@ -99,8 +115,5 @@
         "typedoc": "^0.21.1",
         "typescript": "^4.3.4",
         "typescript-transform-paths": "^3.0.0"
-    },
-    "optionalDependencies": {
-        "@eradani-inc/ec-generate": "^3.5.4"
     }
 }

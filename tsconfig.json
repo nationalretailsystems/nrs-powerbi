@@ -69,5 +69,5 @@
         // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
     },
     "include": ["src/*", "src/*/*", "src/*/*/*", "src/*/*/*/*", "src/*/*/*/*/*"],
-    "exclude": ["dist/*", "docs/*", "logs/*"]
+    "exclude": ["dist/*", "docs/*", "logs/*", "dist/**/*", "docs/**/*", "logs/**/*", "temp/**/*"]
 }

@@ -43,8 +43,8 @@
         "baseUrl": "./" /* Base directory to resolve non-absolute module names. */,
         "paths": {
             "src/*": ["./src/*"],
-            "config/*": ["config/*"],
-            "config": ["config"]
+            "config/*": ["src/config/*"],
+            "config": ["src/config"]
         } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
         "plugins": [
             {
@@ -68,6 +68,6 @@
         // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
         // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
     },
-    "include": ["src/*", "src/*/*", "src/*/*/*", "src/*/*/*/*", "src/*/*/*/*/*"],
+    "include": ["src/**/*"],
     "exclude": ["dist/*", "docs/*", "logs/*", "dist/**/*", "docs/**/*", "logs/**/*", "temp/**/*"]
 }

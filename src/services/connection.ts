@@ -1,10 +1,11 @@
 import config from 'config';
 import eradaniConnect from '@eradani-inc/eradani-connect';
+import _ from 'lodash/fp';
 import createLogger from 'src/services/logger';
 const logger = createLogger('eradani-inc/eradani-connect');
 
 const transport = new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc, {
-    ...config.eradaniConnect.odbcOptions,
+    ..._.cloneDeep(config.eradaniConnect.odbcOptions),
     logger
 });
 

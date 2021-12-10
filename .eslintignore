@@ -1,1 +1,5 @@
+src/config/**
+native/**
+src/interfaces/**
+dist/**
 *.js

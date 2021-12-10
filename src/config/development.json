@@ -75,7 +75,7 @@
         "requestLen": 1024,
         "debug": false,
         "pooling": false,
-        "connectionString": "Driver={IBM i Access ODBC Driver};System=localhost;Uid=SCAVALIERI;Pwd=3r@d@n!;NAM=1",
+        "connectionString": "DSN=*LOCAL;NAM=1;CCSID=1208",
         "useIbmiServices": false
     },
 
@@ -92,7 +92,7 @@
             "usePOST": true,
             "debug": true
         },
-        "odbc": "Driver={IBM i Access ODBC Driver};System=localhost;Uid=SCAVALIERI;Pwd=3r@d@n!;NAM=1",
+        "odbc": "DSN=*LOCAL;NAM=1;CCSID=1208",
         "odbcOptions": {
             "debug": true,
             "noPool": false,

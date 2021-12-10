@@ -12,6 +12,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('app');
+const requestLoggerInst = createLogger('requests');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 import ECCRouter from '@eradani-inc/ecc-router';
 import { ECClient } from '@eradani-inc/ec-client';
@@ -84,7 +85,7 @@ function startServer(app: Express.Application) {
 
 async function startOutbound() {
     const ecc = new ECClient(ecclient);
-    router = new ECCRouter(ecc, { logger: requestLogger, debug });
+    router = new ECCRouter(ecc, { logger: requestLoggerInst, debug });
 
     await registerCommands(router);
 
@@ -147,4 +148,4 @@ function setUpAPI(swaggerSpec?: any) {
 module.exports = {
     startup: startup,
     stop
-}
+};

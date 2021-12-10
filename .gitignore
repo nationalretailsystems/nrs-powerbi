@@ -24,6 +24,8 @@ docs/**
 /output/
 config/*
 src/services/*api.js
+src/config/development.json
+src/config/production.json
 temp/*.*
 temp/*/*
 native/*.clleinc

@@ -3,8 +3,8 @@ import { promisify } from 'es6-promisify';
 import config from 'config';
 import APIError from 'src/APIError';
 import { JWTUserData } from 'src/types';
-const key = config.getKeys().privateKey;
-const options = config.get().jwt;
+const key = config.keys.privateKey;
+const options = config.jwt;
 const jwtSign = promisify(jwt.sign) as (data: any, key: string, options?: any) => Promise<string>;
 const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promise<any>;
 

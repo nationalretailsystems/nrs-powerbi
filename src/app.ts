@@ -21,15 +21,19 @@ const { ecclient, debug } = config;
 import registerCommands from 'src/commands';
 let router: ECCRouter;
 
+// TODO SEPARATE INBOUND AND OUTBOUND STARTUP LIKE AARON'S V3 EXAMPLE
+
 const startup = loadSwagger()
     .then(setUpAPI)
     .then(startServer)
+    .catch((err: any) => {
+        logger.error('ERROR ON INBOUND STARTUP', err);
+        console.log('ERROR ON INBOUND STARTUP: ', err);
+    })
     .then(startOutbound)
     .catch((err: any) => {
-        logger.error('ERROR ON STARTUP', err);
-    })
-    .catch((err: any) => {
-        console.log('ERROR ON STARTUP: ', err);
+        logger.error('ERROR ON OUTBOUND STARTUP', err);
+        console.log('ERROR ON OUTBOUND STARTUP: ', err);
     });
 
 async function loadSwagger() {

@@ -1,155 +1,67 @@
-import http from 'http';
-import express from 'express';
-import createLogger, { requestLogger } from 'src/services/logger';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import cors from 'cors';
-import routes from 'src/routes';
-import expressOASGenerator, { SPEC_OUTPUT_FILE_BEHAVIOR } from 'express-oas-generator';
-import swStats from 'swagger-stats';
-import swaggerUi from 'swagger-ui-express';
-import { readFile } from 'fs/promises';
-import path from 'path';
-// If you want realtime services: import socketIO from 'socket.io';
-const logger = createLogger('app');
-const requestLoggerInst = createLogger('requests');
 import config from 'config';
-const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
-import ECCRouter from '@eradani-inc/ecc-router';
-import { ECClient } from '@eradani-inc/ec-client';
-const { ecclient, debug } = config;
-import registerCommands from 'src/commands';
-let router: ECCRouter;
 
-// TODO SEPARATE INBOUND AND OUTBOUND STARTUP LIKE AARON'S V3 EXAMPLE
+import * as outbound from 'src/outbound';
+import * as inbound from 'src/inbound';
 
-const startup = loadSwagger()
-    .then(setUpAPI)
-    .then(startServer)
-    .catch((err: any) => {
-        logger.error('ERROR ON INBOUND STARTUP', err);
-        console.log('ERROR ON INBOUND STARTUP: ', err);
+export { shutdown, killImmediate } from 'src/services/shutdown';
+import { shutdown } from 'src/services/shutdown';
+import * as healthCheckService from 'src/services/health-check';
+import transport from 'src/services/connection';
+import * as ec from '@eradani-inc/eradani-connect';
+
+import createLogger from 'src/services/logger';
+const logger = createLogger('app');
+
+const modules: any[] = [];
+if (config.app.inbound) {
+    modules.push(inbound.startup);
+}
+
+if (config.app.outbound) {
+    modules.push(outbound.start);
+}
+
+export const startup = Promise.all(modules)
+    .then(() => {
+        logger.info('App Startup Complete!');
     })
-    .then(startOutbound)
-    .catch((err: any) => {
-        logger.error('ERROR ON OUTBOUND STARTUP', err);
-        console.log('ERROR ON OUTBOUND STARTUP: ', err);
+    .catch((err) => {
+        void shutdown();
+        logger.error('App Startup Failed', err);
     });
 
-async function loadSwagger() {
-    try {
-        if (config?.swagger?.disableDashboard) {
-            return undefined;
+process.on('unhandledRejection', (err) => {
+    logger.error('Unhandled Promise Rejection Received', err);
+});
+
+// Health Check for database connection
+healthCheckService.register('ibm-i-connection', {
+    status: async () => {
+        try {
+            let result = await transport.execute(new ec.run.Sql(`values(x'60')`));
+            if (result?.[0]?.['00001'] === '-') {
+                return {
+                    status: healthCheckService.Status.ok
+                };
+            } else {
+                return {
+                    status: healthCheckService.Status.warn,
+                    message: 'Incorrect result returned from db health check query',
+                    details: {
+                        expected: [{ '00001': '-' }],
+                        actual: result
+                    }
+                };
+            }
+        } catch (err) {
+            return {
+                status: healthCheckService.Status.error,
+                message: 'Error running connection health check',
+                details: {
+                    name: err.name,
+                    message: err.message
+                }
+            };
         }
-        return {
-            v2: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec.json'))).toString()),
-            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString())
-        };
-    } catch (e) {
-        logger.warn('Failed to load swagger spec. Disabling swagger-dependent dashboards.', e);
-        return undefined;
     }
-}
-
-function startServer(app: Express.Application) {
-    const server = http.createServer(app);
-
-    server.on('error', function (err: any) {
-        // If the address is already in use
-        if (err.code === 'EADDRINUSE') {
-            logger.error(
-                '\n\n========================================\n' +
-                    '\n' +
-                    'ERROR: Address In Use (EADDRINUSE)!\n' +
-                    '\n' +
-                    'The server could not start because its\n' +
-                    `configured port (Port ${process.env.PORT || config.app.port}) is already\n` +
-                    'in use by another application. This is\n' +
-                    'usually caused by an attempt to start a\n' +
-                    'second instance of this server while\n' +
-                    'another instance is running.\n' +
-                    '\n' +
-                    "Check to make sure there isn't already\n" +
-                    'another instance of this application\n' +
-                    'running and try again.\n' +
-                    '\n' +
-                    '=======================================\n\n'
-            );
-            process.exit(0);
-        } else {
-            throw err;
-        }
-    });
-
-    server.listen(process.env.PORT || config.app.port);
-    logger.info(`Server listening on port ${process.env.PORT || config.app.port}`);
-
-    return { server };
-}
-
-async function startOutbound() {
-    const ecc = new ECClient(ecclient);
-    router = new ECCRouter(ecc, { logger: requestLoggerInst, debug });
-
-    await registerCommands(router);
-
-    await router.listen();
-
-    logger.info('ECC App Listening for Commands');
-}
-
-async function stop() {
-    return router.close();
-}
-
-function setUpAPI(swaggerSpec?: any) {
-    const app = express();
-
-    // General middlewares
-
-    if (generateSwagger) {
-        expressOASGenerator.handleResponses(app, {
-            specOutputPath: './oas/spec.json',
-            alwaysServeDocs: false,
-            specOutputFileBehavior: SPEC_OUTPUT_FILE_BEHAVIOR.PRESERVE,
-            swaggerDocumentOptions: {}
-        });
-    }
-
-    app.use(morgan('dev', { stream: requestLogger }));
-    app.use(cors());
-
-    if (swaggerSpec && !config?.swagger?.disableDashboard) {
-        app.use(swStats.getMiddleware({ swaggerSpec: swaggerSpec.v3, uriPath: '/dashboard/stats' }));
-        app.use('/dashboard/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec.v3));
-        app.use('/api-spec/v2', (_, res) => res.status(200).json(swaggerSpec.v2));
-        app.use('/api-spec/v3', (_, res) => res.status(200).json(swaggerSpec.v3));
-    }
-
-    app.use(
-        bodyParser.json({
-            type: 'application/json'
-        })
-    );
-    app.use(
-        bodyParser.urlencoded({
-            extended: false
-        })
-    );
-
-    // Mount routes
-    const router = express.Router();
-    routes(router);
-    app.use('/', router);
-
-    if (generateSwagger) {
-        expressOASGenerator.handleRequests();
-    }
-
-    return app;
-}
-
-module.exports = {
-    startup: startup,
-    stop
-};
+});

@@ -18,7 +18,7 @@ if (config.app.inbound) {
 }
 
 if (config.app.outbound) {
-    modules.push(outbound.start);
+    modules.push(outbound.start());
 }
 
 export const startup = Promise.all(modules)
@@ -26,8 +26,8 @@ export const startup = Promise.all(modules)
         logger.info('App Startup Complete!');
     })
     .catch((err) => {
-        void shutdown();
         logger.error('App Startup Failed', err);
+        void shutdown();
     });
 
 process.on('unhandledRejection', (err) => {

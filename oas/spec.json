@@ -203,6 +203,103 @@
                 "produces": ["application/json"]
             }
         },
+        "/api/powerbi/viamundoWeight": {
+            "get": {
+                "summary": "/api/powerbi/viamundoweight",
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "fromDate",
+                        "in": "query",
+                        "example": "210901"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "toDate",
+                        "in": "query",
+                        "example": "210930"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "BLDG1X": {
+                                        "type": "string"
+                                    },
+                                    "TERM#H_1": {
+                                        "type": "string"
+                                    },
+                                    "RECPT_DATE": {
+                                        "type": "date"
+                                    },
+                                    "MANF_DATE": {
+                                        "type": "date"
+                                    },
+                                    "ICAR#H": {
+                                        "type": "number"
+                                    },
+                                    "CARRIH": {
+                                        "type": "string"
+                                    },
+                                    "INPROH": {
+                                        "type": "number"
+                                    },
+                                    "TOQTYH": {
+                                        "type": "number"
+                                    },
+                                    "TOWGTH": {
+                                        "type": "number"
+                                    },
+                                    "IPORTH": {
+                                        "type": "string"
+                                    },
+                                    "CONT#X": {
+                                        "type": "number"
+                                    },
+                                    "ACCT#C": {
+                                        "type": "string"
+                                    },
+                                    "ACNAMC": {
+                                        "type": "string"
+                                    },
+                                    "PROSTH": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "BLDG1X",
+                                    "TERM#H_1",
+                                    "RECPT_DATE",
+                                    "MANF_DATE",
+                                    "ICAR#H",
+                                    "CARRIH",
+                                    "INPROH",
+                                    "TOQTYH",
+                                    "TOWGTH",
+                                    "IPORTH",
+                                    "CONT#X",
+                                    "ACCT#X",
+                                    "ACNAMC",
+                                    "PROSTH"
+                                ]
+                            }
+                        }
+                    },
+                    "304": {},
+                    "500": {
+                        "description": "Bad Something Something Something"
+                    }
+                },
+                "tags": [],
+                "produces": ["application/json"]
+            }
+        },
         "/auth": {
             "post": {
                 "summary": "/auth",

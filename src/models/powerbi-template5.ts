@@ -28,11 +28,11 @@ export interface SQLTemplateInput5 {
     /**
      * @description From Date
      */
-     fromDate: number | string;
-     /**
-      * @description To Date
-      */
-     toDate: number | string;
+    fromDate: number | string;
+    /**
+     * @description To Date
+     */
+    toDate: number | string;
 }
 
 /**

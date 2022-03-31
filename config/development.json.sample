@@ -6,12 +6,12 @@
     "debug": true,
 
     "jwt": {
-        "expiresIn": "1h"
+        "expiresIn": "24h"
     },
 
     "credentials": {
-        "username": "usrprf",
-        "password": "password"
+        "username": "fourkites",
+        "password": "tnE7vyVT!"
     },
 
     "protectedFields": ["password", "username"],
@@ -51,7 +51,8 @@
         },
         "native": {
             "templateLib": "ECNCTAPP",
-            "templateDataLib": "QIWS"
+            "templateDataLib": "QIWS",
+            "pgmLib": "FOURKITES"
         }
     },
 

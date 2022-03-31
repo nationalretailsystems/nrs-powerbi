@@ -65,7 +65,7 @@ export async function getWMS378(inputs: JSONObject): Promise<SQLTemplateOutput5>
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         // X toDate: inputs.toDate,
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
     return transport.execute(SQLTemplate5, params) as Promise<SQLTemplateOutput5>;
 }

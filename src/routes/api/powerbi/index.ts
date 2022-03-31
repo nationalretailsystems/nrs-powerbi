@@ -30,5 +30,5 @@ export default function mountPOWERBI(router: Router) {
         '/WMS378',
         validate(validators.getWMS378),
         respond((req: any) => sqlController.getWMS378(req.query))
-    );    
+    );
 }

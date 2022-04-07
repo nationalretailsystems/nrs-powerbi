@@ -1,5 +1,4 @@
 node_modules/**
-/.vscode/**
 logs/*.log
 logs/exceptions/*.exceptions
 jsconfig.json
@@ -22,13 +21,9 @@ docs/**
 /bower_components/
 /generated-docs/
 /output/
-src/services/*api.js
-src/interfaces/*
-src/config/development.json
-src/config/production.json
-temp/*.*
-temp/*/*
-native/*.clleinc
-native/*.rpgleinc
+src/config/*.json
+temp/**
+!temp/.gitignore
+!temp/**/.gitignore
 native/*.js
 native/*.ts

@@ -3,6 +3,7 @@ import { FKLOADCREAModel, FKLOADCREAInput, FKLOADCREAOutput } from 'src/models/f
 import { FKSTOPETAModel, FKSTOPETAInput, FKSTOPETAOutput } from 'src/models/fkstopeta';
 import { FKOCEANUPDModel, FKOCEANUPDInput, FKOCEANUPDOutput } from 'src/models/fkoceanupd';
 import transport from 'src/services/connection';
+import APIError from 'src/APIError';
 
 const logger = createLogger('controllers/fourkites');
 
@@ -12,10 +13,15 @@ const logger = createLogger('controllers/fourkites');
  * @param {number} num The number to input to the program
  * @returns {Promise<FKLOADCREAOutput}
  */
-export async function loadCreation(load: FKLOADCREAInput): Promise<FKLOADCREAOutput> {
+export async function loadCreation(load: FKLOADCREAInput) {
     logger.debug('Calling FKLOADCREA program');
 
-    return transport.execute(FKLOADCREAModel, load) as Promise<FKLOADCREAOutput>;
+    const loadCreResult = await transport.execute(FKLOADCREAModel, load) as FKLOADCREAOutput;
+    if ( loadCreResult.FourKitesLoadId === 0) {
+        throw new APIError(450, 'Bad Load ID')
+    } 
+    
+    //    return transport.execute(FKLOADCREAModel, load) as Promise<FKLOADCREAOutput>;
 }
 
 export async function stopEtaUpdate(load: FKSTOPETAInput): Promise<FKSTOPETAOutput> {

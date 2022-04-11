@@ -86,7 +86,13 @@
 
     "swagger": {
         "disableDashboard": false,
-        "generate": false
+        "generate": false,
+        "auth": {
+            "enabled": true,
+            "sessionMaxAge": 3600,
+            "username": "changethisusername",
+            "password": "changethispassword"
+        }
     },
 
     "eradaniConnect": {

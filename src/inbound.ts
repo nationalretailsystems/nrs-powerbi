@@ -30,9 +30,15 @@ async function loadSwagger() {
         if (config?.swagger?.disableDashboard) {
             return undefined;
         }
+        const swaggerUserName = config.swagger.auth.username;
+        const swaggerUserPassword = config.swagger.auth.password;
         return {
             v2: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec.json'))).toString()),
-            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString())
+            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString()),
+            onAuthenticate: function (req: object, username: any, password: any) {
+                if (req) return username === swaggerUserName && password === swaggerUserPassword;
+                return false;
+            }
         };
     } catch (e) {
         logger.warn('Failed to load swagger spec. Disabling swagger-dependent dashboards.', e);
@@ -94,7 +100,15 @@ function setUpAPI(swaggerSpec?: any) {
     app.use(cors());
 
     if (swaggerSpec && !config?.swagger?.disableDashboard) {
-        app.use(swStats.getMiddleware({ swaggerSpec: swaggerSpec.v3, uriPath: '/dashboard/stats' }));
+        app.use(
+            swStats.getMiddleware({
+                swaggerSpec: swaggerSpec.v3,
+                uriPath: '/dashboard/stats',
+                authentication: config.swagger.auth.enabled,
+                sessionMaxAge: config.swagger.auth.sessionMaxAge,
+                onAuthenticate: swaggerSpec.onAuthenticate
+            })
+        );
         app.use('/dashboard/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec.v3));
         app.use('/api-spec/v2', (_, res) => res.status(200).json(swaggerSpec.v2));
         app.use('/api-spec/v3', (_, res) => res.status(200).json(swaggerSpec.v3));

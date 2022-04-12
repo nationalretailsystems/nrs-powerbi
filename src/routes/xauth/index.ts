@@ -8,8 +8,8 @@ import * as user from 'src/controllers/user';
 export default function mountAuth(router: Router) {
     router.post(
         '/',
-        validate(validators.login),
-        respond((req: any) => user.login(req.body.username, req.body.password))
+        validate(validators.xauth),
+        respond((req: any) => user.login(req.body.client_id, req.body.client_secret))
     );
 
     router.post(

@@ -16,11 +16,11 @@ const logger = createLogger('controllers/fourkites');
 export async function loadCreation(load: FKLOADCREAInput) {
     logger.debug('Calling FKLOADCREA program');
 
-    const loadCreResult = await transport.execute(FKLOADCREAModel, load) as FKLOADCREAOutput;
-    if ( loadCreResult.FourKitesLoadId === 0) {
-        throw new APIError(450, 'Bad Load ID')
-    } 
-    
+    const loadCreResult = (await transport.execute(FKLOADCREAModel, load)) as FKLOADCREAOutput;
+    if (loadCreResult.FourKitesLoadId === 0) {
+        throw new APIError(450, 'Bad Load ID');
+    }
+
     //    return transport.execute(FKLOADCREAModel, load) as Promise<FKLOADCREAOutput>;
 }
 

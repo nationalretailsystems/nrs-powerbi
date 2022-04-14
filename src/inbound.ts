@@ -11,7 +11,10 @@ import swStats from 'swagger-stats';
 import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
+import * as user from 'src/controllers/user';
+
 // If you want realtime services: import socketIO from 'socket.io';
+const dashboardLogin: Function = user.dashboardLoginCredentialsCheck;
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 
@@ -30,15 +33,11 @@ async function loadSwagger() {
         if (config?.swagger?.disableDashboard) {
             return undefined;
         }
-        const swaggerUserName = config.swagger.auth.username;
-        const swaggerUserPassword = config.swagger.auth.password;
+
         return {
             v2: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec.json'))).toString()),
             v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString()),
-            onAuthenticate: function (req: object, username: any, password: any) {
-                if (req) return username === swaggerUserName && password === swaggerUserPassword;
-                return false;
-            }
+            onAuthenticate: dashboardLogin
         };
     } catch (e) {
         logger.warn('Failed to load swagger spec. Disabling swagger-dependent dashboards.', e);

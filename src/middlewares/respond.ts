@@ -126,23 +126,13 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
  *
  * @param {Request} req
  */
- function _filterProtectedFields(req: any) {
+function _filterProtectedFields(req: any) {
     for (let field of protectedFields) {
-        req.body[field] = protectField(req.body[field]);
-        req.user[field] = protectField(req.user[field]);
-        req.query[field] = protectField(req.query[field]);
-        req.params[field] = protectField(req.params[field]);
-        req.headers[field] = protectField(req.headers[field]);
-    }
-
-    function protectField(field: any) {
-        const blank = '';
-        const zero = 0;
-
-        if (field || field === blank || field === zero) {
-            field = '**PROTECTED FIELD**';
-        }
-        return field;
+        if (req.body[field] !== undefined) req.body[field] = '**PROTECTED FIELD**';
+        if (req.query[field] !== undefined) req.query[field] = '**PROTECTED FIELD**';
+        if (req.params[field] !== undefined) req.params[field] = '**PROTECTED FIELD**';
+        if (req.user && req.user[field] !== undefined) req.user[field] = '**PROTECTED FIELD**';
+        if (req.headers[field] !== undefined) req.headers[field] = '**PROTECTED FIELD**';
     }
 }
 

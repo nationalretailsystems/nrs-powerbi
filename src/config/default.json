@@ -89,7 +89,7 @@
         "generate": false,
         "auth": {
             "enabled": true,
-            "sessionMaxAge": 3600,
+            "sessionMaxAge": 43200,
             "username": "changethisusername",
             "password": "changethispassword"
         }

@@ -8,7 +8,7 @@ export default new eradaniConnect.run.Sql(
     CASE WHEN ETYPEY IN ('T','R')  THEN TRIM(CARRCY) || '-' || EQUIPY
          WHEN ETYPEY = 'X' then EQUIPY  
          ELSE TRIM(CARRCY) || EQUIPY END AS "Asset",
-    CASE 
+    CASE WHEN YARD#Y = '?' THEN '?'
          WHEN LTYPEY IN ('S','D') THEN YARD#Y || LTYPEY || DIGITS(LOCT#Y) 
          WHEN LTYPEY = 'R' THEN YARD#Y || ' Row ' || LOCT#Y
          WHEN LTYPEY = 'U' THEN YARD#Y || ' Uns ' || LOCT#Y

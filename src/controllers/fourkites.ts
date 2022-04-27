@@ -30,16 +30,24 @@ export async function loadCreation(load: FKLOADCREAInput) {
     //    return transport.execute(FKLOADCREAModel, load) as Promise<FKLOADCREAOutput>;
 }
 
-export async function stopEtaUpdate(load: FKSTOPETAInput): Promise<FKSTOPETAOutput> {
+export async function stopEtaUpdate(load: FKSTOPETAInput) {
     logger.debug('Calling FKSTOPETA program');
 
-    return transport.execute(FKSTOPETAModel, load) as Promise<FKSTOPETAOutput>;
+    const stopEtaResult = (await transport.execute(FKSTOPETAModel, load)) as FKSTOPETAOutput;
+    if (stopEtaResult.FourKitesLoadId === 0) {
+        throw new APIError(450, 'Bad Load ID');
+    }
+    //  return transport.execute(FKSTOPETAModel, load) as Promise<FKSTOPETAOutput>;
 }
 
-export async function oceanUpdate(load: FKOCEANUPDInput): Promise<FKOCEANUPDOutput> {
+export async function oceanUpdate(load: FKOCEANUPDInput) {
     logger.debug('Calling FKOCEANUPDATE program');
 
-    return transport.execute(FKOCEANUPDModel, load) as Promise<FKOCEANUPDOutput>;
+    const oceanUpdResult = (await transport.execute(FKOCEANUPDModel, load)) as FKOCEANUPDOutput;
+    if (oceanUpdResult.FourKitesLoadId === 0) {
+        throw new APIError(450, 'Bad Load ID');
+    }
+    //  return transport.execute(FKOCEANUPDModel, load) as Promise<FKOCEANUPDOutput>;
 }
 
 export async function trackingUpdate(load: FKTRACKUPDInput): Promise<FKTRACKUPDOutput> {

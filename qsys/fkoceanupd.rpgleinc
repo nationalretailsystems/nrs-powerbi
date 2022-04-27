@@ -15,12 +15,12 @@
      DMessage                       100A
      DMessageType                    20A
      DProNumber                      20A
-     DRefNumbers                     20A   Dim(20)
+     DRefNumbers                     50A   Dim(20)
      DScac                            4A
      DShipper                        30A
      DStatus                         30A
      DStatusCode                      5A
      DStopName                       30A
-     DTags                           25A   Dim(10)
+     DTags                           50A   Dim(10)
      DTimestamp                        Z
      DVoyageNumber                   20A

@@ -68,7 +68,7 @@ pgmmodels:
             type: Timestamp
           VesselName:
             type: Character
-            length: 360
+            length: 30
           VoyageNumber:
             type: Character
             length: 20

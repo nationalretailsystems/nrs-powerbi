@@ -89,7 +89,7 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "VesselName",
-      type: new dataTypes.Char(360)
+      type: new dataTypes.Char(30)
     },
       {
       name: "VoyageNumber",
@@ -171,7 +171,7 @@ export interface FKSTOPETAInput {
      */
     Timestamp: Date | string,
     /**
-     * @size 360 characters
+     * @size 30 characters
      */
     VesselName: string,
     /**
@@ -253,7 +253,7 @@ export interface FKSTOPETAOutput {
      */
     Timestamp: Date,
     /**
-     * @size 360 characters
+     * @size 30 characters
      */
     VesselName: string,
     /**

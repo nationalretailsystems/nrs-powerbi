@@ -25,5 +25,5 @@
      DStopUnlocode                   10A
      DTags                           50A   Dim(10)
      DTimestamp                        Z
-     DVesselName                    360A
+     DVesselName                     30A
      DVoyageNumber                   20A

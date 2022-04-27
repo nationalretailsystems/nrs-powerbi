@@ -3,123 +3,150 @@
 // Module: fkloadcrea
 // Generated source -- do not modify
 
-import eradaniConnect from '@eradani-inc/eradani-connect';
+import eradaniConnect from "@eradani-inc/eradani-connect";
 const { dataTypes } = eradaniConnect;
 
+
 // Manually entered import
-import configService from '../../config';
+import configService from "../../config";
 const config = configService.get();
 
 /**
  * Program model
  */
-export const FKLOADCREAModel = new eradaniConnect.run.Pgm('FKLOADCREA', {
-    lib: config.eradaniConnect.native.pgmLib,
-    mode: 'ile',
-    params: [
-        {
-            name: 'Errors',
-            type: new dataTypes.Char(50),
-            defaultValue: '',
-            dim: 10
-        },
-        {
-            name: 'FourKitesLoadId',
-            type: new dataTypes.PackedDecimal(16, 0)
-        },
-        {
-            name: 'IsSuccess',
-            type: new dataTypes.Bool()
-        },
-        {
-            name: 'LoadNumber',
-            type: new dataTypes.Char(10)
-        },
-        {
-            name: 'MessageType',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'ProNumber',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'ReferenceNumbers',
-            type: new dataTypes.Char(15),
-            defaultValue: '',
-            dim: 10
-        },
-        {
-            name: 'Scac',
-            type: new dataTypes.Char(4)
-        },
-        {
-            name: 'Shipper',
-            type: new dataTypes.Char(30)
-        },
-        {
-            name: 'Tags',
-            type: new dataTypes.Char(15),
-            defaultValue: '',
-            dim: 10
-        },
-        {
-            name: 'Timestamp',
-            type: new dataTypes.Timestamp()
-        }
-    ]
-});
+export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
+      lib: config.eradaniConnect.native.pgmLib,
+      mode: "ile",
+      params: [
+      {
+      name: "ConsignmentEncryptedAccessToken",
+      type: new dataTypes.Char(125)
+    },
+      {
+      name: "EncryptedAccessToken",
+      type: new dataTypes.Char(125)
+    },
+      {
+      name: "EncryptedUrl",
+      type: new dataTypes.Char(150)
+    },
+      {
+      name: "Errors",
+      type: new dataTypes.Char(50),
+      defaultValue: "",
+      dim: 5
+    },
+      {
+      name: "FourKitesLoadId",
+      type: new dataTypes.PackedDecimal(16, 0)
+    },
+      {
+      name: "IsSuccess",
+      type: new dataTypes.Bool()
+    },
+      {
+      name: "LoadNumber",
+      type: new dataTypes.Char(20)
+    },
+      {
+      name: "MessageType",
+      type: new dataTypes.Char(20)
+    },
+      {
+      name: "ProNumber",
+      type: new dataTypes.Char(20),
+      defaultValue: ""
+    },
+      {
+      name: "ReferenceNumbers",
+      type: new dataTypes.Char(20),
+      defaultValue: "",
+      dim: 10
+    },
+      {
+      name: "Scac",
+      type: new dataTypes.Char(4)
+    },
+      {
+      name: "Shipper",
+      type: new dataTypes.Char(30)
+    },
+      {
+      name: "Tags",
+      type: new dataTypes.Char(25),
+      defaultValue: "",
+      dim: 10
+    },
+      {
+      name: "Timestamp",
+      type: new dataTypes.Timestamp()
+    }
+  ]
+    });
 
 /**
  * Input interface
  */
 export interface FKLOADCREAInput {
     /**
+     * @size 125 characters
+     */
+    ConsignmentEncryptedAccessToken: string,
+    /**
+     * @size 125 characters
+     */
+    EncryptedAccessToken: string,
+    /**
+     * @size 150 characters
+     */
+    EncryptedUrl: string,
+    /**
      * @size 50 characters
      * @default ``
      */
-    Errors?: Array<string>;
+    Errors?: Array<string>,
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
-    FourKitesLoadId: number | string;
+    FourKitesLoadId: number | string,
     /**
      */
-    IsSuccess: boolean;
-    /**
-     * @size 10 characters
-     */
-    LoadNumber: string;
+    IsSuccess: boolean,
     /**
      * @size 20 characters
      */
-    MessageType: string;
+    LoadNumber: string,
     /**
      * @size 20 characters
      */
-    ProNumber: string;
+    MessageType: string,
     /**
-     * @size 15 characters
+     * @size 20 characters
      * @default ``
      */
-    ReferenceNumbers?: Array<string>;
+    ProNumber?: string,
+    /**
+     * @size 20 characters
+     * @default ``
+     */
+    ReferenceNumbers?: Array<string>,
     /**
      * @size 4 characters
      */
-    Scac: string;
+    Scac: string,
     /**
      * @size 30 characters
      */
-    Shipper: string;
+    Shipper: string,
     /**
-     * @size 15 characters
+     * @size 25 characters
      * @default ``
      */
-    Tags?: Array<string>;
+    Tags?: Array<string>,
     /**
      */
-    Timestamp: Date | string;
+    Timestamp: Date | string
 }
 
 /**
@@ -127,51 +154,64 @@ export interface FKLOADCREAInput {
  */
 export interface FKLOADCREAOutput {
     /**
+     * @size 125 characters
+     */
+    ConsignmentEncryptedAccessToken: string,
+    /**
+     * @size 125 characters
+     */
+    EncryptedAccessToken: string,
+    /**
+     * @size 150 characters
+     */
+    EncryptedUrl: string,
+    /**
      * @size 50 characters
      * @default ``
      */
-    Errors: Array<string>;
+    Errors: Array<string>,
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
-    FourKitesLoadId: number;
+    FourKitesLoadId: number,
     /**
      */
-    IsSuccess: boolean;
-    /**
-     * @size 10 characters
-     */
-    LoadNumber: string;
+    IsSuccess: boolean,
     /**
      * @size 20 characters
      */
-    MessageType: string;
+    LoadNumber: string,
     /**
      * @size 20 characters
      */
-    ProNumber: string;
+    MessageType: string,
     /**
-     * @size 15 characters
+     * @size 20 characters
      * @default ``
      */
-    ReferenceNumbers: Array<string>;
+    ProNumber: string,
+    /**
+     * @size 20 characters
+     * @default ``
+     */
+    ReferenceNumbers: Array<string>,
     /**
      * @size 4 characters
      */
-    Scac: string;
+    Scac: string,
     /**
      * @size 30 characters
      */
-    Shipper: string;
+    Shipper: string,
     /**
-     * @size 15 characters
+     * @size 25 characters
      * @default ``
      */
-    Tags: Array<string>;
+    Tags: Array<string>,
     /**
      */
-    Timestamp: Date;
+    Timestamp: Date
 }
 
 /* eslint-enable */

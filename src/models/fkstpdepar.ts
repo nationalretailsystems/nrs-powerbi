@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-// Module: fkstopeta
+// Module: fkstpdepar
 // Generated source -- do not modify
 
 import eradaniConnect from '@eradani-inc/eradani-connect';
@@ -13,13 +13,13 @@ const config = configService.get();
 /**
  * Program model
  */
-export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
+export const FKSTPDEPARModel = new eradaniConnect.run.Pgm('FKSTPDEPAR', {
     lib: config.eradaniConnect.native.pgmLib,
     mode: 'ile',
     params: [
         {
-            name: 'ContainerType',
-            type: new dataTypes.Char(10)
+            name: 'AutoDeparture',
+            type: new dataTypes.Binary(0)
         },
         {
             name: 'FourKitesLoadId',
@@ -27,7 +27,7 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
         },
         {
             name: 'LoadNumber',
-            type: new dataTypes.Char(20)
+            type: new dataTypes.Char(10)
         },
         {
             name: 'MessageType',
@@ -35,12 +35,11 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
         },
         {
             name: 'ProNumber',
-            type: new dataTypes.Char(20),
-            defaultValue: ''
+            type: new dataTypes.Char(20)
         },
         {
             name: 'ReferenceNumbers',
-            type: new dataTypes.Char(20),
+            type: new dataTypes.Char(15),
             defaultValue: '',
             dim: 10
         },
@@ -65,34 +64,18 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
             type: new dataTypes.PackedDecimal(7, 0)
         },
         {
-            name: 'StopStatus',
-            type: new dataTypes.Char(20)
-        },
-        {
             name: 'StopType',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'StopUnlocode',
             type: new dataTypes.Char(10)
         },
         {
             name: 'Tags',
-            type: new dataTypes.Char(25),
+            type: new dataTypes.Char(15),
             defaultValue: '',
             dim: 10
         },
         {
             name: 'Timestamp',
             type: new dataTypes.Timestamp()
-        },
-        {
-            name: 'VesselName',
-            type: new dataTypes.Char(25)
-        },
-        {
-            name: 'VoyageNumber',
-            type: new dataTypes.Char(20)
         }
     ]
 });
@@ -100,18 +83,19 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
 /**
  * Input interface
  */
-export interface FKSTOPETAInput {
+export interface FKSTPDEPARInput {
     /**
-     * @size 10 characters
+     * @size 0 digits
+     * @precision 0 decimals
      */
-    ContainerType: string;
+    AutoDeparture: number | string;
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
     FourKitesLoadId: number | string;
     /**
-     * @size 20 characters
+     * @size 10 characters
      */
     LoadNumber: string;
     /**
@@ -120,11 +104,10 @@ export interface FKSTOPETAInput {
     MessageType: string;
     /**
      * @size 20 characters
-     * @default ``
      */
-    ProNumber?: string;
+    ProNumber: string;
     /**
-     * @size 20 characters
+     * @size 15 characters
      * @default ``
      */
     ReferenceNumbers?: Array<string>;
@@ -150,50 +133,35 @@ export interface FKSTOPETAInput {
      */
     StopSequence: number | string;
     /**
-     * @size 20 characters
-     */
-    StopStatus: string;
-    /**
-     * @size 20 characters
+     * @size 10 characters
      */
     StopType: string;
     /**
-     * @size 10 characters
-     */
-    StopUnlocode: string;
-    /**
-     * @size 25 characters
+     * @size 15 characters
      * @default ``
      */
     Tags?: Array<string>;
     /**
      */
     Timestamp: Date | string;
-    /**
-     * @size 25 characters
-     */
-    VesselName: string;
-    /**
-     * @size 20 characters
-     */
-    VoyageNumber: string;
 }
 
 /**
  * Output interface
  */
-export interface FKSTOPETAOutput {
+export interface FKSTPDEPAROutput {
     /**
-     * @size 10 characters
+     * @size 0 digits
+     * @precision 0 decimals
      */
-    ContainerType: string;
+    AutoDeparture: number;
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
     FourKitesLoadId: number;
     /**
-     * @size 20 characters
+     * @size 10 characters
      */
     LoadNumber: string;
     /**
@@ -202,11 +170,10 @@ export interface FKSTOPETAOutput {
     MessageType: string;
     /**
      * @size 20 characters
-     * @default ``
      */
     ProNumber: string;
     /**
-     * @size 20 characters
+     * @size 15 characters
      * @default ``
      */
     ReferenceNumbers: Array<string>;
@@ -232,33 +199,17 @@ export interface FKSTOPETAOutput {
      */
     StopSequence: number;
     /**
-     * @size 20 characters
-     */
-    StopStatus: string;
-    /**
-     * @size 20 characters
+     * @size 10 characters
      */
     StopType: string;
     /**
-     * @size 10 characters
-     */
-    StopUnlocode: string;
-    /**
-     * @size 25 characters
+     * @size 15 characters
      * @default ``
      */
     Tags: Array<string>;
     /**
      */
     Timestamp: Date;
-    /**
-     * @size 25 characters
-     */
-    VesselName: string;
-    /**
-     * @size 20 characters
-     */
-    VoyageNumber: string;
 }
 
 /* eslint-enable */

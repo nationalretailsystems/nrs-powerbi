@@ -23,7 +23,7 @@ export default function mountAPI(router: Router) {
     const fourkites = express.Router();
     mountFourKites(fourkites);
     router.use('/fourkites', fourkites);
-    
+
     const pinc = express.Router();
     mountPinc(pinc);
     router.use('/pinc', pinc);

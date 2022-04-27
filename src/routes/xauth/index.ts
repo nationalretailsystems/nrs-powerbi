@@ -5,7 +5,6 @@ import requireAuth from 'src/middlewares/require-auth';
 import * as validators from './validators';
 import * as user from 'src/controllers/fkuser';
 
-
 export default function mountAuth(router: Router) {
     router.post(
         '/',

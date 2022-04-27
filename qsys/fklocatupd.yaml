@@ -1,5 +1,5 @@
 ---
-name: fkstopeta
+name: fklocatupd
 codeblocks:
   typescript:
     - ""
@@ -7,32 +7,47 @@ codeblocks:
     - import configService from "../../config";
     - const config = configService.get();
 pgmmodels:
-  FKSTOPETA:
+  FKLOCATUPD:
     library: \config.eradaniConnect.native.pgmLib
     mode: ile
     procedures:
       MainProc:
         params:
-          ContainerType:
+          City:
             type: Character
-            length: 10
+            length: 25
+          Country:
+            type: Character
+            length: 2
           FourKitesLoadId:
             type: Packed
             length: 16
+          Latitude:
+            type: Character
+            length: 15
           LoadNumber:
             type: Character
-            length: 20
+            length: 10
+          Location:
+            type: Character
+            length: 30
+          Longtitude:
+            type: Character
+            length: 15
           MessageType:
             type: Character
             length: 20
+          OdometerReading:
+            type: Packed
+            length: 11
+            precision: 2
           ProNumber:
             type: Character
             length: 20
-            default: ""
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 20
+            length: 15
             default: ""
             dim: 10
           Scac:
@@ -41,34 +56,13 @@ pgmmodels:
           Shipper:
             type: Character
             length: 30
-          StopName:
+          State:
             type: Character
-            length: 30
-          StopReferenceId:
-            type: Character
-            length: 15
-          StopSequence:
-            type: Packed
-            length: 7
-          StopStatus:
-            type: Character
-            length: 20
-          StopType:
-            type: Character
-            length: 20
-          StopUnlocode:
-            type: Character
-            length: 10
+            length: 2
           Tags:
             type: Character
-            length: 25
+            length: 15
             default: ""
             dim: 10
           Timestamp:
             type: Timestamp
-          VesselName:
-            type: Character
-            length: 25
-          VoyageNumber:
-            type: Character
-            length: 20

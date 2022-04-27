@@ -6,7 +6,6 @@ import * as validators from './validators';
 
 // You can set login requirements on an API endpoint by putting `requireAuth` after the URL specification
 export default function mountPinc(router: Router) {
-
     router.get(
         '/get-yard',
         validate(validators.getYard),

@@ -21,6 +21,6 @@ export function generateJWT(userData: JWTUserData) {
     };
 
     return jwt.sign(user).then((token: string) => {
-        return { access_token: token  };
+        return { access_token: token };
     });
 }

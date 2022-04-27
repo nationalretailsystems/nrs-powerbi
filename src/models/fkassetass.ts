@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-// Module: fkstopeta
+// Module: fkassetass
 // Generated source -- do not modify
 
 import eradaniConnect from '@eradani-inc/eradani-connect';
@@ -13,13 +13,17 @@ const config = configService.get();
 /**
  * Program model
  */
-export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
+export const FKASSETASSModel = new eradaniConnect.run.Pgm('FKASSETASS', {
     lib: config.eradaniConnect.native.pgmLib,
     mode: 'ile',
     params: [
         {
-            name: 'ContainerType',
-            type: new dataTypes.Char(10)
+            name: 'Carrier',
+            type: new dataTypes.Char(25)
+        },
+        {
+            name: 'DriverNumber',
+            type: new dataTypes.PackedDecimal(11, 0)
         },
         {
             name: 'FourKitesLoadId',
@@ -27,7 +31,7 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
         },
         {
             name: 'LoadNumber',
-            type: new dataTypes.Char(20)
+            type: new dataTypes.Char(10)
         },
         {
             name: 'MessageType',
@@ -35,12 +39,15 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
         },
         {
             name: 'ProNumber',
-            type: new dataTypes.Char(20),
-            defaultValue: ''
+            type: new dataTypes.Char(20)
+        },
+        {
+            name: 'RailEquipment',
+            type: new dataTypes.Char(15)
         },
         {
             name: 'ReferenceNumbers',
-            type: new dataTypes.Char(20),
+            type: new dataTypes.Char(15),
             defaultValue: '',
             dim: 10
         },
@@ -53,32 +60,8 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
             type: new dataTypes.Char(30)
         },
         {
-            name: 'StopName',
-            type: new dataTypes.Char(30)
-        },
-        {
-            name: 'StopReferenceId',
-            type: new dataTypes.Char(15)
-        },
-        {
-            name: 'StopSequence',
-            type: new dataTypes.PackedDecimal(7, 0)
-        },
-        {
-            name: 'StopStatus',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'StopType',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'StopUnlocode',
-            type: new dataTypes.Char(10)
-        },
-        {
             name: 'Tags',
-            type: new dataTypes.Char(25),
+            type: new dataTypes.Char(15),
             defaultValue: '',
             dim: 10
         },
@@ -87,12 +70,12 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
             type: new dataTypes.Timestamp()
         },
         {
-            name: 'VesselName',
-            type: new dataTypes.Char(25)
+            name: 'Trailer',
+            type: new dataTypes.Char(15)
         },
         {
-            name: 'VoyageNumber',
-            type: new dataTypes.Char(20)
+            name: 'TrucK',
+            type: new dataTypes.Char(15)
         }
     ]
 });
@@ -100,18 +83,23 @@ export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
 /**
  * Input interface
  */
-export interface FKSTOPETAInput {
+export interface FKASSETASSInput {
     /**
-     * @size 10 characters
+     * @size 25 characters
      */
-    ContainerType: string;
+    Carrier: string;
+    /**
+     * @size 11 digits
+     * @precision 0 decimals
+     */
+    DriverNumber: number | string;
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
     FourKitesLoadId: number | string;
     /**
-     * @size 20 characters
+     * @size 10 characters
      */
     LoadNumber: string;
     /**
@@ -120,11 +108,14 @@ export interface FKSTOPETAInput {
     MessageType: string;
     /**
      * @size 20 characters
-     * @default ``
      */
-    ProNumber?: string;
+    ProNumber: string;
     /**
-     * @size 20 characters
+     * @size 15 characters
+     */
+    RailEquipment: string;
+    /**
+     * @size 15 characters
      * @default ``
      */
     ReferenceNumbers?: Array<string>;
@@ -137,32 +128,7 @@ export interface FKSTOPETAInput {
      */
     Shipper: string;
     /**
-     * @size 30 characters
-     */
-    StopName: string;
-    /**
      * @size 15 characters
-     */
-    StopReferenceId: string;
-    /**
-     * @size 7 digits
-     * @precision 0 decimals
-     */
-    StopSequence: number | string;
-    /**
-     * @size 20 characters
-     */
-    StopStatus: string;
-    /**
-     * @size 20 characters
-     */
-    StopType: string;
-    /**
-     * @size 10 characters
-     */
-    StopUnlocode: string;
-    /**
-     * @size 25 characters
      * @default ``
      */
     Tags?: Array<string>;
@@ -170,30 +136,35 @@ export interface FKSTOPETAInput {
      */
     Timestamp: Date | string;
     /**
-     * @size 25 characters
+     * @size 15 characters
      */
-    VesselName: string;
+    Trailer: string;
     /**
-     * @size 20 characters
+     * @size 15 characters
      */
-    VoyageNumber: string;
+    TrucK: string;
 }
 
 /**
  * Output interface
  */
-export interface FKSTOPETAOutput {
+export interface FKASSETASSOutput {
     /**
-     * @size 10 characters
+     * @size 25 characters
      */
-    ContainerType: string;
+    Carrier: string;
+    /**
+     * @size 11 digits
+     * @precision 0 decimals
+     */
+    DriverNumber: number;
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
     FourKitesLoadId: number;
     /**
-     * @size 20 characters
+     * @size 10 characters
      */
     LoadNumber: string;
     /**
@@ -202,11 +173,14 @@ export interface FKSTOPETAOutput {
     MessageType: string;
     /**
      * @size 20 characters
-     * @default ``
      */
     ProNumber: string;
     /**
-     * @size 20 characters
+     * @size 15 characters
+     */
+    RailEquipment: string;
+    /**
+     * @size 15 characters
      * @default ``
      */
     ReferenceNumbers: Array<string>;
@@ -219,32 +193,7 @@ export interface FKSTOPETAOutput {
      */
     Shipper: string;
     /**
-     * @size 30 characters
-     */
-    StopName: string;
-    /**
      * @size 15 characters
-     */
-    StopReferenceId: string;
-    /**
-     * @size 7 digits
-     * @precision 0 decimals
-     */
-    StopSequence: number;
-    /**
-     * @size 20 characters
-     */
-    StopStatus: string;
-    /**
-     * @size 20 characters
-     */
-    StopType: string;
-    /**
-     * @size 10 characters
-     */
-    StopUnlocode: string;
-    /**
-     * @size 25 characters
      * @default ``
      */
     Tags: Array<string>;
@@ -252,13 +201,13 @@ export interface FKSTOPETAOutput {
      */
     Timestamp: Date;
     /**
-     * @size 25 characters
+     * @size 15 characters
      */
-    VesselName: string;
+    Trailer: string;
     /**
-     * @size 20 characters
+     * @size 15 characters
      */
-    VoyageNumber: string;
+    TrucK: string;
 }
 
 /* eslint-enable */

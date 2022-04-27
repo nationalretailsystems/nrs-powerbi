@@ -24,4 +24,34 @@ export default function mountFourKites(router: Router) {
         validate(validators.oceanUpdate),
         respond((req: any) => fourKitesController.oceanUpdate(req.body))
     );
+    router.post(
+        '/tracking-update',
+        validate(validators.trackingUpdate),
+        respond((req: any) => fourKitesController.trackingUpdate(req.body))
+    );
+    router.post(
+        '/load-deletion',
+        validate(validators.loadDeletion),
+        respond((req: any) => fourKitesController.loadDeletion(req.body))
+    );
+    router.post(
+        '/location-update',
+        validate(validators.locationUpdate),
+        respond((req: any) => fourKitesController.locationUpdate(req.body))
+    );
+    router.post(
+        '/asset-assignment',
+        validate(validators.assetAssignment),
+        respond((req: any) => fourKitesController.assetAssignment(req.body))
+    );
+    router.post(
+        '/stop-arrival',
+        validate(validators.stopArrival),
+        respond((req: any) => fourKitesController.stopArrival(req.body))
+    );
+    router.post(
+        '/stop-departure',
+        validate(validators.stopDeparture),
+        respond((req: any) => fourKitesController.stopDeparture(req.body))
+    );
 }

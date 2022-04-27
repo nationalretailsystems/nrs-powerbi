@@ -2,6 +2,9 @@ import { body } from 'express-validator';
 import { InputCheckChain } from 'src/types';
 
 export const loadCreation: InputCheckChain[] = [
+    body('LoadConsignmentEncryptedAccessTokenNumber').exists().isString().isLength({max: 125}),
+    body('EncryptedAccessToken').exists().isString().isLength({max: 125}),
+    body('EncryptedUrl').exists().isString().isLength({max: 150}),
     body('Errors').exists().isArray({max: 10}),
     body('Errors.*').isString().isLength({max: 50}),
     body('FourKitesLoadId').exists().isInt().isLength({max: 16}),
@@ -39,6 +42,7 @@ export const stopEtaUpdate: InputCheckChain[] = [
     body('VoyageNumber').exists().isString().isLength({max: 20})
 ];
 export const oceanUpdate: InputCheckChain[] = [
+    body('ContainerType').exists().isString().isLength({max: 5}),
     body('FourKitesLoadId').exists().isInt().isLength({max: 16}),
     body('LoadNumber').exists().isString().isLength({max: 20}),
     body('Message').exists().isString().isLength({max: 100}),
@@ -52,7 +56,8 @@ export const oceanUpdate: InputCheckChain[] = [
     body('StatusCode').exists().isString().isLength({max: 5}),
     body('Tags').exists().isArray({max: 10}),
     body('Tags.*').isString().isLength({max: 25}),
-    body('Timestamp').exists().isISO8601()
+    body('Timestamp').exists().isISO8601(),
+    body('VoyageNumber').isString().isLength({max: 20})
 ];
 export const trackingUpdate: InputCheckChain[] = [
 ];

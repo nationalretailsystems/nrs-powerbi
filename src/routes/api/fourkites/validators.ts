@@ -38,8 +38,8 @@ export const stopEtaUpdate: InputCheckChain[] = [
     body('Tags').exists().isArray({max: 10}), 
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
-    body('VesselName').exists().isString().isLength({max: 30}),
-    body('VoyageNumber').exists().isString().isLength({max: 20})
+    body('VesselName').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 30}),
+    body('VoyageNumber').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 20})
 ];
 export const oceanUpdate: InputCheckChain[] = [
     body('ContainerType').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 5}),

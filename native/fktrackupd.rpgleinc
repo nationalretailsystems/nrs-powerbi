@@ -1,5 +1,5 @@
       ************************************
-      * Module: fkstopeta
+      * Module: fktrackupd
       * Generated RPG data structures
       * and prototypes
       * Do not modify
@@ -8,22 +8,16 @@
       ************************************
       * Program prototype
       ************************************
-     DFKSTOPETA        PR
-     DContainerType                  10A
+     DFKTRACKUPD       PR
      DFourKitesLoadId                16P 0
-     DLoadNumber                     20A
+     DLoadNumber                     10A
+     DMessage                        80A
      DMessageType                    20A
      DProNumber                      20A
-     DRefNumbers                     20A   Dim(10)
+     DRefNumbers                     15A   Dim(10)
      DScac                            4A
      DShipper                        30A
+     DStatus                         25A
      DStopName                       30A
-     DStopReferenceId                15A
-     DStopSequence                    7P 0
-     DStopStatus                     20A
-     DStopType                       20A
-     DStopUnlocode                   10A
-     DTags                           25A   Dim(10)
+     DTags                           15A   Dim(10)
      DTimestamp                        Z
-     DVesselName                     25A
-     DVoyageNumber                   20A

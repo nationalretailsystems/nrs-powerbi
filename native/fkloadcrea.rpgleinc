@@ -9,14 +9,17 @@
       * Program prototype
       ************************************
      DFKLOADCREA       PR
-     DErrors                         50A   Dim(10)
+     DConsignmentEncryptedAccessToken               125A
+     DEncryptedAccessToken               125A
+     DEncryptedUrl                  150A
+     DErrors                         50A   Dim(5)
      DFourKitesLoadId                16P 0
      DIsSuccess                        N
-     DLoadNumber                     10A
+     DLoadNumber                     20A
      DMessageType                    20A
      DProNumber                      20A
-     DRefNumbers                     15A   Dim(10)
+     DRefNumbers                     20A   Dim(10)
      DScac                            4A
      DShipper                        30A
-     DTags                           15A   Dim(10)
+     DTags                           25A   Dim(10)
      DTimestamp                        Z

@@ -13,12 +13,15 @@ pgmmodels:
     procedures:
       MainProc:
         params:
+          ContainerType:
+            type: Character
+            length: 5
           FourKitesLoadId:
             type: Packed
             length: 16
           LoadNumber:
             type: Character
-            length: 10
+            length: 20
           Message:
             type: Character
             length: 100
@@ -28,12 +31,13 @@ pgmmodels:
           ProNumber:
             type: Character
             length: 20
+            default: ""
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 15
+            length: 20
             default: ""
-            dim: 10
+            dim: 20
           Scac:
             type: Character
             length: 4
@@ -48,11 +52,14 @@ pgmmodels:
             length: 5
           StopName:
             type: Character
-            length: 15
+            length: 30
           Tags:
             type: Character
-            length: 15
+            length: 25
             default: ""
             dim: 10
           Timestamp:
             type: Timestamp
+          VoyageNumber:
+            type: Character
+            length: 20

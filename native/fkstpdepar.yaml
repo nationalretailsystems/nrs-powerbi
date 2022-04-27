@@ -1,5 +1,5 @@
 ---
-name: fkstopeta
+name: fkstpdepar
 codeblocks:
   typescript:
     - ""
@@ -7,32 +7,30 @@ codeblocks:
     - import configService from "../../config";
     - const config = configService.get();
 pgmmodels:
-  FKSTOPETA:
+  FKSTPDEPAR:
     library: \config.eradaniConnect.native.pgmLib
     mode: ile
     procedures:
       MainProc:
         params:
-          ContainerType:
-            type: Character
-            length: 10
+          AutoDeparture:
+            type: Binary
           FourKitesLoadId:
             type: Packed
             length: 16
           LoadNumber:
             type: Character
-            length: 20
+            length: 10
           MessageType:
             type: Character
             length: 20
           ProNumber:
             type: Character
             length: 20
-            default: ""
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 20
+            length: 15
             default: ""
             dim: 10
           Scac:
@@ -50,25 +48,13 @@ pgmmodels:
           StopSequence:
             type: Packed
             length: 7
-          StopStatus:
-            type: Character
-            length: 20
           StopType:
-            type: Character
-            length: 20
-          StopUnlocode:
             type: Character
             length: 10
           Tags:
             type: Character
-            length: 25
+            length: 15
             default: ""
             dim: 10
           Timestamp:
             type: Timestamp
-          VesselName:
-            type: Character
-            length: 25
-          VoyageNumber:
-            type: Character
-            length: 20

@@ -1,5 +1,5 @@
       ************************************
-      * Module: fkoceanupd
+      * Module: fkloaddele
       * Generated RPG data structures
       * and prototypes
       * Do not modify
@@ -8,19 +8,14 @@
       ************************************
       * Program prototype
       ************************************
-     DFKOCEANUPD       PR
-     DContainerType                   5A
+     DFKLOADDELE       PR
      DFourKitesLoadId                16P 0
-     DLoadNumber                     20A
-     DMessage                       100A
+     DLoadNumber                     10A
      DMessageType                    20A
      DProNumber                      20A
-     DRefNumbers                     20A   Dim(20)
+     DRefNumbers                     15A   Dim(10)
      DScac                            4A
      DShipper                        30A
-     DStatus                         30A
-     DStatusCode                      5A
-     DStopName                       30A
-     DTags                           25A   Dim(10)
+     DStatus                         25A
+     DTags                           15A   Dim(10)
      DTimestamp                        Z
-     DVoyageNumber                   20A

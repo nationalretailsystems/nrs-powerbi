@@ -1,5 +1,5 @@
 ---
-name: fkstopeta
+name: fkassetass
 codeblocks:
   typescript:
     - ""
@@ -7,32 +7,37 @@ codeblocks:
     - import configService from "../../config";
     - const config = configService.get();
 pgmmodels:
-  FKSTOPETA:
+  FKASSETASS:
     library: \config.eradaniConnect.native.pgmLib
     mode: ile
     procedures:
       MainProc:
         params:
-          ContainerType:
+          Carrier:
             type: Character
-            length: 10
+            length: 25
+          DriverNumber:
+            type: Packed
+            length: 11
           FourKitesLoadId:
             type: Packed
             length: 16
           LoadNumber:
             type: Character
-            length: 20
+            length: 10
           MessageType:
             type: Character
             length: 20
           ProNumber:
             type: Character
             length: 20
-            default: ""
+          RailEquipment:
+            type: Character
+            length: 15
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 20
+            length: 15
             default: ""
             dim: 10
           Scac:
@@ -41,34 +46,16 @@ pgmmodels:
           Shipper:
             type: Character
             length: 30
-          StopName:
-            type: Character
-            length: 30
-          StopReferenceId:
-            type: Character
-            length: 15
-          StopSequence:
-            type: Packed
-            length: 7
-          StopStatus:
-            type: Character
-            length: 20
-          StopType:
-            type: Character
-            length: 20
-          StopUnlocode:
-            type: Character
-            length: 10
           Tags:
             type: Character
-            length: 25
+            length: 15
             default: ""
             dim: 10
           Timestamp:
             type: Timestamp
-          VesselName:
+          Trailer:
             type: Character
-            length: 25
-          VoyageNumber:
+            length: 15
+          TrucK:
             type: Character
-            length: 20
+            length: 15

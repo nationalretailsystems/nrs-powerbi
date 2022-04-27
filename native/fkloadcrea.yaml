@@ -13,11 +13,20 @@ pgmmodels:
     procedures:
       MainProc:
         params:
+          ConsignmentEncryptedAccessToken:
+            type: Character
+            length: 125
+          EncryptedAccessToken:
+            type: Character
+            length: 125
+          EncryptedUrl:
+            type: Character
+            length: 150
           Errors:
             type: Character
             length: 50
             default: ""
-            dim: 10
+            dim: 5
           FourKitesLoadId:
             type: Packed
             length: 16
@@ -25,17 +34,18 @@ pgmmodels:
             type: Boolean
           LoadNumber:
             type: Character
-            length: 10
+            length: 20
           MessageType:
             type: Character
             length: 20
           ProNumber:
             type: Character
             length: 20
+            default: ""
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 15
+            length: 20
             default: ""
             dim: 10
           Scac:
@@ -46,7 +56,7 @@ pgmmodels:
             length: 30
           Tags:
             type: Character
-            length: 15
+            length: 25
             default: ""
             dim: 10
           Timestamp:

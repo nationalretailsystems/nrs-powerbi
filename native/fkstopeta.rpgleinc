@@ -14,7 +14,7 @@
      DLoadNumber                     20A
      DMessageType                    20A
      DProNumber                      20A
-     DRefNumbers                     20A   Dim(10)
+     DRefNumbers                     50A   Dim(10)
      DScac                            4A
      DShipper                        30A
      DStopName                       30A
@@ -23,7 +23,7 @@
      DStopStatus                     20A
      DStopType                       20A
      DStopUnlocode                   10A
-     DTags                           25A   Dim(10)
+     DTags                           50A   Dim(10)
      DTimestamp                        Z
-     DVesselName                     25A
+     DVesselName                    360A
      DVoyageNumber                   20A

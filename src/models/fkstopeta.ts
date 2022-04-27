@@ -3,99 +3,100 @@
 // Module: fkstopeta
 // Generated source -- do not modify
 
-import eradaniConnect from '@eradani-inc/eradani-connect';
+import eradaniConnect from "@eradani-inc/eradani-connect";
 const { dataTypes } = eradaniConnect;
 
+
 // Manually entered import
-import configService from '../../config';
+import configService from "../../config";
 const config = configService.get();
 
 /**
  * Program model
  */
-export const FKSTOPETAModel = new eradaniConnect.run.Pgm('FKSTOPETA', {
-    lib: config.eradaniConnect.native.pgmLib,
-    mode: 'ile',
-    params: [
-        {
-            name: 'ContainerType',
-            type: new dataTypes.Char(10)
-        },
-        {
-            name: 'FourKitesLoadId',
-            type: new dataTypes.PackedDecimal(16, 0)
-        },
-        {
-            name: 'LoadNumber',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'MessageType',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'ProNumber',
-            type: new dataTypes.Char(20),
-            defaultValue: ''
-        },
-        {
-            name: 'ReferenceNumbers',
-            type: new dataTypes.Char(20),
-            defaultValue: '',
-            dim: 10
-        },
-        {
-            name: 'Scac',
-            type: new dataTypes.Char(4)
-        },
-        {
-            name: 'Shipper',
-            type: new dataTypes.Char(30)
-        },
-        {
-            name: 'StopName',
-            type: new dataTypes.Char(30)
-        },
-        {
-            name: 'StopReferenceId',
-            type: new dataTypes.Char(15)
-        },
-        {
-            name: 'StopSequence',
-            type: new dataTypes.PackedDecimal(7, 0)
-        },
-        {
-            name: 'StopStatus',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'StopType',
-            type: new dataTypes.Char(20)
-        },
-        {
-            name: 'StopUnlocode',
-            type: new dataTypes.Char(10)
-        },
-        {
-            name: 'Tags',
-            type: new dataTypes.Char(25),
-            defaultValue: '',
-            dim: 10
-        },
-        {
-            name: 'Timestamp',
-            type: new dataTypes.Timestamp()
-        },
-        {
-            name: 'VesselName',
-            type: new dataTypes.Char(25)
-        },
-        {
-            name: 'VoyageNumber',
-            type: new dataTypes.Char(20)
-        }
-    ]
-});
+export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
+      lib: config.eradaniConnect.native.pgmLib,
+      mode: "ile",
+      params: [
+      {
+      name: "ContainerType",
+      type: new dataTypes.Char(10)
+    },
+      {
+      name: "FourKitesLoadId",
+      type: new dataTypes.PackedDecimal(16, 0)
+    },
+      {
+      name: "LoadNumber",
+      type: new dataTypes.Char(20)
+    },
+      {
+      name: "MessageType",
+      type: new dataTypes.Char(20)
+    },
+      {
+      name: "ProNumber",
+      type: new dataTypes.Char(20),
+      defaultValue: ""
+    },
+      {
+      name: "ReferenceNumbers",
+      type: new dataTypes.Char(50),
+      defaultValue: "",
+      dim: 10
+    },
+      {
+      name: "Scac",
+      type: new dataTypes.Char(4)
+    },
+      {
+      name: "Shipper",
+      type: new dataTypes.Char(30)
+    },
+      {
+      name: "StopName",
+      type: new dataTypes.Char(30)
+    },
+      {
+      name: "StopReferenceId",
+      type: new dataTypes.Char(15)
+    },
+      {
+      name: "StopSequence",
+      type: new dataTypes.PackedDecimal(7, 0)
+    },
+      {
+      name: "StopStatus",
+      type: new dataTypes.Char(20)
+    },
+      {
+      name: "StopType",
+      type: new dataTypes.Char(20)
+    },
+      {
+      name: "StopUnlocode",
+      type: new dataTypes.Char(10)
+    },
+      {
+      name: "Tags",
+      type: new dataTypes.Char(50),
+      defaultValue: "",
+      dim: 10
+    },
+      {
+      name: "Timestamp",
+      type: new dataTypes.Timestamp()
+    },
+      {
+      name: "VesselName",
+      type: new dataTypes.Char(360)
+    },
+      {
+      name: "VoyageNumber",
+      type: new dataTypes.Char(20)
+    }
+  ]
+    });
 
 /**
  * Input interface
@@ -104,79 +105,79 @@ export interface FKSTOPETAInput {
     /**
      * @size 10 characters
      */
-    ContainerType: string;
+    ContainerType: string,
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
-    FourKitesLoadId: number | string;
+    FourKitesLoadId: number | string,
     /**
      * @size 20 characters
      */
-    LoadNumber: string;
+    LoadNumber: string,
     /**
      * @size 20 characters
      */
-    MessageType: string;
-    /**
-     * @size 20 characters
-     * @default ``
-     */
-    ProNumber?: string;
+    MessageType: string,
     /**
      * @size 20 characters
      * @default ``
      */
-    ReferenceNumbers?: Array<string>;
+    ProNumber?: string,
+    /**
+     * @size 50 characters
+     * @default ``
+     */
+    ReferenceNumbers?: Array<string>,
     /**
      * @size 4 characters
      */
-    Scac: string;
+    Scac: string,
     /**
      * @size 30 characters
      */
-    Shipper: string;
+    Shipper: string,
     /**
      * @size 30 characters
      */
-    StopName: string;
+    StopName: string,
     /**
      * @size 15 characters
      */
-    StopReferenceId: string;
+    StopReferenceId: string,
     /**
      * @size 7 digits
      * @precision 0 decimals
      */
-    StopSequence: number | string;
+    StopSequence: number | string,
     /**
      * @size 20 characters
      */
-    StopStatus: string;
+    StopStatus: string,
     /**
      * @size 20 characters
      */
-    StopType: string;
+    StopType: string,
     /**
      * @size 10 characters
      */
-    StopUnlocode: string;
+    StopUnlocode: string,
     /**
-     * @size 25 characters
+     * @size 50 characters
      * @default ``
      */
-    Tags?: Array<string>;
+    Tags?: Array<string>,
     /**
      */
-    Timestamp: Date | string;
+    Timestamp: Date | string,
     /**
-     * @size 25 characters
+     * @size 360 characters
      */
-    VesselName: string;
+    VesselName: string,
     /**
      * @size 20 characters
      */
-    VoyageNumber: string;
+    VoyageNumber: string
 }
 
 /**
@@ -186,79 +187,79 @@ export interface FKSTOPETAOutput {
     /**
      * @size 10 characters
      */
-    ContainerType: string;
+    ContainerType: string,
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
-    FourKitesLoadId: number;
+    FourKitesLoadId: number,
     /**
      * @size 20 characters
      */
-    LoadNumber: string;
+    LoadNumber: string,
     /**
      * @size 20 characters
      */
-    MessageType: string;
-    /**
-     * @size 20 characters
-     * @default ``
-     */
-    ProNumber: string;
+    MessageType: string,
     /**
      * @size 20 characters
      * @default ``
      */
-    ReferenceNumbers: Array<string>;
+    ProNumber: string,
+    /**
+     * @size 50 characters
+     * @default ``
+     */
+    ReferenceNumbers: Array<string>,
     /**
      * @size 4 characters
      */
-    Scac: string;
+    Scac: string,
     /**
      * @size 30 characters
      */
-    Shipper: string;
+    Shipper: string,
     /**
      * @size 30 characters
      */
-    StopName: string;
+    StopName: string,
     /**
      * @size 15 characters
      */
-    StopReferenceId: string;
+    StopReferenceId: string,
     /**
      * @size 7 digits
      * @precision 0 decimals
      */
-    StopSequence: number;
+    StopSequence: number,
     /**
      * @size 20 characters
      */
-    StopStatus: string;
+    StopStatus: string,
     /**
      * @size 20 characters
      */
-    StopType: string;
+    StopType: string,
     /**
      * @size 10 characters
      */
-    StopUnlocode: string;
+    StopUnlocode: string,
     /**
-     * @size 25 characters
+     * @size 50 characters
      * @default ``
      */
-    Tags: Array<string>;
+    Tags: Array<string>,
     /**
      */
-    Timestamp: Date;
+    Timestamp: Date,
     /**
-     * @size 25 characters
+     * @size 360 characters
      */
-    VesselName: string;
+    VesselName: string,
     /**
      * @size 20 characters
      */
-    VoyageNumber: string;
+    VoyageNumber: string
 }
 
 /* eslint-enable */

@@ -32,7 +32,7 @@ pgmmodels:
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 20
+            length: 50
             default: ""
             dim: 10
           Scac:
@@ -61,14 +61,14 @@ pgmmodels:
             length: 10
           Tags:
             type: Character
-            length: 25
+            length: 50
             default: ""
             dim: 10
           Timestamp:
             type: Timestamp
           VesselName:
             type: Character
-            length: 25
+            length: 360
           VoyageNumber:
             type: Character
             length: 20

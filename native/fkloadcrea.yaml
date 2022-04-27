@@ -45,7 +45,7 @@ pgmmodels:
           ReferenceNumbers:
             rpgName: RefNumbers
             type: Character
-            length: 20
+            length: 50
             default: ""
             dim: 10
           Scac:
@@ -56,7 +56,7 @@ pgmmodels:
             length: 30
           Tags:
             type: Character
-            length: 25
+            length: 50
             default: ""
             dim: 10
           Timestamp:

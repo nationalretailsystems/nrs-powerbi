@@ -59,7 +59,7 @@ export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
     },
       {
       name: "ReferenceNumbers",
-      type: new dataTypes.Char(20),
+      type: new dataTypes.Char(50),
       defaultValue: "",
       dim: 10
     },
@@ -73,7 +73,7 @@ export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
     },
       {
       name: "Tags",
-      type: new dataTypes.Char(25),
+      type: new dataTypes.Char(50),
       defaultValue: "",
       dim: 10
     },
@@ -127,7 +127,7 @@ export interface FKLOADCREAInput {
      */
     ProNumber?: string,
     /**
-     * @size 20 characters
+     * @size 50 characters
      * @default ``
      */
     ReferenceNumbers?: Array<string>,
@@ -140,7 +140,7 @@ export interface FKLOADCREAInput {
      */
     Shipper: string,
     /**
-     * @size 25 characters
+     * @size 50 characters
      * @default ``
      */
     Tags?: Array<string>,
@@ -192,7 +192,7 @@ export interface FKLOADCREAOutput {
      */
     ProNumber: string,
     /**
-     * @size 20 characters
+     * @size 50 characters
      * @default ``
      */
     ReferenceNumbers: Array<string>,
@@ -205,7 +205,7 @@ export interface FKLOADCREAOutput {
      */
     Shipper: string,
     /**
-     * @size 25 characters
+     * @size 50 characters
      * @default ``
      */
     Tags: Array<string>,

@@ -4,6 +4,7 @@ import SQLTemplate2, { SQLTemplateInput2, SQLTemplateOutput2 } from 'src/models/
 import SQLTemplate3, { SQLTemplateInput3, SQLTemplateOutput3 } from 'src/models/powerbi-template3';
 import SQLTemplate4, { SQLTemplateInput4, SQLTemplateOutput4 } from 'src/models/powerbi-template4';
 import SQLTemplate5, { SQLTemplateInput5, SQLTemplateOutput5 } from 'src/models/powerbi-template5';
+import SQLTemplate6, { SQLTemplateInput6, SQLTemplateOutput6 } from 'src/models/powerbi-template6';
 import { JSONObject } from 'src/types';
 import transport, { transport2 } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -68,4 +69,14 @@ export async function getWMS378(inputs: JSONObject): Promise<SQLTemplateOutput5>
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
     return transport.execute(SQLTemplate5, params) as Promise<SQLTemplateOutput5>;
+}
+export async function getSales(inputs: JSONObject): Promise<SQLTemplateOutput6> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInput6 = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        // X toDate: inputs.toDate,
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return transport.execute(SQLTemplate6, params) as Promise<SQLTemplateOutput6>;
 }

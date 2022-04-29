@@ -70,7 +70,8 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "StopReferenceId",
-      type: new dataTypes.Char(15)
+      type: new dataTypes.Char(15),
+      defaultValue: ""
     },
       {
       name: "StopSequence",
@@ -168,8 +169,9 @@ export interface FKSTOPETAInput {
     StopName: string,
     /**
      * @size 15 characters
+     * @default ``
      */
-    StopReferenceId: string,
+    StopReferenceId?: string,
     /**
      * @size 7 digits
      * @precision 0 decimals
@@ -264,6 +266,7 @@ export interface FKSTOPETAOutput {
     StopName: string,
     /**
      * @size 15 characters
+     * @default ``
      */
     StopReferenceId: string,
     /**

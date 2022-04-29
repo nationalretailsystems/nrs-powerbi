@@ -68,6 +68,7 @@ pgmmodels:
           StopUnlocode:
             type: Character
             length: 10
+            default: ""
           Tags:
             type: Character
             length: 50
@@ -78,6 +79,8 @@ pgmmodels:
           VesselName:
             type: Character
             length: 30
+            default: ""
           VoyageNumber:
             type: Character
             length: 20
+            default: ""

@@ -86,7 +86,8 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "StopUnlocode",
-      type: new dataTypes.Char(10)
+      type: new dataTypes.Char(10),
+      defaultValue: ""
     },
       {
       name: "Tags",
@@ -100,11 +101,13 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "VesselName",
-      type: new dataTypes.Char(30)
+      type: new dataTypes.Char(30),
+      defaultValue: ""
     },
       {
       name: "VoyageNumber",
-      type: new dataTypes.Char(20)
+      type: new dataTypes.Char(20),
+      defaultValue: ""
     }
   ]
     });
@@ -182,8 +185,9 @@ export interface FKSTOPETAInput {
     StopType: string,
     /**
      * @size 10 characters
+     * @default ``
      */
-    StopUnlocode: string,
+    StopUnlocode?: string,
     /**
      * @size 50 characters
      * @default ``
@@ -194,12 +198,14 @@ export interface FKSTOPETAInput {
     Timestamp: Date | string,
     /**
      * @size 30 characters
+     * @default ``
      */
-    VesselName: string,
+    VesselName?: string,
     /**
      * @size 20 characters
+     * @default ``
      */
-    VoyageNumber: string
+    VoyageNumber?: string
 }
 
 /**
@@ -275,6 +281,7 @@ export interface FKSTOPETAOutput {
     StopType: string,
     /**
      * @size 10 characters
+     * @default ``
      */
     StopUnlocode: string,
     /**
@@ -287,10 +294,12 @@ export interface FKSTOPETAOutput {
     Timestamp: Date,
     /**
      * @size 30 characters
+     * @default ``
      */
     VesselName: string,
     /**
      * @size 20 characters
+     * @default ``
      */
     VoyageNumber: string
 }

@@ -11,7 +11,7 @@ export const loadCreation: InputCheckChain[] = [
     body('IsSuccess').exists().isBoolean(),
     body('LoadNumber').exists().isString().isLength({max: 40}),
     body('MessageType').exists().isString().isLength({max: 20}),
-    body('ProNumber').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 20}),
+    body('ProNumber').optional({nullable:true, checkFalsy: true}).isString().isLength({max: 20}),
     body('ReferenceNumbers').exists().isArray({max: 10}),
     body('ReferenceNumbers.*').isString().isLength({max: 50}),
     body('Scac').exists().isString().isLength({max: 4}),
@@ -27,21 +27,21 @@ export const stopEtaUpdate: InputCheckChain[] = [
     body('FourKitesLoadId').exists().isInt().isLength({max: 16}),
     body('LoadNumber').exists().isString().isLength({max: 40}),
     body('MessageType').exists().isString().isLength({max: 20}),
-    body('ProNumber').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 20}),
+    body('ProNumber').optional({nullable:true, checkFalsy: true}).isString().isLength({max: 20}),
     body('ReferenceNumbers').exists().isArray({max: 10}), 
     body('ReferenceNumbers.*').isString().isLength({max: 50}),
     body('Scac').exists().isString().isLength({max: 4}),
     body('Shipper').exists().isString().isLength({max: 30}),
     body('StopName').exists().isString().isLength({max: 30}),
-    body('StopReferenceId').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 15}),
+    body('StopReferenceId').optional().isString().isLength({max: 15}),
     body('StopSequence').exists().isInt().isLength({max: 7}),
     body('StopType').exists().isString().isLength({max: 20}),
-    body('StopUnlocode').exists().isString().isLength({max: 10}),
+    body('StopUnlocode').optional().isString().isLength({max: 10}),
     body('Tags').exists().isArray({max: 10}), 
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
-    body('VesselName').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 30}),
-    body('VoyageNumber').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 20})
+    body('VesselName').optional().isString().isLength({max: 30}),
+    body('VoyageNumber').optional().isString().isLength({max: 20})
 ];
 export const oceanUpdate: InputCheckChain[] = [
     body('ContainerType').optional().isString().isLength({max: 5}),
@@ -49,7 +49,7 @@ export const oceanUpdate: InputCheckChain[] = [
     body('LoadNumber').exists().isString().isLength({max: 40}),
     body('Message').exists().isString().isLength({max: 100}),
     body('MessageType').exists().isString().isLength({max: 20}),
-    body('ProNumber').optional({nullable:true, checkFalsy: true}).exists().isString().isLength({max: 20}),
+    body('ProNumber').optional({nullable:true, checkFalsy: true}).isString().isLength({max: 20}),
     body('ReferenceNumbers').exists().isArray({max: 10}),
     body('ReferenceNumbers.*').isString().isLength({max: 50}),
     body('Scac').exists().isString().isLength({max: 4}),
@@ -59,7 +59,7 @@ export const oceanUpdate: InputCheckChain[] = [
     body('Tags').exists().isArray({max: 10}),
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
-    body('VoyageNumber').isString().isLength({max: 20})
+    body('VoyageNumber').optional().isString().isLength({max: 20})
 ];
 export const trackingUpdate: InputCheckChain[] = [
 ];

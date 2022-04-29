@@ -64,3 +64,4 @@ pgmmodels:
           VoyageNumber:
             type: Character
             length: 20
+            default: ""

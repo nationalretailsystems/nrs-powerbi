@@ -16,12 +16,13 @@ pgmmodels:
           ContainerType:
             type: Character
             length: 5
+            default: ""
           FourKitesLoadId:
             type: Packed
             length: 16
           LoadNumber:
             type: Character
-            length: 20
+            length: 40
           Message:
             type: Character
             length: 100

@@ -16,7 +16,7 @@
      DFourKitesLoadId                16P 0
      DIsSuccess                        N
      DLoadNumber                     20A
-     DMessageType                    20A
+     DMessageType                    40A
      DProNumber                      20A
      DRefNumbers                     50A   Dim(10)
      DScac                            4A

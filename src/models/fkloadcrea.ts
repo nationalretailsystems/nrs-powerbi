@@ -50,7 +50,7 @@ export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
     },
       {
       name: "MessageType",
-      type: new dataTypes.Char(20)
+      type: new dataTypes.Char(40)
     },
       {
       name: "ProNumber",
@@ -118,7 +118,7 @@ export interface FKLOADCREAInput {
      */
     LoadNumber: string,
     /**
-     * @size 20 characters
+     * @size 40 characters
      */
     MessageType: string,
     /**
@@ -183,7 +183,7 @@ export interface FKLOADCREAOutput {
      */
     LoadNumber: string,
     /**
-     * @size 20 characters
+     * @size 40 characters
      */
     MessageType: string,
     /**

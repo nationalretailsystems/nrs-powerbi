@@ -9,9 +9,11 @@
       * Program prototype
       ************************************
      DFKSTOPETA        PR
+     DBillOfLading                   20A
+     DBookingNumber                  20A
      DContainerType                  10A
      DFourKitesLoadId                16P 0
-     DLoadNumber                     20A
+     DLoadNumber                     40A
      DMessageType                    20A
      DProNumber                      20A
      DRefNumbers                     50A   Dim(10)

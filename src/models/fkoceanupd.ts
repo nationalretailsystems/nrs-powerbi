@@ -20,7 +20,8 @@ export const FKOCEANUPDModel =   new eradaniConnect.run.Pgm("FKOCEANUPD",   {
       params: [
       {
       name: "ContainerType",
-      type: new dataTypes.Char(5)
+      type: new dataTypes.Char(5),
+      defaultValue: ""
     },
       {
       name: "FourKitesLoadId",
@@ -28,7 +29,7 @@ export const FKOCEANUPDModel =   new eradaniConnect.run.Pgm("FKOCEANUPD",   {
     },
       {
       name: "LoadNumber",
-      type: new dataTypes.Char(20)
+      type: new dataTypes.Char(40)
     },
       {
       name: "Message",
@@ -92,15 +93,16 @@ export const FKOCEANUPDModel =   new eradaniConnect.run.Pgm("FKOCEANUPD",   {
 export interface FKOCEANUPDInput {
     /**
      * @size 5 characters
+     * @default ``
      */
-    ContainerType: string,
+    ContainerType?: string,
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
     FourKitesLoadId: number | string,
     /**
-     * @size 20 characters
+     * @size 40 characters
      */
     LoadNumber: string,
     /**
@@ -161,6 +163,7 @@ export interface FKOCEANUPDInput {
 export interface FKOCEANUPDOutput {
     /**
      * @size 5 characters
+     * @default ``
      */
     ContainerType: string,
     /**
@@ -169,7 +172,7 @@ export interface FKOCEANUPDOutput {
      */
     FourKitesLoadId: number,
     /**
-     * @size 20 characters
+     * @size 40 characters
      */
     LoadNumber: string,
     /**

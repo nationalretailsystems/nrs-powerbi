@@ -13,15 +13,24 @@ pgmmodels:
     procedures:
       MainProc:
         params:
+          BillOfLading:
+            type: Character
+            length: 20
+            default: ""
+          BookingNumber:
+              type: Character
+              length: 20
+              default: ""
           ContainerType:
             type: Character
             length: 10
+            default: ""
           FourKitesLoadId:
             type: Packed
             length: 16
           LoadNumber:
             type: Character
-            length: 20
+            length: 40
           MessageType:
             type: Character
             length: 20

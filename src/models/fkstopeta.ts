@@ -19,8 +19,19 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
       mode: "ile",
       params: [
       {
+      name: "BillOfLading",
+      type: new dataTypes.Char(20),
+      defaultValue: ""
+    },
+      {
+      name: "BookingNumber",
+      type: new dataTypes.Char(20),
+      defaultValue: ""
+    },
+      {
       name: "ContainerType",
-      type: new dataTypes.Char(10)
+      type: new dataTypes.Char(10),
+      defaultValue: ""
     },
       {
       name: "FourKitesLoadId",
@@ -28,7 +39,7 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "LoadNumber",
-      type: new dataTypes.Char(20)
+      type: new dataTypes.Char(40)
     },
       {
       name: "MessageType",
@@ -103,16 +114,27 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
  */
 export interface FKSTOPETAInput {
     /**
-     * @size 10 characters
+     * @size 20 characters
+     * @default ``
      */
-    ContainerType: string,
+    BillOfLading?: string,
+    /**
+     * @size 20 characters
+     * @default ``
+     */
+    BookingNumber?: string,
+    /**
+     * @size 10 characters
+     * @default ``
+     */
+    ContainerType?: string,
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
     FourKitesLoadId: number | string,
     /**
-     * @size 20 characters
+     * @size 40 characters
      */
     LoadNumber: string,
     /**
@@ -185,7 +207,18 @@ export interface FKSTOPETAInput {
  */
 export interface FKSTOPETAOutput {
     /**
+     * @size 20 characters
+     * @default ``
+     */
+    BillOfLading: string,
+    /**
+     * @size 20 characters
+     * @default ``
+     */
+    BookingNumber: string,
+    /**
      * @size 10 characters
+     * @default ``
      */
     ContainerType: string,
     /**
@@ -194,7 +227,7 @@ export interface FKSTOPETAOutput {
      */
     FourKitesLoadId: number,
     /**
-     * @size 20 characters
+     * @size 40 characters
      */
     LoadNumber: string,
     /**

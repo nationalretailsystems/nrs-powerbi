@@ -37,7 +37,7 @@ pgmmodels:
             length: 20
           MessageType:
             type: Character
-            length: 20
+            length: 40
           ProNumber:
             type: Character
             length: 20

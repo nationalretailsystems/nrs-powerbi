@@ -11,7 +11,7 @@
      DFKOCEANUPD       PR
      DContainerType                   5A
      DFourKitesLoadId                16P 0
-     DLoadNumber                     20A
+     DLoadNumber                     40A
      DMessage                       100A
      DMessageType                    20A
      DProNumber                      20A

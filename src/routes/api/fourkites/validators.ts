@@ -33,7 +33,7 @@ export const stopEtaUpdate: InputCheckChain[] = [
     body('Scac').exists().isString().isLength({max: 4}),
     body('Shipper').exists().isString().isLength({max: 30}),
     body('StopName').exists().isString().isLength({max: 30}),
-    body('StopReferenceId').optional().isString().isLength({max: 15}),
+    body('StopReferenceId').optional({nullable:true, checkFalsy: true}).isString().isLength({max: 15}),
     body('StopSequence').exists().isInt().isLength({max: 7}),
     body('StopType').exists().isString().isLength({max: 20}),
     body('StopUnlocode').optional().isString().isLength({max: 10}),

@@ -4,7 +4,7 @@
     "description": "Eradani Connect InOut Template Application",
     "main": "dist/src/app.js",
     "scripts": {
-        "setup": "npm run install-shx && npm run link-keys && npm run reset-git && npm run create-user && npm run create-objects && npm run install-deps && npm install && npm run build-connectors && npm run generate-config && npm run build-native && npm run package:release && npm run update-eol && npm run set-permissions",
+        "setup": "npm run install-shx && npm run link-keys && npm run create-user && npm run create-objects && npm run install-deps && npm install && npm run build-connectors && npm run generate-config && npm run build-native && npm run package:release && npm run update-eol && npm run set-permissions",
         "generate": "cd native && ec-generate -f",
         "build-native": "(shx echo $OSTYPE | shx grep os400 && make -C native) || npm run build-interfaces || shx echo \"IBM i Asset Build Failed\"",
         "build-interfaces": "make -C native library -i && make -C native generatedtssrc -i",
@@ -24,7 +24,6 @@
         "install-shx": "npm install -g shx cross-var && npx shx ln -s /QOpenSys/pkgs/lib/nodejs14/bin/shx /QOpenSys/pkgs/bin/shx && npx shx ln -s /QOpenSys/pkgs/lib/nodejs14/bin/cross-var /QOpenSys/pkgs/bin/cross-var || echo \"Failed to install shx and cross-var\"",
         "install-npm": "cd dist && shx rm -rf node_modules && shx ln -s ../node_modules node_modules && cd ..",
         "install-deps": "((shx echo $OSTYPE | shx grep os400 && yum group install \"Development Tools\" -y && yum install git make-gnu unzip nodejs14 unixODBC unixODBC-devel -y) || shx echo \"Installing without Yum\") && (shx which pm2 || npm install -g pm2 && shx ln -s /QOpenSys/pkgs/lib/nodejs14/bin/pm2 /QOpenSys/pkgs/bin/pm2 || shx echo \"PM2 already set up\")",
-        "reset-git": "((shx rm -rf .git && git init && git add . && cross-var git commit -am \"chore(Setup): Clone Eradani TypeScript Template App v$npm_package_version\") || shx echo \"No remote git repo connected\") && printf \"\u001b[1;32m===== Disconnected from template GitHub Repo. You should connect to your own with [git remote add origin <url>] =====\u001b[0m\"",
         "link-keys": "(shx ln -s /QOpenSys/opt/eradani/.npmrc .npmrc) || shx echo \"Product Key Link Failed. Consult terminal output for details.\"",
         "build:dev": "npx ttsc --p ./tsconfig.json",
         "build:watch": "npx ttsc --p ./tsconfig.json --w",

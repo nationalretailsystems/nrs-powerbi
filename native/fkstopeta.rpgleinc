@@ -28,4 +28,4 @@
      DTags                           50A   Dim(10)
      DTimestamp                        Z
      DVesselName                     30A
-     DVoyageNumber                   20A
+     DVoyageNumber                   25A

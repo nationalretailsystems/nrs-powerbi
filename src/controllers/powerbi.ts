@@ -5,6 +5,8 @@ import SQLTemplate3, { SQLTemplateInput3, SQLTemplateOutput3 } from 'src/models/
 import SQLTemplate4, { SQLTemplateInput4, SQLTemplateOutput4 } from 'src/models/powerbi-template4';
 import SQLTemplate5, { SQLTemplateInput5, SQLTemplateOutput5 } from 'src/models/powerbi-template5';
 import SQLTemplate6, { SQLTemplateInput6, SQLTemplateOutput6 } from 'src/models/powerbi-template6';
+import SQLTemplateBLHD2AR, { SQLTemplateInputBLHD2AR, SQLTemplateOutputBLHD2AR } from 'src/models/powerbi-blhd2ar';
+import SQLTemplateBLHD2ARKY, { SQLTemplateInputBLHD2ARKY, SQLTemplateOutputBLHD2ARKY } from 'src/models/powerbi-blhd2arky';
 import { JSONObject } from 'src/types';
 import transport, { transport2 } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -79,4 +81,20 @@ export async function getSales(inputs: JSONObject): Promise<SQLTemplateOutput6> 
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
     return transport.execute(SQLTemplate6, params) as Promise<SQLTemplateOutput6>;
+}
+export async function getBlhd2Ar(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2AR> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputBLHD2AR = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+    };
+    return transport.execute(SQLTemplateBLHD2AR, params) as Promise<SQLTemplateOutputBLHD2AR>;
+}
+export async function getBlhd2ArKy(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2ARKY> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputBLHD2ARKY = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+    };
+    return transport.execute(SQLTemplateBLHD2ARKY, params) as Promise<SQLTemplateOutputBLHD2ARKY>;
 }

@@ -47,6 +47,7 @@ pgmmodels:
           Scac:
             type: Character
             length: 4
+            default: ""
           Shipper:
             type: Character
             length: 30
@@ -83,5 +84,5 @@ pgmmodels:
             default: ""
           VoyageNumber:
             type: Character
-            length: 20
+            length: 25
             default: ""

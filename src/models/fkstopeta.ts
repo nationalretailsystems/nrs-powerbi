@@ -58,7 +58,8 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "Scac",
-      type: new dataTypes.Char(4)
+      type: new dataTypes.Char(4),
+      defaultValue: ""
     },
       {
       name: "Shipper",
@@ -107,7 +108,7 @@ export const FKSTOPETAModel =   new eradaniConnect.run.Pgm("FKSTOPETA",   {
     },
       {
       name: "VoyageNumber",
-      type: new dataTypes.Char(20),
+      type: new dataTypes.Char(25),
       defaultValue: ""
     }
   ]
@@ -157,8 +158,9 @@ export interface FKSTOPETAInput {
     ReferenceNumbers?: Array<string>,
     /**
      * @size 4 characters
+     * @default ``
      */
-    Scac: string,
+    Scac?: string,
     /**
      * @size 30 characters
      */
@@ -204,7 +206,7 @@ export interface FKSTOPETAInput {
      */
     VesselName?: string,
     /**
-     * @size 20 characters
+     * @size 25 characters
      * @default ``
      */
     VoyageNumber?: string
@@ -254,6 +256,7 @@ export interface FKSTOPETAOutput {
     ReferenceNumbers: Array<string>,
     /**
      * @size 4 characters
+     * @default ``
      */
     Scac: string,
     /**
@@ -301,7 +304,7 @@ export interface FKSTOPETAOutput {
      */
     VesselName: string,
     /**
-     * @size 20 characters
+     * @size 25 characters
      * @default ``
      */
     VoyageNumber: string

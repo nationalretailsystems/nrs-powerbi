@@ -36,4 +36,15 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getSales),
         respond((req: any) => sqlController.getSales(req.query))
     );
+    router.get(
+        '/blhd-to-ar',
+        validate(validators.getBlhd2Ar),
+        respond((req: any) => sqlController.getBlhd2Ar(req.query))
+    );    
+
+    router.get(
+        '/blhd-to-arky',
+        validate(validators.getBlhd2ArKy),
+        respond((req: any) => sqlController.getBlhd2ArKy(req.query))
+    ); 
 }

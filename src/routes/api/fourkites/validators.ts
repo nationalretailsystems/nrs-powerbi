@@ -41,7 +41,7 @@ export const stopEtaUpdate: InputCheckChain[] = [
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
     body('VesselName').optional().isString().isLength({max: 30}),
-    body('VoyageNumber').optional().isString().isLength({max: 20})
+    body('VoyageNumber').optional().isString().isLength({max: 25})
 ];
 export const oceanUpdate: InputCheckChain[] = [
     body('ContainerType').optional().isString().isLength({max: 5}),
@@ -59,7 +59,7 @@ export const oceanUpdate: InputCheckChain[] = [
     body('Tags').exists().isArray({max: 10}),
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
-    body('VoyageNumber').optional().isString().isLength({max: 20})
+    body('VoyageNumber').optional().isString().isLength({max: 25})
 ];
 export const trackingUpdate: InputCheckChain[] = [
 ];

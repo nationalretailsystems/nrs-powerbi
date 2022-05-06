@@ -18,7 +18,7 @@ import SQLTemplateBILLDTL, { SQLTemplateInputBILLDTL, SQLTemplateOutputBILLDTL }
 import SQLTemplateBLHDACT, { SQLTemplateInputBLHDACT, SQLTemplateOutputBLHDACT } from 'src/models/powerbi-blhdact';
 import SQLTemplateBLHDCONS, {  SQLTemplateOutputBLHDCONS } from 'src/models/powerbi-blhdcons';
 import SQLTemplateBLHDOL5, { SQLTemplateInputBLHDOL5, SQLTemplateOutputBLHDOL5 } from 'src/models/powerbi-blhdolfile5';
-import SQLTemplateBLHDORIGH, { SQLTemplateInputBLHDORIGH, SQLTemplateOutputBLHDORIGH } from 'src/models/powerbi-blhdOriginh';
+import SQLTemplateBLHDORIGH, { SQLTemplateInputBLHDORIGH, SQLTemplateOutputBLHDORIGH } from 'src/models/powerbi-blhdoriginh';
 import { JSONObject } from 'src/types';
 import transport, { transport2 } from 'src/services/connection';
 import { DateTime } from 'luxon';

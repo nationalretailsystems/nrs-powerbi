@@ -39,3 +39,27 @@ export const getBlhd2Ar: InputCheckChain[] = [
 export const getBlhd2ArKy: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
 ];
+export const getRecpt: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getManif: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getProDetails: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getBillDetail: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getBlhdAct: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getBlhdOlfile5: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getBlhdOriginh: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];

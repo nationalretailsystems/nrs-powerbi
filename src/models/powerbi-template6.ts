@@ -18,7 +18,8 @@ export default new eradaniConnect.run.Sql(
          ELSE CAST(acct#a AS CHAR(5)) END AS ACCOUNT,
         CASE WHEN ORIGNA > ' ' THEN DESCR1
          ELSE NAMEAA END AS ACCOUNT_NAME,
-       SUM(totalh) AS "SumTotalh"
+       SUM(totalh) AS "SumTotalh",
+       month(prodth) as "MONTH", year(prodth) as "YEAR"
        From blpgm.cust
          LEFT OUTER JOIN blpgm.grup
            ON origna = corpg1 AND group1 = ' '
@@ -27,8 +28,9 @@ export default new eradaniConnect.run.Sql(
        GROUP BY  
          CASE WHEN ORIGNA > ' ' THEN ORIGNA
             ELSE CAST(acct#a AS CHAR(5)) END,
-         CASE WHEN ORIGNA > ' ' THEN DESCR1 ELSE NAMEAA END
-        ORDER BY 3 DESC`,
+         CASE WHEN ORIGNA > ' ' THEN DESCR1 ELSE NAMEAA END,
+         month(prodth), year(prodth)
+        ORDER BY 5,4`,
     {
         params: [
             {

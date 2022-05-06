@@ -41,10 +41,67 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getBlhd2Ar),
         respond((req: any) => sqlController.getBlhd2Ar(req.query))
     );    
-
     router.get(
         '/blhd-to-arky',
         validate(validators.getBlhd2ArKy),
         respond((req: any) => sqlController.getBlhd2ArKy(req.query))
     ); 
+    router.get(
+        '/recpt-analysis',
+        validate(validators.getRecpt),
+        respond((req: any) => sqlController.getRecpt(req.query))
+    ); 
+    router.get(
+        '/manifest-analysis',
+        validate(validators.getManif),
+        respond((req: any) => sqlController.getManif(req.query))
+    ); 
+    router.get(
+        '/blex',
+        // validate(validators.getBlex),
+        respond(() => sqlController.getBlex())
+    ); 
+    router.get(
+        '/blpr',
+        // validate(validators.getBlpr),
+        respond(() => sqlController.getBlpr())
+    ); 
+    router.get(
+        '/blsj',
+        // validate(validators.getBlsj),
+        respond(() => sqlController.getBlsj())
+    ); 
+    router.get(
+        '/ar-balance',
+        respond(() => sqlController.getARBalance())
+    ); 
+    router.get(
+        '/pro-details',
+        validate(validators.getProDetails),
+        respond((req: any) => sqlController.getProDetails(req.query))
+    );     
+    router.get(
+        '/billing-detail',
+        validate(validators.getBillDetail),
+        respond((req: any) => sqlController.getBillDetail(req.query))
+    ); 
+    router.get(
+        '/blhd-act',
+        validate(validators.getBlhdAct),
+        respond((req: any) => sqlController.getBlhdAct(req.query))
+    );
+    router.get(
+        '/blhd-cons',
+        respond(() => sqlController.getBlhdCons())
+    ); 
+    router.get(
+        '/blhd-olfile5',
+        validate(validators.getBlhdOlfile5),
+        respond((req: any) => sqlController.getBlhdOlfile5(req.query))
+    ); 
+    router.get(
+        '/blhd-originh',
+        validate(validators.getBlhdOriginh),
+        respond((req: any) => sqlController.getBlhdOriginh(req.query))
+    );                
 }

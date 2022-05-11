@@ -19,6 +19,29 @@ import SQLTemplateBLHDACT, { SQLTemplateInputBLHDACT, SQLTemplateOutputBLHDACT }
 import SQLTemplateBLHDCONS, {  SQLTemplateOutputBLHDCONS } from 'src/models/powerbi-blhdcons';
 import SQLTemplateBLHDOL5, { SQLTemplateInputBLHDOL5, SQLTemplateOutputBLHDOL5 } from 'src/models/powerbi-blhdolfile5';
 import SQLTemplateBLHDORIGH, { SQLTemplateInputBLHDORIGH, SQLTemplateOutputBLHDORIGH } from 'src/models/powerbi-blhdoriginh';
+import SQLTemplateBLHDQUERY, { SQLTemplateInputBLHDQUERY, SQLTemplateOutputBLHDQUERY } from 'src/models/powerbi-blhdquery';
+import SQLTemplateLTLWGT, { SQLTemplateInputLTLWGT, SQLTemplateOutputLTLWGT } from 'src/models/powerbi-ltlweight';
+import SQLTemplateCUST, {  SQLTemplateOutputCUST } from 'src/models/powerbi-cust';
+import SQLTemplateMANF, { SQLTemplateInputMANF, SQLTemplateOutputMANF } from 'src/models/powerbi-manf';
+import SQLTemplateTLWGT, { SQLTemplateInputTLWGT, SQLTemplateOutputTLWGT } from 'src/models/powerbi-tlweight';
+import SQLTemplateMOVE, {  SQLTemplateOutputMOVE } from 'src/models/powerbi-move';
+import SQLTemplateMOVENBR, {  SQLTemplateOutputMOVENBR } from 'src/models/powerbi-movenumber';
+import SQLTemplateORDR, { SQLTemplateInputORDR, SQLTemplateOutputORDR } from 'src/models/powerbi-ordr';
+import SQLTemplateDISP, { SQLTemplateInputDISP, SQLTemplateOutputDISP } from 'src/models/powerbi-disp';
+import SQLTemplateDISPDT, { SQLTemplateInputDISPDT, SQLTemplateOutputDISPDT } from 'src/models/powerbi-dispdt';
+import SQLTemplateDISPATCH, { SQLTemplateInputDISPATCH, SQLTemplateOutputDISPATCH } from 'src/models/powerbi-dispatch';
+import SQLTemplateDRIVER, { SQLTemplateInputDRIVER, SQLTemplateOutputDRIVER } from 'src/models/powerbi-driver';
+import SQLTemplateKRONOS, { SQLTemplateInputKRONOS, SQLTemplateOutputKRONOS } from 'src/models/powerbi-kronoshours';
+import SQLTemplateLTLMAN, { SQLTemplateInputLTLMAN, SQLTemplateOutputLTLMAN } from 'src/models/powerbi-ltlmanifest';
+import SQLTemplateSUPERC, { SQLTemplateInputSUPERC, SQLTemplateOutputSUPERC } from 'src/models/powerbi-supermilesconsignee';
+import SQLTemplateSUPERS, { SQLTemplateInputSUPERS, SQLTemplateOutputSUPERS } from 'src/models/powerbi-supermilesshp';
+import SQLTemplateP80CONT, {  SQLTemplateOutputP80CONT } from 'src/models/powerbi-port80cont';
+import SQLTemplateP80KRONOS, { SQLTemplateInputP80KRONOS, SQLTemplateOutputP80KRONOS } from 'src/models/powerbi-port80kronos';
+import SQLTemplateP80PROS, { SQLTemplateInputP80PROS, SQLTemplateOutputP80PROS } from 'src/models/powerbi-port80pros';
+import SQLTemplateNRT2PORT, {  SQLTemplateOutputNRT2PORT } from 'src/models/powerbi-port80turnsnrt2port';
+import SQLTemplatePORT2NRT, {  SQLTemplateOutputPORT2NRT } from 'src/models/powerbi-port80turnsport2nrt';
+import SQLTemplateCONT, { SQLTemplateInputCONT, SQLTemplateOutputCONT } from 'src/models/powerbi-containers';
+import SQLTemplateWEIGHTS, { SQLTemplateInputWEIGHTS, SQLTemplateOutputWEIGHTS } from 'src/models/powerbi-weights';
 import { JSONObject } from 'src/types';
 import transport, { transport2 } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -156,10 +179,12 @@ export async function getProDetails(inputs: JSONObject): Promise<SQLTemplateOutp
 export async function getBillDetail(inputs: JSONObject): Promise<SQLTemplateOutputBILLDTL> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBILLDTL = {
-        // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        // X toDate: inputs.toDate,
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()               
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        fromDate2: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate2: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        fromDate3: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate3: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()                               
     };
     return transport.execute(SQLTemplateBILLDTL, params) as Promise<SQLTemplateOutputBILLDTL>;
 }
@@ -192,4 +217,177 @@ export async function getBlhdOriginh(inputs: JSONObject): Promise<SQLTemplateOut
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
     };
     return transport.execute(SQLTemplateBLHDORIGH, params) as Promise<SQLTemplateOutputBLHDORIGH>;
+}
+export async function getBlhdQuery(inputs: JSONObject): Promise<SQLTemplateOutputBLHDQUERY> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputBLHDQUERY = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+    };
+    return transport.execute(SQLTemplateBLHDQUERY, params) as Promise<SQLTemplateOutputBLHDQUERY>;
+}
+export async function getLtlWeight(inputs: JSONObject): Promise<SQLTemplateOutputLTLWGT> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputLTLWGT = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateLTLWGT, params) as Promise<SQLTemplateOutputLTLWGT>;
+}
+export async function getCust(): Promise<SQLTemplateOutputCUST> {
+    logger.debug('Calling SQLTemplate program');
+    return transport.execute(SQLTemplateCUST) as Promise<SQLTemplateOutputCUST>;
+}
+export async function getManf(inputs: JSONObject): Promise<SQLTemplateOutputMANF> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputMANF = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateMANF, params) as Promise<SQLTemplateOutputMANF>;
+}
+export async function getTlWeight(inputs: JSONObject): Promise<SQLTemplateOutputTLWGT> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputTLWGT = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateTLWGT, params) as Promise<SQLTemplateOutputTLWGT>;
+}
+export async function getMove(): Promise<SQLTemplateOutputMOVE> {
+    logger.debug('Calling SQLTemplate program');
+    return transport.execute(SQLTemplateMOVE) as Promise<SQLTemplateOutputMOVE>;
+}
+export async function getMoveNumber(): Promise<SQLTemplateOutputMOVENBR> {
+    logger.debug('Calling SQLTemplate program');
+    return transport.execute(SQLTemplateMOVENBR) as Promise<SQLTemplateOutputMOVENBR>;
+}
+export async function getOrdr(inputs: JSONObject): Promise<SQLTemplateOutputORDR> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputORDR = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateORDR, params) as Promise<SQLTemplateOutputORDR>;
+}
+export async function getDisp(inputs: JSONObject): Promise<SQLTemplateOutputDISP> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputDISP = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateDISP, params) as Promise<SQLTemplateOutputDISP>;
+}
+export async function getDispDt(inputs: JSONObject): Promise<SQLTemplateOutputDISPDT> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputDISPDT = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateDISPDT, params) as Promise<SQLTemplateOutputDISPDT>;
+}
+export async function getDispatch(inputs: JSONObject): Promise<SQLTemplateOutputDISPATCH> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputDISPATCH = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateDISPATCH, params) as Promise<SQLTemplateOutputDISPATCH>;
+}
+export async function getDriver(inputs: JSONObject): Promise<SQLTemplateOutputDRIVER> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputDRIVER = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateDRIVER, params) as Promise<SQLTemplateOutputDRIVER>;
+}
+export async function getKronos(inputs: JSONObject): Promise<SQLTemplateOutputKRONOS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputKRONOS = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateKRONOS, params) as Promise<SQLTemplateOutputKRONOS>;
+}
+export async function getLtlManifest(inputs: JSONObject): Promise<SQLTemplateOutputLTLMAN> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputLTLMAN = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateLTLMAN, params) as Promise<SQLTemplateOutputLTLMAN>;
+}
+export async function getSupermilesConsignee(inputs: JSONObject): Promise<SQLTemplateOutputSUPERC> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputSUPERC = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateSUPERC, params) as Promise<SQLTemplateOutputSUPERC>;
+}
+export async function getSupermilesShp(inputs: JSONObject): Promise<SQLTemplateOutputSUPERS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputSUPERS = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateSUPERS, params) as Promise<SQLTemplateOutputSUPERS>;
+}
+export async function getPort80Containers(): Promise<SQLTemplateOutputP80CONT> {
+    logger.debug('Calling SQLTemplate program');
+    return transport.execute(SQLTemplateP80CONT) as Promise<SQLTemplateOutputP80CONT>;
+}
+export async function getPort80Kronos(inputs: JSONObject): Promise<SQLTemplateOutputP80KRONOS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputP80KRONOS = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateP80KRONOS, params) as Promise<SQLTemplateOutputP80KRONOS>;
+}
+export async function getPort80Pros(inputs: JSONObject): Promise<SQLTemplateOutputP80PROS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputP80PROS = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateP80PROS, params) as Promise<SQLTemplateOutputP80PROS>;
+}
+export async function getPort80Nrt2Port(): Promise<SQLTemplateOutputNRT2PORT> {
+    logger.debug('Calling SQLTemplate program');
+    return transport.execute(SQLTemplateNRT2PORT) as Promise<SQLTemplateOutputNRT2PORT>;
+}
+export async function getPort80Port2Nrt(): Promise<SQLTemplateOutputPORT2NRT> {
+    logger.debug('Calling SQLTemplate program');
+    return transport.execute(SQLTemplatePORT2NRT) as Promise<SQLTemplateOutputPORT2NRT>;
+}
+export async function getContainers(inputs: JSONObject): Promise<SQLTemplateOutputCONT> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputCONT = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+       };
+    return transport.execute(SQLTemplateCONT, params) as Promise<SQLTemplateOutputCONT>;
+}
+export async function getWeights(inputs: JSONObject): Promise<SQLTemplateOutputWEIGHTS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputWEIGHTS = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        // X toDate: inputs.toDate,
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        building: inputs.building
+    };
+    return transport.execute(SQLTemplateWEIGHTS, params) as Promise<SQLTemplateOutputWEIGHTS>;
 }

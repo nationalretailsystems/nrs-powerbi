@@ -110,6 +110,18 @@ WHERE
             },
             {
                 name: 'toDate'
+            },
+			{
+                name: 'fromDate'
+            },
+            {
+                name: 'toDate'
+            },
+			{
+                name: 'fromDate'
+            },
+            {
+                name: 'toDate'
             }            
         ]
     }
@@ -124,6 +136,10 @@ export interface SQLTemplateInputBILLDTL {
      * @description To Date
      */
     toDate: number | string;
+	fromDate2: number | string;
+	toDate2: number | string;
+	fromDate3: number | string;
+	toDate3: number | string;
 }
 
 /**

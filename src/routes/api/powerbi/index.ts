@@ -103,5 +103,114 @@ export default function mountPOWERBI(router: Router) {
         '/blhd-originh',
         validate(validators.getBlhdOriginh),
         respond((req: any) => sqlController.getBlhdOriginh(req.query))
-    );                
+    );  
+    router.get(
+        '/blhd-query',
+        validate(validators.getBlhdQuery),
+        respond((req: any) => sqlController.getBlhdQuery(req.query))
+    );     
+    router.get(
+        '/ltl-weight',
+        validate(validators.getLtlWeight),
+        respond((req: any) => sqlController.getLtlWeight(req.query))
+    ); 
+    router.get(
+        '/cust',
+        respond(() => sqlController.getCust())
+    ); 
+    router.get(
+        '/manf',
+        validate(validators.getManf),
+        respond((req: any) => sqlController.getLtlWeight(req.query))
+    );
+    router.get(
+        '/tl-weight',
+        validate(validators.getTlWeight),
+        respond((req: any) => sqlController.getTlWeight(req.query))
+    ); 
+    router.get(
+        '/move',
+        respond(() => sqlController.getMove())
+    );   
+    router.get(
+        '/move-number',
+        respond(() => sqlController.getMoveNumber())
+    ); 
+    router.get(
+        '/ordr',
+        validate(validators.getManf),
+        respond((req: any) => sqlController.getOrdr(req.query))
+    ); 
+    router.get(
+        '/disp',
+        validate(validators.getDisp),
+        respond((req: any) => sqlController.getDisp(req.query))
+    );
+    router.get(
+        '/disp-dt',
+        validate(validators.getDispDt),
+        respond((req: any) => sqlController.getDispDt(req.query))
+    );                                         
+    router.get(
+        '/dispatch',
+        validate(validators.getDispatch),
+        respond((req: any) => sqlController.getDispatch(req.query))
+    );
+    router.get(
+        '/driver',
+        validate(validators.getDriver),
+        respond((req: any) => sqlController.getDriver(req.query))
+    );                                             
+    router.get(
+        '/kronos-hours',
+        validate(validators.getKronos),
+        respond((req: any) => sqlController.getKronos(req.query))
+    );
+    router.get(
+        '/ltl-manifest-blhd-revenue',
+        validate(validators.getLtlManifest),
+        respond((req: any) => sqlController.getLtlManifest(req.query))
+    );  
+    router.get(
+        '/supermiles-consignee',
+        validate(validators.getSupermilesConsignee),
+        respond((req: any) => sqlController.getSupermilesConsignee(req.query))
+    );
+    router.get(
+        '/supermiles-shp',
+        validate(validators.getSupermilesShp),
+        respond((req: any) => sqlController.getSupermilesShp(req.query))
+    );
+    router.get(
+        '/port80-containers',
+        respond(() => sqlController.getPort80Containers())
+    ); 
+    router.get(
+        '/port80-kronos-hours',
+        validate(validators.getPort80Kronos),
+        respond((req: any) => sqlController.getPort80Kronos(req.query))
+    );  
+    router.get(
+        '/port80-pros',
+        validate(validators.getPort80Pros),
+        respond((req: any) => sqlController.getPort80Pros(req.query))
+    ); 
+    router.get(
+        '/port80-turns-nrt2port',
+        respond(() => sqlController.getPort80Nrt2Port())
+    );  
+    router.get(
+        '/port80-turns-port2nrt',
+        respond(() => sqlController.getPort80Port2Nrt())
+    ); 
+    router.get(
+        '/containers',
+        validate(validators.getContainers),
+        respond((req: any) => sqlController.getPort80Pros(req.query))
+    );
+    router.get(
+        '/weights',
+        validate(validators.getWeights),
+        respond((req: any) => sqlController.getWeights(req.query))
+    );    
 }

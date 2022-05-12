@@ -16,12 +16,15 @@ pgmmodels:
           ConsignmentEncryptedAccessToken:
             type: Character
             length: 125
+            default: ""
           EncryptedAccessToken:
             type: Character
             length: 125
+            default: ""
           EncryptedUrl:
             type: Character
             length: 150
+            default: ""
           Errors:
             type: Character
             length: 50

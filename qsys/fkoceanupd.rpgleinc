@@ -23,4 +23,4 @@
      DStopName                       30A
      DTags                           50A   Dim(10)
      DTimestamp                        Z
-     DVoyageNumber                   20A
+     DVoyageNumber                   25A

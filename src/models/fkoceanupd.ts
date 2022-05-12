@@ -82,7 +82,7 @@ export const FKOCEANUPDModel =   new eradaniConnect.run.Pgm("FKOCEANUPD",   {
     },
       {
       name: "VoyageNumber",
-      type: new dataTypes.Char(20),
+      type: new dataTypes.Char(25),
       defaultValue: ""
     }
   ]
@@ -153,7 +153,7 @@ export interface FKOCEANUPDInput {
      */
     Timestamp: Date | string,
     /**
-     * @size 20 characters
+     * @size 25 characters
      * @default ``
      */
     VoyageNumber?: string
@@ -224,7 +224,7 @@ export interface FKOCEANUPDOutput {
      */
     Timestamp: Date,
     /**
-     * @size 20 characters
+     * @size 25 characters
      * @default ``
      */
     VoyageNumber: string

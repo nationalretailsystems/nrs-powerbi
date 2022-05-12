@@ -2,9 +2,9 @@ import { body } from 'express-validator';
 import { InputCheckChain } from 'src/types';
 
 export const loadCreation: InputCheckChain[] = [
-    body('LoadConsignmentEncryptedAccessTokenNumber').exists().isString().isLength({max: 125}),
-    body('EncryptedAccessToken').exists().isString().isLength({max: 125}),
-    body('EncryptedUrl').exists().isString().isLength({max: 150}),
+    body('ConsignmentEncryptedAccessToken').optional({nullable:true}).exists().isString().isLength({max: 125}),
+    body('EncryptedAccessToken').optional({nullable:true}).exists().isString().isLength({max: 125}),
+    body('EncryptedUrl').optional({nullable:true}).exists().isString().isLength({max: 150}),
     body('Errors').exists().isArray({max: 10}),
     body('Errors.*').isString().isLength({max: 50}),
     body('FourKitesLoadId').exists().isInt().isLength({max: 16}),

@@ -20,15 +20,18 @@ export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
       params: [
       {
       name: "ConsignmentEncryptedAccessToken",
-      type: new dataTypes.Char(125)
+      type: new dataTypes.Char(125),
+      defaultValue: ""
     },
       {
       name: "EncryptedAccessToken",
-      type: new dataTypes.Char(125)
+      type: new dataTypes.Char(125),
+      defaultValue: ""
     },
       {
       name: "EncryptedUrl",
-      type: new dataTypes.Char(150)
+      type: new dataTypes.Char(150),
+      defaultValue: ""
     },
       {
       name: "Errors",
@@ -90,16 +93,19 @@ export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
 export interface FKLOADCREAInput {
     /**
      * @size 125 characters
+     * @default ``
      */
-    ConsignmentEncryptedAccessToken: string,
+    ConsignmentEncryptedAccessToken?: string,
     /**
      * @size 125 characters
+     * @default ``
      */
-    EncryptedAccessToken: string,
+    EncryptedAccessToken?: string,
     /**
      * @size 150 characters
+     * @default ``
      */
-    EncryptedUrl: string,
+    EncryptedUrl?: string,
     /**
      * @size 50 characters
      * @default ``
@@ -155,14 +161,17 @@ export interface FKLOADCREAInput {
 export interface FKLOADCREAOutput {
     /**
      * @size 125 characters
+     * @default ``
      */
     ConsignmentEncryptedAccessToken: string,
     /**
      * @size 125 characters
+     * @default ``
      */
     EncryptedAccessToken: string,
     /**
      * @size 150 characters
+     * @default ``
      */
     EncryptedUrl: string,
     /**

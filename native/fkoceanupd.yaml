@@ -63,5 +63,5 @@ pgmmodels:
             type: Timestamp
           VoyageNumber:
             type: Character
-            length: 20
+            length: 25
             default: ""

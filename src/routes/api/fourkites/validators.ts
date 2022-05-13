@@ -5,13 +5,13 @@ export const loadCreation: InputCheckChain[] = [
     body('ConsignmentEncryptedAccessToken').optional({nullable:true}).exists().isString().isLength({max: 125}),
     body('EncryptedAccessToken').optional({nullable:true}).exists().isString().isLength({max: 125}),
     body('EncryptedUrl').optional({nullable:true}).exists().isString().isLength({max: 150}),
-    body('Errors').exists().isArray({max: 10}),
-    body('Errors.*').isString().isLength({max: 50}),
-    body('FourKitesLoadId').exists().isInt().isLength({max: 16}),
+    body('Errors').exists().isArray({max: 4}),
+    body('Errors.*').isString().isLength({max: 125}),
+    body('FourKitesLoadId').optional({nullable:true}).isInt().isLength({max: 16}),
     body('IsSuccess').exists().isBoolean(),
     body('LoadNumber').exists().isString().isLength({max: 40}),
     body('MessageType').exists().isString().isLength({max: 20}),
-    body('ProNumber').optional({nullable:true, checkFalsy: true}).isString().isLength({max: 20}),
+    body('ProNumber').optional({nullable:true}).isString().isLength({max: 20}),
     body('ReferenceNumbers').exists().isArray({max: 10}),
     body('ReferenceNumbers.*').isString().isLength({max: 50}),
     body('Scac').optional({nullable:true}).exists().isString().isLength({max: 4}),
@@ -41,7 +41,7 @@ export const stopEtaUpdate: InputCheckChain[] = [
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
     body('VesselName').optional().isString().isLength({max: 30}),
-    body('VoyageNumber').optional().isString().isLength({max: 25})
+    body('VoyageNumber').optional({nullable:true}).isString().isLength({max: 25})
 ];
 export const oceanUpdate: InputCheckChain[] = [
     body('ContainerType').optional({nullable:true}).isString().isLength({max: 5}),
@@ -59,7 +59,7 @@ export const oceanUpdate: InputCheckChain[] = [
     body('Tags').exists().isArray({max: 10}),
     body('Tags.*').isString().isLength({max: 50}),
     body('Timestamp').exists().isISO8601(),
-    body('VoyageNumber').optional().isString().isLength({max: 25})
+    body('VoyageNumber').optional({nullable:true}).isString().isLength({max: 25})
 ];
 export const trackingUpdate: InputCheckChain[] = [
 ];

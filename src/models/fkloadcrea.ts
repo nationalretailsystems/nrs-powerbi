@@ -35,13 +35,14 @@ export const FKLOADCREAModel =   new eradaniConnect.run.Pgm("FKLOADCREA",   {
     },
       {
       name: "Errors",
-      type: new dataTypes.Char(50),
+      type: new dataTypes.Char(125),
       defaultValue: "",
-      dim: 5
+      dim: 4
     },
       {
       name: "FourKitesLoadId",
-      type: new dataTypes.PackedDecimal(16, 0)
+      type: new dataTypes.PackedDecimal(16, 0),
+      defaultValue: 0.0
     },
       {
       name: "IsSuccess",
@@ -107,15 +108,16 @@ export interface FKLOADCREAInput {
      */
     EncryptedUrl?: string,
     /**
-     * @size 50 characters
+     * @size 125 characters
      * @default ``
      */
     Errors?: Array<string>,
     /**
      * @size 16 digits
      * @precision 0 decimals
+     * @default `0`
      */
-    FourKitesLoadId: number | string,
+    FourKitesLoadId?: number | string,
     /**
      */
     IsSuccess: boolean,
@@ -175,13 +177,14 @@ export interface FKLOADCREAOutput {
      */
     EncryptedUrl: string,
     /**
-     * @size 50 characters
+     * @size 125 characters
      * @default ``
      */
     Errors: Array<string>,
     /**
      * @size 16 digits
      * @precision 0 decimals
+     * @default `0`
      */
     FourKitesLoadId: number,
     /**

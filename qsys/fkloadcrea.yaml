@@ -27,12 +27,13 @@ pgmmodels:
             default: ""
           Errors:
             type: Character
-            length: 50
+            length: 125
             default: ""
-            dim: 5
+            dim: 4
           FourKitesLoadId:
             type: Packed
             length: 16
+            default: 0
           IsSuccess:
             type: Boolean
           LoadNumber:

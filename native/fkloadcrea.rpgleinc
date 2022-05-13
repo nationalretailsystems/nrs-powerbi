@@ -12,7 +12,7 @@
      DConsignmentEncryptedAccessToken               125A
      DEncryptedAccessToken               125A
      DEncryptedUrl                  150A
-     DErrors                         50A   Dim(5)
+     DErrors                        125A   Dim(4)
      DFourKitesLoadId                16P 0
      DIsSuccess                        N
      DLoadNumber                     20A

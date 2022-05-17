@@ -9,6 +9,6 @@ services:
     volumes:
       # Use `.npmrc` from user directory
       - ~/.npmrc:/home/node/.npmrc:ro
-      - .:/app
+      # - .:/app
     ports:
       - 3000:3000

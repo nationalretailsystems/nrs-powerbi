@@ -14,3 +14,13 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
 # [Optional] Uncomment if you want to install more global node packages
 # RUN su node -c "npm install -g <your-package-list -here>"
+
+RUN apt-get update
+
+# https://github.com/mkleehammer/pyodbc/issues/441
+RUN apt-get install -y unixodbc-dev
+
+COPY ./ibm-iaccess-1.1.0.15-1.0.amd64.deb ./
+# https://askubuntu.com/questions/40011/how-to-let-dpkg-i-install-dependencies-for-me
+RUN apt-get install -y ./ibm-iaccess-1.1.0.15-1.0.amd64.deb 
+RUN rm ibm-iaccess-1.1.0.15-1.0.amd64.deb

@@ -33,3 +33,4 @@ native/*.rpgleinc
 native/*.js
 native/*.ts
 /ibm-iaccess-1.1.0.15-1.0.amd64.deb
+/.idea

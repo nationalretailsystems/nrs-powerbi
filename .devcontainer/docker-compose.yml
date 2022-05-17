@@ -4,8 +4,6 @@ services:
     build: 
       dockerfile: Dockerfile
       context: ..
-    # To reduce friction with permissions and user and group of new files and directories
-    user: '${UID_GID}'
     volumes:
       # Use `.npmrc` from user directory
       - ~/.npmrc:/home/node/.npmrc:ro

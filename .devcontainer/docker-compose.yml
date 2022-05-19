@@ -2,7 +2,7 @@ version: '3'
 services:
   app:
     build: 
-      dockerfile: Dockerfile
+      dockerfile: .devcontainer/Dockerfile
       context: ..
     volumes:
       # Use `.npmrc` from user directory

@@ -32,9 +32,9 @@ WHERE
  * field length, format, numerical precision, and default values.
  */
 // export interface SQLTemplateInputMANIF {
-    /**
-     * @description From Date
-     */
+/**
+ * @description From Date
+ */
 //    fromDate: number | string;
 // }
 /**

@@ -3,90 +3,89 @@
 // Module: fkoceanupd
 // Generated source -- do not modify
 
-import eradaniConnect from "@eradani-inc/eradani-connect";
+import eradaniConnect from '@eradani-inc/eradani-connect';
 const { dataTypes } = eradaniConnect;
 
-
 // Manually entered import
-import configService from "../../config";
+import configService from '../../config';
 const config = configService.get();
 
 /**
  * Program model
  */
-export const FKOCEANUPDModel =   new eradaniConnect.run.Pgm("FKOCEANUPD",   {
-      lib: config.eradaniConnect.native.pgmLib,
-      mode: "ile",
-      params: [
-      {
-      name: "ContainerType",
-      type: new dataTypes.Char(5),
-      defaultValue: ""
-    },
-      {
-      name: "FourKitesLoadId",
-      type: new dataTypes.PackedDecimal(16, 0)
-    },
-      {
-      name: "LoadNumber",
-      type: new dataTypes.Char(40)
-    },
-      {
-      name: "Message",
-      type: new dataTypes.Char(100)
-    },
-      {
-      name: "MessageType",
-      type: new dataTypes.Char(20)
-    },
-      {
-      name: "ProNumber",
-      type: new dataTypes.Char(20),
-      defaultValue: ""
-    },
-      {
-      name: "ReferenceNumbers",
-      type: new dataTypes.Char(50),
-      defaultValue: "",
-      dim: 20
-    },
-      {
-      name: "Scac",
-      type: new dataTypes.Char(4)
-    },
-      {
-      name: "Shipper",
-      type: new dataTypes.Char(30)
-    },
-      {
-      name: "Status",
-      type: new dataTypes.Char(30)
-    },
-      {
-      name: "StatusCode",
-      type: new dataTypes.Char(5)
-    },
-      {
-      name: "StopName",
-      type: new dataTypes.Char(30)
-    },
-      {
-      name: "Tags",
-      type: new dataTypes.Char(50),
-      defaultValue: "",
-      dim: 10
-    },
-      {
-      name: "Timestamp",
-      type: new dataTypes.Timestamp()
-    },
-      {
-      name: "VoyageNumber",
-      type: new dataTypes.Char(25),
-      defaultValue: ""
-    }
-  ]
-    });
+export const FKOCEANUPDModel = new eradaniConnect.run.Pgm('FKOCEANUPD', {
+    lib: config.eradaniConnect.native.pgmLib,
+    mode: 'ile',
+    params: [
+        {
+            name: 'ContainerType',
+            type: new dataTypes.Char(5),
+            defaultValue: ''
+        },
+        {
+            name: 'FourKitesLoadId',
+            type: new dataTypes.PackedDecimal(16, 0)
+        },
+        {
+            name: 'LoadNumber',
+            type: new dataTypes.Char(40)
+        },
+        {
+            name: 'Message',
+            type: new dataTypes.Char(100)
+        },
+        {
+            name: 'MessageType',
+            type: new dataTypes.Char(20)
+        },
+        {
+            name: 'ProNumber',
+            type: new dataTypes.Char(20),
+            defaultValue: ''
+        },
+        {
+            name: 'ReferenceNumbers',
+            type: new dataTypes.Char(50),
+            defaultValue: '',
+            dim: 20
+        },
+        {
+            name: 'Scac',
+            type: new dataTypes.Char(4)
+        },
+        {
+            name: 'Shipper',
+            type: new dataTypes.Char(30)
+        },
+        {
+            name: 'Status',
+            type: new dataTypes.Char(30)
+        },
+        {
+            name: 'StatusCode',
+            type: new dataTypes.Char(5)
+        },
+        {
+            name: 'StopName',
+            type: new dataTypes.Char(30)
+        },
+        {
+            name: 'Tags',
+            type: new dataTypes.Char(50),
+            defaultValue: '',
+            dim: 10
+        },
+        {
+            name: 'Timestamp',
+            type: new dataTypes.Timestamp()
+        },
+        {
+            name: 'VoyageNumber',
+            type: new dataTypes.Char(25),
+            defaultValue: ''
+        }
+    ]
+});
 
 /**
  * Input interface
@@ -96,67 +95,67 @@ export interface FKOCEANUPDInput {
      * @size 5 characters
      * @default ``
      */
-    ContainerType?: string,
+    ContainerType?: string;
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
-    FourKitesLoadId: number | string,
+    FourKitesLoadId: number | string;
     /**
      * @size 40 characters
      */
-    LoadNumber: string,
+    LoadNumber: string;
     /**
      * @size 100 characters
      */
-    Message: string,
+    Message: string;
     /**
      * @size 20 characters
      */
-    MessageType: string,
+    MessageType: string;
     /**
      * @size 20 characters
      * @default ``
      */
-    ProNumber?: string,
+    ProNumber?: string;
     /**
      * @size 50 characters
      * @default ``
      */
-    ReferenceNumbers?: Array<string>,
+    ReferenceNumbers?: Array<string>;
     /**
      * @size 4 characters
      */
-    Scac: string,
+    Scac: string;
     /**
      * @size 30 characters
      */
-    Shipper: string,
+    Shipper: string;
     /**
      * @size 30 characters
      */
-    Status: string,
+    Status: string;
     /**
      * @size 5 characters
      */
-    StatusCode: string,
+    StatusCode: string;
     /**
      * @size 30 characters
      */
-    StopName: string,
+    StopName: string;
     /**
      * @size 50 characters
      * @default ``
      */
-    Tags?: Array<string>,
+    Tags?: Array<string>;
     /**
      */
-    Timestamp: Date | string,
+    Timestamp: Date | string;
     /**
      * @size 25 characters
      * @default ``
      */
-    VoyageNumber?: string
+    VoyageNumber?: string;
 }
 
 /**
@@ -167,67 +166,67 @@ export interface FKOCEANUPDOutput {
      * @size 5 characters
      * @default ``
      */
-    ContainerType: string,
+    ContainerType: string;
     /**
      * @size 16 digits
      * @precision 0 decimals
      */
-    FourKitesLoadId: number,
+    FourKitesLoadId: number;
     /**
      * @size 40 characters
      */
-    LoadNumber: string,
+    LoadNumber: string;
     /**
      * @size 100 characters
      */
-    Message: string,
+    Message: string;
     /**
      * @size 20 characters
      */
-    MessageType: string,
+    MessageType: string;
     /**
      * @size 20 characters
      * @default ``
      */
-    ProNumber: string,
+    ProNumber: string;
     /**
      * @size 50 characters
      * @default ``
      */
-    ReferenceNumbers: Array<string>,
+    ReferenceNumbers: Array<string>;
     /**
      * @size 4 characters
      */
-    Scac: string,
+    Scac: string;
     /**
      * @size 30 characters
      */
-    Shipper: string,
+    Shipper: string;
     /**
      * @size 30 characters
      */
-    Status: string,
+    Status: string;
     /**
      * @size 5 characters
      */
-    StatusCode: string,
+    StatusCode: string;
     /**
      * @size 30 characters
      */
-    StopName: string,
+    StopName: string;
     /**
      * @size 50 characters
      * @default ``
      */
-    Tags: Array<string>,
+    Tags: Array<string>;
     /**
      */
-    Timestamp: Date,
+    Timestamp: Date;
     /**
      * @size 25 characters
      * @default ``
      */
-    VoyageNumber: string
+    VoyageNumber: string;
 }
 
 /* eslint-enable */

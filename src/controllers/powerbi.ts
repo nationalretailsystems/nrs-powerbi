@@ -6,26 +6,38 @@ import SQLTemplate4, { SQLTemplateInput4, SQLTemplateOutput4 } from 'src/models/
 import SQLTemplate5, { SQLTemplateInput5, SQLTemplateOutput5 } from 'src/models/powerbi-template5';
 import SQLTemplate6, { SQLTemplateInput6, SQLTemplateOutput6 } from 'src/models/powerbi-template6';
 import SQLTemplateBLHD2AR, { SQLTemplateInputBLHD2AR, SQLTemplateOutputBLHD2AR } from 'src/models/powerbi-blhd2ar';
-import SQLTemplateBLHD2ARKY, { SQLTemplateInputBLHD2ARKY, SQLTemplateOutputBLHD2ARKY } from 'src/models/powerbi-blhd2arky';
+import SQLTemplateBLHD2ARKY, {
+    SQLTemplateInputBLHD2ARKY,
+    SQLTemplateOutputBLHD2ARKY
+} from 'src/models/powerbi-blhd2arky';
 import SQLTemplateRECPT, { SQLTemplateInputRECPT, SQLTemplateOutputRECPT } from 'src/models/powerbi-recpt';
 import SQLTemplateMANIF, { SQLTemplateInputMANIF, SQLTemplateOutputMANIF } from 'src/models/powerbi-manif';
-import SQLTemplateBLEX, {  SQLTemplateOutputBLEX } from 'src/models/powerbi-blex';
-import SQLTemplateBLPR, {  SQLTemplateOutputBLPR } from 'src/models/powerbi-blpr';
-import SQLTemplateBLSJ, {  SQLTemplateOutputBLSJ } from 'src/models/powerbi-blsj';
-import SQLTemplateARBAL, {  SQLTemplateOutputARBAL } from 'src/models/powerbi-arbalance';
+import SQLTemplateBLEX, { SQLTemplateOutputBLEX } from 'src/models/powerbi-blex';
+import SQLTemplateBLPR, { SQLTemplateOutputBLPR } from 'src/models/powerbi-blpr';
+import SQLTemplateBLSJ, { SQLTemplateOutputBLSJ } from 'src/models/powerbi-blsj';
+import SQLTemplateARBAL, { SQLTemplateOutputARBAL } from 'src/models/powerbi-arbalance';
 import SQLTemplatePRODTL, { SQLTemplateInputPRODTL, SQLTemplateOutputPRODTL } from 'src/models/powerbi-prodetails';
-import SQLTemplateBILLDTL, { SQLTemplateInputBILLDTL, SQLTemplateOutputBILLDTL } from 'src/models/powerbi-billingdetail';
+import SQLTemplateBILLDTL, {
+    SQLTemplateInputBILLDTL,
+    SQLTemplateOutputBILLDTL
+} from 'src/models/powerbi-billingdetail';
 import SQLTemplateBLHDACT, { SQLTemplateInputBLHDACT, SQLTemplateOutputBLHDACT } from 'src/models/powerbi-blhdact';
-import SQLTemplateBLHDCONS, {  SQLTemplateOutputBLHDCONS } from 'src/models/powerbi-blhdcons';
+import SQLTemplateBLHDCONS, { SQLTemplateOutputBLHDCONS } from 'src/models/powerbi-blhdcons';
 import SQLTemplateBLHDOL5, { SQLTemplateInputBLHDOL5, SQLTemplateOutputBLHDOL5 } from 'src/models/powerbi-blhdolfile5';
-import SQLTemplateBLHDORIGH, { SQLTemplateInputBLHDORIGH, SQLTemplateOutputBLHDORIGH } from 'src/models/powerbi-blhdoriginh';
-import SQLTemplateBLHDQUERY, { SQLTemplateInputBLHDQUERY, SQLTemplateOutputBLHDQUERY } from 'src/models/powerbi-blhdquery';
+import SQLTemplateBLHDORIGH, {
+    SQLTemplateInputBLHDORIGH,
+    SQLTemplateOutputBLHDORIGH
+} from 'src/models/powerbi-blhdoriginh';
+import SQLTemplateBLHDQUERY, {
+    SQLTemplateInputBLHDQUERY,
+    SQLTemplateOutputBLHDQUERY
+} from 'src/models/powerbi-blhdquery';
 import SQLTemplateLTLWGT, { SQLTemplateInputLTLWGT, SQLTemplateOutputLTLWGT } from 'src/models/powerbi-ltlweight';
-import SQLTemplateCUST, {  SQLTemplateOutputCUST } from 'src/models/powerbi-cust';
+import SQLTemplateCUST, { SQLTemplateOutputCUST } from 'src/models/powerbi-cust';
 import SQLTemplateMANF, { SQLTemplateInputMANF, SQLTemplateOutputMANF } from 'src/models/powerbi-manf';
 import SQLTemplateTLWGT, { SQLTemplateInputTLWGT, SQLTemplateOutputTLWGT } from 'src/models/powerbi-tlweight';
-import SQLTemplateMOVE, {  SQLTemplateOutputMOVE } from 'src/models/powerbi-move';
-import SQLTemplateMOVENBR, {  SQLTemplateOutputMOVENBR } from 'src/models/powerbi-movenumber';
+import SQLTemplateMOVE, { SQLTemplateOutputMOVE } from 'src/models/powerbi-move';
+import SQLTemplateMOVENBR, { SQLTemplateOutputMOVENBR } from 'src/models/powerbi-movenumber';
 import SQLTemplateORDR, { SQLTemplateInputORDR, SQLTemplateOutputORDR } from 'src/models/powerbi-ordr';
 import SQLTemplateDISP, { SQLTemplateInputDISP, SQLTemplateOutputDISP } from 'src/models/powerbi-disp';
 import SQLTemplateDISPDT, { SQLTemplateInputDISPDT, SQLTemplateOutputDISPDT } from 'src/models/powerbi-dispdt';
@@ -33,19 +45,24 @@ import SQLTemplateDISPATCH, { SQLTemplateInputDISPATCH, SQLTemplateOutputDISPATC
 import SQLTemplateDRIVER, { SQLTemplateInputDRIVER, SQLTemplateOutputDRIVER } from 'src/models/powerbi-driver';
 import SQLTemplateKRONOS, { SQLTemplateInputKRONOS, SQLTemplateOutputKRONOS } from 'src/models/powerbi-kronoshours';
 import SQLTemplateLTLMAN, { SQLTemplateInputLTLMAN, SQLTemplateOutputLTLMAN } from 'src/models/powerbi-ltlmanifest';
-import SQLTemplateSUPERC, { SQLTemplateInputSUPERC, SQLTemplateOutputSUPERC } from 'src/models/powerbi-supermilesconsignee';
+import SQLTemplateSUPERC, {
+    SQLTemplateInputSUPERC,
+    SQLTemplateOutputSUPERC
+} from 'src/models/powerbi-supermilesconsignee';
 import SQLTemplateSUPERS, { SQLTemplateInputSUPERS, SQLTemplateOutputSUPERS } from 'src/models/powerbi-supermilesshp';
-import SQLTemplateP80CONT, {  SQLTemplateOutputP80CONT } from 'src/models/powerbi-port80cont';
-import SQLTemplateP80KRONOS, { SQLTemplateInputP80KRONOS, SQLTemplateOutputP80KRONOS } from 'src/models/powerbi-port80kronos';
+import SQLTemplateP80CONT, { SQLTemplateOutputP80CONT } from 'src/models/powerbi-port80cont';
+import SQLTemplateP80KRONOS, {
+    SQLTemplateInputP80KRONOS,
+    SQLTemplateOutputP80KRONOS
+} from 'src/models/powerbi-port80kronos';
 import SQLTemplateP80PROS, { SQLTemplateInputP80PROS, SQLTemplateOutputP80PROS } from 'src/models/powerbi-port80pros';
-import SQLTemplateNRT2PORT, {  SQLTemplateOutputNRT2PORT } from 'src/models/powerbi-port80turnsnrt2port';
-import SQLTemplatePORT2NRT, {  SQLTemplateOutputPORT2NRT } from 'src/models/powerbi-port80turnsport2nrt';
+import SQLTemplateNRT2PORT, { SQLTemplateOutputNRT2PORT } from 'src/models/powerbi-port80turnsnrt2port';
+import SQLTemplatePORT2NRT, { SQLTemplateOutputPORT2NRT } from 'src/models/powerbi-port80turnsport2nrt';
 import SQLTemplateCONT, { SQLTemplateInputCONT, SQLTemplateOutputCONT } from 'src/models/powerbi-containers';
 import SQLTemplateWEIGHTS, { SQLTemplateInputWEIGHTS, SQLTemplateOutputWEIGHTS } from 'src/models/powerbi-weights';
 import { JSONObject } from 'src/types';
-import transport, { transport2 } from 'src/services/connection';
+import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
-
 
 const logger = createLogger('controllers/powerbi');
 
@@ -64,7 +81,7 @@ export async function getViamundoWeight(inputs: JSONObject): Promise<SQLTemplate
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
         building: inputs.building
     };
-    return transport.execute(SQLTemplate, params) as Promise<SQLTemplateOutput>;
+    return powerbiTransports.wolf.execute(SQLTemplate, params) as Promise<SQLTemplateOutput>;
 }
 export async function getCCRevenue(inputs: JSONObject): Promise<SQLTemplateOutput2> {
     logger.debug('Calling SQLTemplate program');
@@ -77,7 +94,7 @@ export async function getCCRevenue(inputs: JSONObject): Promise<SQLTemplateOutpu
         customer2: inputs.customer || '99999',
         costcenter: inputs.costcenter
     };
-    return transport.execute(SQLTemplate2, params) as Promise<SQLTemplateOutput2>;
+    return powerbiTransports.wolf.execute(SQLTemplate2, params) as Promise<SQLTemplateOutput2>;
 }
 export async function getHours(inputs: JSONObject): Promise<SQLTemplateOutput3> {
     logger.debug('Calling SQLTemplate program');
@@ -88,7 +105,7 @@ export async function getHours(inputs: JSONObject): Promise<SQLTemplateOutput3> 
         costCenter1: inputs.costCenter || '000',
         costCenter2: inputs.costCenter || '999'
     };
-    return transport.execute(SQLTemplate3, params) as Promise<SQLTemplateOutput3>;
+    return powerbiTransports.wolf.execute(SQLTemplate3, params) as Promise<SQLTemplateOutput3>;
 }
 export async function getGL(inputs: JSONObject): Promise<SQLTemplateOutput4> {
     logger.debug('Calling SQLTemplate program');
@@ -96,7 +113,7 @@ export async function getGL(inputs: JSONObject): Promise<SQLTemplateOutput4> {
         year: inputs.year,
         month: inputs.month
     };
-    return transport2.execute(SQLTemplate4, params) as Promise<SQLTemplateOutput4>;
+    return powerbiTransports.lawson.execute(SQLTemplate4, params) as Promise<SQLTemplateOutput4>;
 }
 export async function getWMS378(inputs: JSONObject): Promise<SQLTemplateOutput5> {
     logger.debug('Calling SQLTemplate program');
@@ -106,7 +123,7 @@ export async function getWMS378(inputs: JSONObject): Promise<SQLTemplateOutput5>
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplate5, params) as Promise<SQLTemplateOutput5>;
+    return powerbiTransports.wolf.execute(SQLTemplate5, params) as Promise<SQLTemplateOutput5>;
 }
 export async function getSales(inputs: JSONObject): Promise<SQLTemplateOutput6> {
     logger.debug('Calling SQLTemplate program');
@@ -116,55 +133,55 @@ export async function getSales(inputs: JSONObject): Promise<SQLTemplateOutput6> 
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplate6, params) as Promise<SQLTemplateOutput6>;
+    return powerbiTransports.wolf.execute(SQLTemplate6, params) as Promise<SQLTemplateOutput6>;
 }
 export async function getBlhd2Ar(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2AR> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBLHD2AR = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBLHD2AR, params) as Promise<SQLTemplateOutputBLHD2AR>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHD2AR, params) as Promise<SQLTemplateOutputBLHD2AR>;
 }
 export async function getBlhd2ArKy(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2ARKY> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBLHD2ARKY = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBLHD2ARKY, params) as Promise<SQLTemplateOutputBLHD2ARKY>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHD2ARKY, params) as Promise<SQLTemplateOutputBLHD2ARKY>;
 }
 export async function getRecpt(inputs: JSONObject): Promise<SQLTemplateOutputRECPT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputRECPT = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateRECPT, params) as Promise<SQLTemplateOutputRECPT>;
+    return powerbiTransports.wolf.execute(SQLTemplateRECPT, params) as Promise<SQLTemplateOutputRECPT>;
 }
 export async function getManif(inputs: JSONObject): Promise<SQLTemplateOutputMANIF> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputMANIF = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateMANIF, params) as Promise<SQLTemplateOutputMANIF>;
+    return powerbiTransports.wolf.execute(SQLTemplateMANIF, params) as Promise<SQLTemplateOutputMANIF>;
 }
 export async function getBlex(): Promise<SQLTemplateOutputBLEX> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateBLEX) as Promise<SQLTemplateOutputBLEX>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLEX) as Promise<SQLTemplateOutputBLEX>;
 }
 export async function getBlpr(): Promise<SQLTemplateOutputBLPR> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateBLPR) as Promise<SQLTemplateOutputBLPR>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLPR) as Promise<SQLTemplateOutputBLPR>;
 }
 export async function getBlsj(): Promise<SQLTemplateOutputBLSJ> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateBLSJ) as Promise<SQLTemplateOutputBLSJ>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLSJ) as Promise<SQLTemplateOutputBLSJ>;
 }
 export async function getARBalance(): Promise<SQLTemplateOutputARBAL> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateARBAL) as Promise<SQLTemplateOutputARBAL>;
+    return powerbiTransports.wolf.execute(SQLTemplateARBAL) as Promise<SQLTemplateOutputARBAL>;
 }
 export async function getProDetails(inputs: JSONObject): Promise<SQLTemplateOutputPRODTL> {
     logger.debug('Calling SQLTemplate program');
@@ -174,7 +191,7 @@ export async function getProDetails(inputs: JSONObject): Promise<SQLTemplateOutp
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplatePRODTL, params) as Promise<SQLTemplateOutputPRODTL>;
+    return powerbiTransports.wolf.execute(SQLTemplatePRODTL, params) as Promise<SQLTemplateOutputPRODTL>;
 }
 export async function getBillDetail(inputs: JSONObject): Promise<SQLTemplateOutputBILLDTL> {
     logger.debug('Calling SQLTemplate program');
@@ -184,21 +201,21 @@ export async function getBillDetail(inputs: JSONObject): Promise<SQLTemplateOutp
         fromDate2: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         toDate2: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
         fromDate3: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate3: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()                               
+        toDate3: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBILLDTL, params) as Promise<SQLTemplateOutputBILLDTL>;
+    return powerbiTransports.wolf.execute(SQLTemplateBILLDTL, params) as Promise<SQLTemplateOutputBILLDTL>;
 }
 export async function getBlhdAct(inputs: JSONObject): Promise<SQLTemplateOutputBLHDACT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBLHDACT = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBLHDACT, params) as Promise<SQLTemplateOutputBLHDACT>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHDACT, params) as Promise<SQLTemplateOutputBLHDACT>;
 }
 export async function getBlhdCons(): Promise<SQLTemplateOutputBLHDCONS> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateBLHDCONS) as Promise<SQLTemplateOutputBLHDCONS>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHDCONS) as Promise<SQLTemplateOutputBLHDCONS>;
 }
 export async function getBlhdOlfile5(inputs: JSONObject): Promise<SQLTemplateOutputBLHDOL5> {
     logger.debug('Calling SQLTemplate program');
@@ -208,177 +225,177 @@ export async function getBlhdOlfile5(inputs: JSONObject): Promise<SQLTemplateOut
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBLHDOL5, params) as Promise<SQLTemplateOutputBLHDOL5>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHDOL5, params) as Promise<SQLTemplateOutputBLHDOL5>;
 }
 export async function getBlhdOriginh(inputs: JSONObject): Promise<SQLTemplateOutputBLHDORIGH> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBLHDORIGH = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBLHDORIGH, params) as Promise<SQLTemplateOutputBLHDORIGH>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHDORIGH, params) as Promise<SQLTemplateOutputBLHDORIGH>;
 }
 export async function getBlhdQuery(inputs: JSONObject): Promise<SQLTemplateOutputBLHDQUERY> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBLHDQUERY = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
-    return transport.execute(SQLTemplateBLHDQUERY, params) as Promise<SQLTemplateOutputBLHDQUERY>;
+    return powerbiTransports.wolf.execute(SQLTemplateBLHDQUERY, params) as Promise<SQLTemplateOutputBLHDQUERY>;
 }
 export async function getLtlWeight(inputs: JSONObject): Promise<SQLTemplateOutputLTLWGT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputLTLWGT = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateLTLWGT, params) as Promise<SQLTemplateOutputLTLWGT>;
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateLTLWGT, params) as Promise<SQLTemplateOutputLTLWGT>;
 }
 export async function getCust(): Promise<SQLTemplateOutputCUST> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateCUST) as Promise<SQLTemplateOutputCUST>;
+    return powerbiTransports.wolf.execute(SQLTemplateCUST) as Promise<SQLTemplateOutputCUST>;
 }
 export async function getManf(inputs: JSONObject): Promise<SQLTemplateOutputMANF> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputMANF = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateMANF, params) as Promise<SQLTemplateOutputMANF>;
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateMANF, params) as Promise<SQLTemplateOutputMANF>;
 }
 export async function getTlWeight(inputs: JSONObject): Promise<SQLTemplateOutputTLWGT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputTLWGT = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateTLWGT, params) as Promise<SQLTemplateOutputTLWGT>;
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateTLWGT, params) as Promise<SQLTemplateOutputTLWGT>;
 }
 export async function getMove(): Promise<SQLTemplateOutputMOVE> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateMOVE) as Promise<SQLTemplateOutputMOVE>;
+    return powerbiTransports.wolf.execute(SQLTemplateMOVE) as Promise<SQLTemplateOutputMOVE>;
 }
 export async function getMoveNumber(): Promise<SQLTemplateOutputMOVENBR> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateMOVENBR) as Promise<SQLTemplateOutputMOVENBR>;
+    return powerbiTransports.wolf.execute(SQLTemplateMOVENBR) as Promise<SQLTemplateOutputMOVENBR>;
 }
 export async function getOrdr(inputs: JSONObject): Promise<SQLTemplateOutputORDR> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputORDR = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateORDR, params) as Promise<SQLTemplateOutputORDR>;
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateORDR, params) as Promise<SQLTemplateOutputORDR>;
 }
 export async function getDisp(inputs: JSONObject): Promise<SQLTemplateOutputDISP> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputDISP = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateDISP, params) as Promise<SQLTemplateOutputDISP>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateDISP, params) as Promise<SQLTemplateOutputDISP>;
 }
 export async function getDispDt(inputs: JSONObject): Promise<SQLTemplateOutputDISPDT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputDISPDT = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateDISPDT, params) as Promise<SQLTemplateOutputDISPDT>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateDISPDT, params) as Promise<SQLTemplateOutputDISPDT>;
 }
 export async function getDispatch(inputs: JSONObject): Promise<SQLTemplateOutputDISPATCH> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputDISPATCH = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateDISPATCH, params) as Promise<SQLTemplateOutputDISPATCH>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateDISPATCH, params) as Promise<SQLTemplateOutputDISPATCH>;
 }
 export async function getDriver(inputs: JSONObject): Promise<SQLTemplateOutputDRIVER> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputDRIVER = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateDRIVER, params) as Promise<SQLTemplateOutputDRIVER>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateDRIVER, params) as Promise<SQLTemplateOutputDRIVER>;
 }
 export async function getKronos(inputs: JSONObject): Promise<SQLTemplateOutputKRONOS> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputKRONOS = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateKRONOS, params) as Promise<SQLTemplateOutputKRONOS>;
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateKRONOS, params) as Promise<SQLTemplateOutputKRONOS>;
 }
 export async function getLtlManifest(inputs: JSONObject): Promise<SQLTemplateOutputLTLMAN> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputLTLMAN = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateLTLMAN, params) as Promise<SQLTemplateOutputLTLMAN>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateLTLMAN, params) as Promise<SQLTemplateOutputLTLMAN>;
 }
 export async function getSupermilesConsignee(inputs: JSONObject): Promise<SQLTemplateOutputSUPERC> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputSUPERC = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateSUPERC, params) as Promise<SQLTemplateOutputSUPERC>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateSUPERC, params) as Promise<SQLTemplateOutputSUPERC>;
 }
 export async function getSupermilesShp(inputs: JSONObject): Promise<SQLTemplateOutputSUPERS> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputSUPERS = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateSUPERS, params) as Promise<SQLTemplateOutputSUPERS>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateSUPERS, params) as Promise<SQLTemplateOutputSUPERS>;
 }
 export async function getPort80Containers(): Promise<SQLTemplateOutputP80CONT> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateP80CONT) as Promise<SQLTemplateOutputP80CONT>;
+    return powerbiTransports.wolf.execute(SQLTemplateP80CONT) as Promise<SQLTemplateOutputP80CONT>;
 }
 export async function getPort80Kronos(inputs: JSONObject): Promise<SQLTemplateOutputP80KRONOS> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputP80KRONOS = {
         // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateP80KRONOS, params) as Promise<SQLTemplateOutputP80KRONOS>;
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateP80KRONOS, params) as Promise<SQLTemplateOutputP80KRONOS>;
 }
 export async function getPort80Pros(inputs: JSONObject): Promise<SQLTemplateOutputP80PROS> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputP80PROS = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateP80PROS, params) as Promise<SQLTemplateOutputP80PROS>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateP80PROS, params) as Promise<SQLTemplateOutputP80PROS>;
 }
 export async function getPort80Nrt2Port(): Promise<SQLTemplateOutputNRT2PORT> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplateNRT2PORT) as Promise<SQLTemplateOutputNRT2PORT>;
+    return powerbiTransports.wolf.execute(SQLTemplateNRT2PORT) as Promise<SQLTemplateOutputNRT2PORT>;
 }
 export async function getPort80Port2Nrt(): Promise<SQLTemplateOutputPORT2NRT> {
     logger.debug('Calling SQLTemplate program');
-    return transport.execute(SQLTemplatePORT2NRT) as Promise<SQLTemplateOutputPORT2NRT>;
+    return powerbiTransports.wolf.execute(SQLTemplatePORT2NRT) as Promise<SQLTemplateOutputPORT2NRT>;
 }
 export async function getContainers(inputs: JSONObject): Promise<SQLTemplateOutputCONT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputCONT = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-       };
-    return transport.execute(SQLTemplateCONT, params) as Promise<SQLTemplateOutputCONT>;
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateCONT, params) as Promise<SQLTemplateOutputCONT>;
 }
 export async function getWeights(inputs: JSONObject): Promise<SQLTemplateOutputWEIGHTS> {
     logger.debug('Calling SQLTemplate program');
@@ -389,5 +406,5 @@ export async function getWeights(inputs: JSONObject): Promise<SQLTemplateOutputW
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
         building: inputs.building
     };
-    return transport.execute(SQLTemplateWEIGHTS, params) as Promise<SQLTemplateOutputWEIGHTS>;
+    return powerbiTransports.wolf.execute(SQLTemplateWEIGHTS, params) as Promise<SQLTemplateOutputWEIGHTS>;
 }

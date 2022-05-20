@@ -8,10 +8,18 @@ const transport = new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc,
     ..._.cloneDeep(config.eradaniConnect.odbcOptions),
     logger
 });
-export const transport2 = new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc2, {
-    ...config.eradaniConnect.odbcOptions,
-    logger
-});
+
+export const powerbiTransports = {
+    wolf: new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc, {
+        ...Object.assign({}, config.eradaniConnect.odbcOptions, { noPool: true }),
+        logger
+    }),
+
+    lawson: new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc2, {
+        ...Object.assign({}, config.eradaniConnect.odbcOptions, { noPool: true }),
+        logger
+    })
+};
 
 /* Disabled XML Transport
 const credentials = config.eradaniConnect.credentials;

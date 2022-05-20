@@ -21,15 +21,14 @@ const logger = createLogger('controllers/fourkites');
  */
 export async function loadCreation(load: FKLOADCREAInput) {
     logger.debug('Calling FKLOADCREA program');
-    load.FourKitesLoadId === null ? load.FourKitesLoadId = 0 : load.FourKitesLoadId;
+    load.FourKitesLoadId ??= 0;
     const loadCreResult = (await transport.execute(FKLOADCREAModel, load)) as FKLOADCREAOutput;
-    if (loadCreResult.FourKitesLoadId === 0 ) {
+    if (loadCreResult.FourKitesLoadId === 0) {
         throw new APIError(450, 'Bad Load ID');
     }
 
     //    return transport.execute(FKLOADCREAModel, load) as Promise<FKLOADCREAOutput>;
 }
-
 
 export async function stopEtaUpdate(load: FKSTOPETAInput) {
     logger.debug('Calling FKSTOPETA program');

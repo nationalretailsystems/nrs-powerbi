@@ -40,51 +40,51 @@ export default function mountPOWERBI(router: Router) {
         '/blhd-to-ar',
         validate(validators.getBlhd2Ar),
         respond((req: any) => sqlController.getBlhd2Ar(req.query))
-    );    
+    );
     router.get(
         '/blhd-to-arky',
         validate(validators.getBlhd2ArKy),
         respond((req: any) => sqlController.getBlhd2ArKy(req.query))
-    ); 
+    );
     router.get(
         '/recpt-analysis',
         validate(validators.getRecpt),
         respond((req: any) => sqlController.getRecpt(req.query))
-    ); 
+    );
     router.get(
         '/manifest-analysis',
         validate(validators.getManif),
         respond((req: any) => sqlController.getManif(req.query))
-    ); 
+    );
     router.get(
         '/blex',
         // validate(validators.getBlex),
         respond(() => sqlController.getBlex())
-    ); 
+    );
     router.get(
         '/blpr',
         // validate(validators.getBlpr),
         respond(() => sqlController.getBlpr())
-    ); 
+    );
     router.get(
         '/blsj',
         // validate(validators.getBlsj),
         respond(() => sqlController.getBlsj())
-    ); 
+    );
     router.get(
         '/ar-balance',
         respond(() => sqlController.getARBalance())
-    ); 
+    );
     router.get(
         '/pro-details',
         validate(validators.getProDetails),
         respond((req: any) => sqlController.getProDetails(req.query))
-    );     
+    );
     router.get(
         '/billing-detail',
         validate(validators.getBillDetail),
         respond((req: any) => sqlController.getBillDetail(req.query))
-    ); 
+    );
     router.get(
         '/blhd-act',
         validate(validators.getBlhdAct),
@@ -93,31 +93,31 @@ export default function mountPOWERBI(router: Router) {
     router.get(
         '/blhd-cons',
         respond(() => sqlController.getBlhdCons())
-    ); 
+    );
     router.get(
         '/blhd-olfile5',
         validate(validators.getBlhdOlfile5),
         respond((req: any) => sqlController.getBlhdOlfile5(req.query))
-    ); 
+    );
     router.get(
         '/blhd-originh',
         validate(validators.getBlhdOriginh),
         respond((req: any) => sqlController.getBlhdOriginh(req.query))
-    );  
+    );
     router.get(
         '/blhd-query',
         validate(validators.getBlhdQuery),
         respond((req: any) => sqlController.getBlhdQuery(req.query))
-    );     
+    );
     router.get(
         '/ltl-weight',
         validate(validators.getLtlWeight),
         respond((req: any) => sqlController.getLtlWeight(req.query))
-    ); 
+    );
     router.get(
         '/cust',
         respond(() => sqlController.getCust())
-    ); 
+    );
     router.get(
         '/manf',
         validate(validators.getManf),
@@ -127,20 +127,20 @@ export default function mountPOWERBI(router: Router) {
         '/tl-weight',
         validate(validators.getTlWeight),
         respond((req: any) => sqlController.getTlWeight(req.query))
-    ); 
+    );
     router.get(
         '/move',
         respond(() => sqlController.getMove())
-    );   
+    );
     router.get(
         '/move-number',
         respond(() => sqlController.getMoveNumber())
-    ); 
+    );
     router.get(
         '/ordr',
         validate(validators.getManf),
         respond((req: any) => sqlController.getOrdr(req.query))
-    ); 
+    );
     router.get(
         '/disp',
         validate(validators.getDisp),
@@ -150,7 +150,7 @@ export default function mountPOWERBI(router: Router) {
         '/disp-dt',
         validate(validators.getDispDt),
         respond((req: any) => sqlController.getDispDt(req.query))
-    );                                         
+    );
     router.get(
         '/dispatch',
         validate(validators.getDispatch),
@@ -160,7 +160,7 @@ export default function mountPOWERBI(router: Router) {
         '/driver',
         validate(validators.getDriver),
         respond((req: any) => sqlController.getDriver(req.query))
-    );                                             
+    );
     router.get(
         '/kronos-hours',
         validate(validators.getKronos),
@@ -170,7 +170,7 @@ export default function mountPOWERBI(router: Router) {
         '/ltl-manifest-blhd-revenue',
         validate(validators.getLtlManifest),
         respond((req: any) => sqlController.getLtlManifest(req.query))
-    );  
+    );
     router.get(
         '/supermiles-consignee',
         validate(validators.getSupermilesConsignee),
@@ -184,25 +184,25 @@ export default function mountPOWERBI(router: Router) {
     router.get(
         '/port80-containers',
         respond(() => sqlController.getPort80Containers())
-    ); 
+    );
     router.get(
         '/port80-kronos-hours',
         validate(validators.getPort80Kronos),
         respond((req: any) => sqlController.getPort80Kronos(req.query))
-    );  
+    );
     router.get(
         '/port80-pros',
         validate(validators.getPort80Pros),
         respond((req: any) => sqlController.getPort80Pros(req.query))
-    ); 
+    );
     router.get(
         '/port80-turns-nrt2port',
         respond(() => sqlController.getPort80Nrt2Port())
-    );  
+    );
     router.get(
         '/port80-turns-port2nrt',
         respond(() => sqlController.getPort80Port2Nrt())
-    ); 
+    );
     router.get(
         '/containers',
         validate(validators.getContainers),
@@ -212,5 +212,5 @@ export default function mountPOWERBI(router: Router) {
         '/weights',
         validate(validators.getWeights),
         respond((req: any) => sqlController.getWeights(req.query))
-    );    
+    );
 }

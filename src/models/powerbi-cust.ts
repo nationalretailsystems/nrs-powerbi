@@ -3,9 +3,7 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-export default new eradaniConnect.run.Sql(
-    `SELECT * FROM WOLFIASP.OLFILE5.CUST`
-);
+export default new eradaniConnect.run.Sql(`SELECT * FROM WOLFIASP.OLFILE5.CUST`);
 
 /**
  * Input Structure for SQLTemplate. Includes detailed field information such as

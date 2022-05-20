@@ -50,9 +50,9 @@ WHERE
             {
                 name: 'fromDate'
             },
-			{
-				name: 'toDate'
-			}
+            {
+                name: 'toDate'
+            }
         ]
     }
 );
@@ -69,7 +69,7 @@ export interface SQLTemplateInputBLHDQUERY {
     /**
      * @description From Date
      */
-	 toDate: number | string;	
+    toDate: number | string;
 }
 /**
  * Structure of records outputted by SQLTemplate SQL query

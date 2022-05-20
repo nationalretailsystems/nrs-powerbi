@@ -5,8 +5,7 @@ import { JSONObject } from 'src/types';
 
 export default new eradaniConnect.run.Sql(
     `SELECT * FROM WOLFIASP.OLFILE5.BLHD
-    WHERE WOLFIASP.OLFILE5.BLHD.PRODTH >= ? and 
-    WOLFIASP.OLFILE5.BLHD.PRODTH <= ?`,
+    WHERE WOLFIASP.OLFILE5.BLHD.PRODTH between ? and ?`,
     {
         params: [
             {

@@ -1,0 +1,51 @@
+      ************************************
+      * Module: wthfrcapi
+      * Generated RPG data structures
+      * and prototypes
+      * Do not modify
+      ************************************
+
+      ************************************
+      * Forecast data structure
+      ************************************
+     DForecast         DS                  Qualified
+     D                                     Template
+     DDate                             D   DatFmt(*MDY)
+     DMin                             5P 2
+     DMax                             5P 2
+     DDesc                           58A
+
+      ************************************
+      * Location data structure
+      * Record length: 22
+      ************************************
+     DLocationLen      C                   22
+     DLocation         DS                  Qualified
+     D                                     Template
+     DLat                             9P 6
+     DLon                             9P 6
+
+      ************************************
+      * Convert Location to buffer
+      ************************************
+     DLocationToBuf    PR
+     DDataStruct                           LikeDS(Location)
+     D                                     Const
+     DBuffer                         22A
+
+      ************************************
+      * Weather data structure
+      * Record length: 656
+      ************************************
+     DWeatherLen       C                   656
+     DWeather          DS                  Qualified
+     D                                     Template
+     DForecasts                            LikeDS(Forecast)
+     D                                     Dim(8)
+
+      ************************************
+      * Convert buffer to Weather
+      ************************************
+     DBufToWeather     PR
+     DBuffer                        656A
+     DDataStruct                           LikeDS(Weather)

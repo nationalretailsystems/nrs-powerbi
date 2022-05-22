@@ -28,10 +28,10 @@
      D                                     Const
      DBuffer                         10A
 
-       // Initialize to beginning of buffer
+      * Initialize to beginning of buffer
        BufPtr = %addr(Buffer);
 
-       // Write fields from DS to buffer
+      * Write fields from DS to buffer
        %subst(CharBuf:1:10) = DataStruct.Type;
        BufPtr += 10;
 
@@ -48,10 +48,10 @@
      DBuffer                         64A
      DDataStruct                           LikeDS(Traffic)
 
-       // Initialize to begining of buffer
+      * Initialize to begining of buffer
        BufPtr = %addr(Buffer);
 
-       // Read fields from buffer into DS
+      * Read fields from buffer into DS
        DataStruct.TRank = %dec(%subst(CharBuf:1:4):2:0);
        BufPtr += 4;
        DataStruct.TStrtNm = %subst(CharBuf:1:30);

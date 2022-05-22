@@ -28,10 +28,10 @@
      D                                     Const
      DBuffer                         80A
 
-       // Initialize to beginning of buffer
+      * Initialize to beginning of buffer
        BufPtr = %addr(Buffer);
 
-       // Write fields from DS to buffer
+      * Write fields from DS to buffer
        %subst(CharBuf:1:16) = DataStruct.Name;
        BufPtr += 16;
        %subst(CharBuf:1:20) = DataStruct.Addr;
@@ -70,10 +70,10 @@
      DBuffer                         62A
      DDataStruct                           LikeDS(ShipInfo)
 
-       // Initialize to begining of buffer
+      * Initialize to begining of buffer
        BufPtr = %addr(Buffer);
 
-       // Read fields from buffer into DS
+      * Read fields from buffer into DS
        DataStruct.LblSts = %subst(CharBuf:1:10);
        BufPtr += 10;
        DataStruct.ShipId = %subst(CharBuf:1:11);
@@ -102,10 +102,10 @@
      DBuffer                         76A
      DDataStruct                           LikeDS(Label)
 
-       // Initialize to begining of buffer
+      * Initialize to begining of buffer
        BufPtr = %addr(Buffer);
 
-       // Read fields from buffer into DS
+      * Read fields from buffer into DS
        DataStruct.TrackNbr = %subst(CharBuf:1:30);
        BufPtr += 30;
        DataStruct.LblPdf = %subst(CharBuf:1:23);

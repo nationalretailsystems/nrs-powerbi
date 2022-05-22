@@ -28,10 +28,10 @@
      D                                     Const
      DBuffer                         15A
 
-       // Initialize to beginning of buffer
+      * Initialize to beginning of buffer
        BufPtr = %addr(Buffer);
 
-       // Write fields from DS to buffer
+      * Write fields from DS to buffer
        %subst(CharBuf:1:15) = DataStruct.Category;
        BufPtr += 15;
 
@@ -48,10 +48,10 @@
      DBuffer                       1000A
      DDataStruct                           LikeDS(ResData)
 
-       // Initialize to begining of buffer
+      * Initialize to begining of buffer
        BufPtr = %addr(Buffer);
 
-       // Read fields from buffer into DS
+      * Read fields from buffer into DS
        DataStruct.Joke = %subst(CharBuf:1:1000);
        BufPtr += 1000;
 

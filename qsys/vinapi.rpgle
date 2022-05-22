@@ -28,10 +28,10 @@
      D                                     Const
      DBuffer                         23A
 
-       // Initialize to beginning of buffer
+      * Initialize to beginning of buffer
        BufPtr = %addr(Buffer);
 
-       // Write fields from DS to buffer
+      * Write fields from DS to buffer
        %subst(CharBuf:1:17) = DataStruct.Vin;
        BufPtr += 17;
        %subst(CharBuf:1:6) = %char(DataStruct.Year);
@@ -50,10 +50,10 @@
      DBuffer                         75A
      DDataStruct                           LikeDS(VinInfo)
 
-       // Initialize to begining of buffer
+      * Initialize to begining of buffer
        BufPtr = %addr(Buffer);
 
-       // Read fields from buffer into DS
+      * Read fields from buffer into DS
        DataStruct.ElecLvl = %subst(CharBuf:1:35);
        BufPtr += 35;
        DataStruct.FlTypPrim = %subst(CharBuf:1:15);

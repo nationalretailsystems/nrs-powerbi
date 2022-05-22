@@ -28,5 +28,5 @@ src/config/keys/*.key
 temp/**
 !temp/.gitignore
 !temp/**/.gitignore
-native/*.js
-native/*.ts
+qsys/*.js
+qsys/*.ts

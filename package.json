@@ -17,7 +17,7 @@
         "start:debug": "node --inspect dist/src/app.js && printf \"\u001b[1;36mOpen an SSH Tunnel on your local machine with \u001b[1;32mssh -L 9229:localhost:9229 user@your.server.address\u001b[0m\"&& printf \"\u001b[1;36mThen the Chrome interactive debugger \u001b[1;32mopen chrome://inspect in Google Chrome and click Open Dedicated Development Tools for Node\u001b[0m\"",
         "test": "npx mocha ./dist/tests",
         "clean": "npx shx rm -rf dist",
-        "docs": "ls /QOpenSys/opt || npx typedoc --out docs src && printf \"\u001b[1;36mView Generated Documentation with \u001b[1;32mnpm run view-docs\u001b[0m\"",
+        "docs": "ls /QOpenSys/opt || npx typedoc --cleanOutputDir --entryPointStrategy expand src && printf \"\u001b[1;36mView Generated Documentation with \u001b[1;32mnpm run view-docs\u001b[0m\"",
         "install-npm": "cd dist && npx shx ln -s ../node_modules node_modules && cd ..",
         "link-keys": "(ls /QOpenSys/opt && npx shx ln -s /QOpenSys/opt/eradani/.npmrc .npmrc) || npx shx echo \"Product Key Link Skipped. Consult terminal output for details.\"",
         "build:dev": "npx ttsc --p ./tsconfig.json",

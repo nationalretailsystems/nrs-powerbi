@@ -4,8 +4,8 @@
     "description": "Eradani Connect InOut Template Application",
     "main": "dist/src/app.js",
     "scripts": {
-        "setup": "npm run link-keys && npm run create-objects && npm install && npm run build-connectors && npm run generate-config && npm run build-native && npm run package:release && npm run update-eol && npm run set-permissions",
-        "build-native": "(ls /QOpenSys/opt && make -C qsys) || npx shx echo \"IBM i Asset Build Failed\"",
+        "setup": "npm run link-keys && npm run create-objects && npm install && npm run build-connectors && npm run generate-config && npm run build-qsys && npm run package:release && npm run update-eol && npm run set-permissions",
+        "build-qsys": "(ls /QOpenSys/opt && make -C qsys) || npx shx echo \"IBM i Asset Build Failed\"",
         "build-interfaces": "make -C qsys library -i && make -C qsys generatedtssrc -i",
         "build-connectors": "(ls /QOpenSys/opt && cd node_modules/@eradani-inc/ec-client && make -C native library && make -C native) || npx shx echo \"Connector Build Failed\"",
         "create-objects": "(ls /QOpenSys/opt && ((system \"CRTLIB LIB(ECNCTSBS) TEXT('Eradani Connect Subsystem library')\" || npx shx echo \"Subsystem Library Already Exists\") && system \"CRTCLS CLS(ECNCTSBS/ECIDEV) TEXT('Class for Eradani Connect subsystem')\" && system \"CRTJOBQ JOBQ(ECNCTSBS/ECIDEV) TEXT('Job queue for Eradani Connect jobs')\" && system \"CRTJOBD JOBD(ECNCTSBS/ECIDEV) JOBQ(ECNCTSBS/ECIDEV) TEXT('Eradani Connect job description') USER(ECNCT) PRTTXT('Eradani Connect jobs') RQSDTA('call PGM(QP2SHELL) PARM(''/QOpenSys/opt/eradani/eradani-inout-template/start.sh'')')\" && system \"CRTSBSD SBSD(ECNCTSBS/ECIDEV) POOLS((1 *BASE)) MAXJOBS(30) TEXT('Eradani Connect subsystem description')\" && system \"ADDJOBQE SBSD(ECNCTSBS/ECIDEV) JOBQ(ECNCTSBS/ECIDEV) MAXACT(15)\" && system \"ADDRTGE SBSD(ECNCTSBS/ECIDEV) SEQNBR(9999) CMPVAL(*ANY) PGM(QSYS/QCMD) CLS(ECNCTSBS/ECIDEV)\" && system \"ADDAJE SBSD(ECNCTSBS/ECIDEV) JOB(ECIDEV) JOBD(ECNCTSBS/ECIDEV)\")) || npx shx echo \"QSYS Object Creation Skipped. Consult terminal output for details.\"",

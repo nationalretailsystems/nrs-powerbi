@@ -129,7 +129,9 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
 const _protectedMessage = '**PROTECTED FIELD**';
 function _filterProtectedFields(req: any) {
     for (let field of protectedFields) {
-        if (req.body[field] !== undefined) req.body[field] = _protectedMessage;
+        if (req.body[field] !== undefined) {
+            req.body[field] = _protectedMessage;
+        }
         if (req.query[field] !== undefined) {
             req.query[field] = _protectedMessage;
             logger.warn(
@@ -137,9 +139,15 @@ function _filterProtectedFields(req: any) {
                 { field }
             );
         }
-        if (req.params[field] !== undefined) req.params[field] = _protectedMessage;
-        if (req.user?.[field] !== undefined) req.user[field] = _protectedMessage;
-        if (req.headers[field] !== undefined) req.headers[field] = _protectedMessage;
+        if (req.params[field] !== undefined) {
+            req.params[field] = _protectedMessage;
+        }
+        if (req.user?.[field] !== undefined) {
+            req.user[field] = _protectedMessage;
+        }
+        if (req.headers[field] !== undefined) {
+            req.headers[field] = _protectedMessage;
+        }
     }
 }
 

@@ -40,7 +40,9 @@ export async function getStatus(timeout: number = defaultTimeout) {
             try {
                 logger.error('Error checking service status', { service, err });
                 results[service.name] = serviceUnreachable(service, timeout);
-            } catch {}
+            } catch (e) {
+                console.log('Unknown Error', e);
+            }
         }
     }
 

@@ -34,6 +34,8 @@ export function generateJWT(userData: JWTUserData) {
 export function dashboardLoginCredentialsCheck(req: object, username: any, password: any) {
     const swaggerUserName = dashboardCredentials.username;
     const passwordMatch = bcrypt.compareSync(password, hashPassword);
-    if (req) return scmp(Buffer.from(username), Buffer.from(swaggerUserName)) && passwordMatch;
+    if (req) {
+        return scmp(Buffer.from(username), Buffer.from(swaggerUserName)) && passwordMatch;
+    }
     return false;
 }

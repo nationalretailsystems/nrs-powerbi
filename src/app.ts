@@ -7,7 +7,7 @@ export { shutdown, killImmediate } from 'src/services/shutdown';
 import { shutdown } from 'src/services/shutdown';
 import * as healthCheckService from 'src/services/health-check';
 import transport from 'src/services/connection';
-import * as ec from '@eradani-inc/eradani-connect';
+import ec from '@eradani-inc/eradani-connect';
 
 import createLogger from 'src/services/logger';
 const logger = createLogger('app');

@@ -11,7 +11,10 @@ import swStats from 'swagger-stats';
 import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
+import * as user from 'src/controllers/user';
+
 // If you want realtime services: import socketIO from 'socket.io';
+const dashboardLogin: Function = user.dashboardLoginCredentialsCheck;
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 
@@ -30,9 +33,11 @@ async function loadSwagger() {
         if (config?.swagger?.disableDashboard) {
             return undefined;
         }
+
         return {
             v2: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec.json'))).toString()),
-            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString())
+            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString()),
+            onAuthenticate: dashboardLogin
         };
     } catch (e) {
         logger.warn('Failed to load swagger spec. Disabling swagger-dependent dashboards.', e);
@@ -94,7 +99,15 @@ function setUpAPI(swaggerSpec?: any) {
     app.use(cors());
 
     if (swaggerSpec && !config?.swagger?.disableDashboard) {
-        app.use(swStats.getMiddleware({ swaggerSpec: swaggerSpec.v3, uriPath: '/dashboard/stats' }));
+        app.use(
+            swStats.getMiddleware({
+                swaggerSpec: swaggerSpec.v3,
+                uriPath: '/dashboard/stats',
+                authentication: config.swagger.auth.enabled,
+                sessionMaxAge: config.swagger.auth.sessionMaxAge,
+                onAuthenticate: swaggerSpec.onAuthenticate
+            })
+        );
         app.use('/dashboard/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec.v3));
         app.use('/api-spec/v2', (_, res) => res.status(200).json(swaggerSpec.v2));
         app.use('/api-spec/v3', (_, res) => res.status(200).json(swaggerSpec.v3));

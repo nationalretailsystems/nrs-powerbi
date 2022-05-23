@@ -11,25 +11,49 @@ import swStats from 'swagger-stats';
 import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
+import * as user from 'src/controllers/user';
+import * as shutdownService from 'src/services/shutdown';
+
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
+let _server: http.Server;
 
-export const startup = loadSwagger()
-    .then(setUpAPI)
-    .then(startServer)
-    .catch((err: any) => {
-        logger.error('ERROR ON STARTUP', err);
-    })
-    .catch((err: any) => {
-        console.log('ERROR ON STARTUP: ', err);
+export const start = () => {
+    shutdownService.register('inbound', { close: () => stop() });
+    return loadSwagger()
+        .then(setUpAPI)
+        .then(startServer)
+        .catch((err: any) => {
+            logger.error('ERROR ON STARTUP', err);
+        })
+        .catch((err: any) => {
+            console.log('ERROR ON STARTUP: ', err);
+        });
+};
+
+export const stop = (): Promise<Error | null> => {
+    return new Promise((resolve, reject) => {
+        if (!_server || !_server.listening) {
+            return reject(new Error('Server is not running'));
+        }
+
+        _server.close((err) => {
+            if (err) {
+                return reject(err);
+            }
+            logger.debug('HTTP Server Closed');
+            resolve(null);
+        });
     });
+};
 
 async function loadSwagger() {
     try {
         if (config?.swagger?.disableDashboard) {
             return undefined;
         }
+
         return {
             v2: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec.json'))).toString()),
             v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString())
@@ -70,9 +94,10 @@ function startServer(app: Express.Application) {
         }
     });
 
-    server.listen(process.env.PORT || config.app.port);
-    logger.info(`Server listening on port ${process.env.PORT || config.app.port}`);
+    server.listen(config.app.port, config.app.host);
+    logger.info(`Server listening on port ${config.app.port}`);
 
+    _server = server;
     return { server };
 }
 
@@ -94,7 +119,15 @@ function setUpAPI(swaggerSpec?: any) {
     app.use(cors());
 
     if (swaggerSpec && !config?.swagger?.disableDashboard) {
-        app.use(swStats.getMiddleware({ swaggerSpec: swaggerSpec.v3, uriPath: '/dashboard/stats' }));
+        app.use(
+            swStats.getMiddleware({
+                swaggerSpec: swaggerSpec.v3,
+                uriPath: '/dashboard/stats',
+                authentication: config.swagger.auth.enabled,
+                sessionMaxAge: config.swagger.auth.sessionMaxAge,
+                onAuthenticate: user.dashboardLoginCredentialsCheck
+            })
+        );
         app.use('/dashboard/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec.v3));
         app.use('/api-spec/v2', (_, res) => res.status(200).json(swaggerSpec.v2));
         app.use('/api-spec/v3', (_, res) => res.status(200).json(swaggerSpec.v3));

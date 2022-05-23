@@ -6,3 +6,4 @@ package-lock.json
 .coverage/**
 docs/**
 **/validators.ts
+oas/**

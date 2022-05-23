@@ -2,4 +2,6 @@ src/config/**
 native/**
 src/interfaces/**
 dist/**
+oas/**
 *.js
+*.json

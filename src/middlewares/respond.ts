@@ -126,16 +126,20 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
  *
  * @param {Request} req
  */
- function _filterProtectedFields(req: any) {
+const _protectedMessage = '**PROTECTED FIELD**';
+function _filterProtectedFields(req: any) {
     for (let field of protectedFields) {
-        if (req.body[field] !== undefined) req.body[field] = '**PROTECTED FIELD**';
+        if (req.body[field] !== undefined) req.body[field] = _protectedMessage;
         if (req.query[field] !== undefined) {
-            req.query[field] = '**PROTECTED FIELD**';
-            logger.warn('Protected field in query string. Sensitive should not be sent in query strings because it cannot be adequately protected', {field});
+            req.query[field] = _protectedMessage;
+            logger.warn(
+                'Protected field found in query string. Sensitive data should not be sent in query strings because it cannot be adequately protected',
+                { field }
+            );
         }
-        if (req.params[field] !== undefined) req.params[field] = '**PROTECTED FIELD**';
-        if (req.user?.[field] !== undefined) req.user[field] = '**PROTECTED FIELD**';
-        if (req.headers[field] !== undefined) req.headers[field] = '**PROTECTED FIELD**';
+        if (req.params[field] !== undefined) req.params[field] = _protectedMessage;
+        if (req.user?.[field] !== undefined) req.user[field] = _protectedMessage;
+        if (req.headers[field] !== undefined) req.headers[field] = _protectedMessage;
     }
 }
 

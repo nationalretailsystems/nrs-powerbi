@@ -14,7 +14,6 @@ import path from 'path';
 import * as user from 'src/controllers/user';
 
 // If you want realtime services: import socketIO from 'socket.io';
-const dashboardLogin: Function = user.dashboardLoginCredentialsCheck;
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 
@@ -36,8 +35,7 @@ async function loadSwagger() {
 
         return {
             v2: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec.json'))).toString()),
-            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString()),
-            onAuthenticate: dashboardLogin
+            v3: JSON.parse((await readFile(path.join(__dirname, '../../oas/spec_v3.json'))).toString())
         };
     } catch (e) {
         logger.warn('Failed to load swagger spec. Disabling swagger-dependent dashboards.', e);
@@ -105,7 +103,7 @@ function setUpAPI(swaggerSpec?: any) {
                 uriPath: '/dashboard/stats',
                 authentication: config.swagger.auth.enabled,
                 sessionMaxAge: config.swagger.auth.sessionMaxAge,
-                onAuthenticate: swaggerSpec.onAuthenticate
+                onAuthenticate: user.dashboardLoginCredentialsCheck
             })
         );
         app.use('/dashboard/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec.v3));

@@ -6,11 +6,15 @@ import createLogger from 'src/services/logger';
 const { ecclient, debug } = config;
 import registerCommands from 'src/commands';
 
+import * as shutdownService from 'src/services/shutdown';
+
 const logger = createLogger('outbound');
 const requestLogger = createLogger('requests');
 let router: ECCRouter;
 
 export async function start() {
+    shutdownService.register('outbound', { close: () => stop() });
+
     const ecc = new ECClient(ecclient);
     router = new ECCRouter(ecc, { logger: requestLogger, debug });
 

@@ -14,7 +14,7 @@ const logger = createLogger('app');
 
 const modules: any[] = [];
 if (config.app.inbound) {
-    modules.push(inbound.startup);
+    modules.push(inbound.start());
 }
 
 if (config.app.outbound) {

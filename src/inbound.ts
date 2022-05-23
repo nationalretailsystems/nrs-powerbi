@@ -12,20 +12,41 @@ import swaggerUi from 'swagger-ui-express';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
+import * as shutdownService from 'src/services/shutdown';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
+let _server: http.Server;
 
-export const startup = loadSwagger()
-    .then(setUpAPI)
-    .then(startServer)
-    .catch((err: any) => {
-        logger.error('ERROR ON STARTUP', err);
-    })
-    .catch((err: any) => {
-        console.log('ERROR ON STARTUP: ', err);
+export const start = () => {
+    shutdownService.register('inbound', { close: () => stop() });
+    return loadSwagger()
+        .then(setUpAPI)
+        .then(startServer)
+        .catch((err: any) => {
+            logger.error('ERROR ON STARTUP', err);
+        })
+        .catch((err: any) => {
+            console.log('ERROR ON STARTUP: ', err);
+        });
+};
+
+export const stop = (): Promise<Error | null> => {
+    return new Promise((resolve, reject) => {
+        if (!_server || !_server.listening) {
+            return reject(new Error('Server is not running'));
+        }
+
+        _server.close((err) => {
+            if (err) {
+                return reject(err);
+            }
+            logger.debug('HTTP Server Closed');
+            resolve(null);
+        });
     });
+};
 
 async function loadSwagger() {
     try {
@@ -76,6 +97,7 @@ function startServer(app: Express.Application) {
     server.listen(process.env.PORT || config.app.port);
     logger.info(`Server listening on port ${process.env.PORT || config.app.port}`);
 
+    _server = server;
     return { server };
 }
 

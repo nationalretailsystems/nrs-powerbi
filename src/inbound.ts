@@ -94,8 +94,8 @@ function startServer(app: Express.Application) {
         }
     });
 
-    server.listen(process.env.PORT || config.app.port);
-    logger.info(`Server listening on port ${process.env.PORT || config.app.port}`);
+    server.listen(config.app.port, config.app.host);
+    logger.info(`Server listening on port ${config.app.port}`);
 
     _server = server;
     return { server };

@@ -224,3 +224,4 @@ clean:
 	-rm $(LCLGENTSSRC)
 	-rm $(LCLGENJSSRC)
 	-rm $(FQTSGENSRC)
+	-rm $(FQINBOUNDPGMS)

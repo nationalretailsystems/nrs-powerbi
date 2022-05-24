@@ -2,7 +2,6 @@ import express, { Router } from 'express';
 import mountRPG from './rpg';
 import mountSQL from './sql';
 import mountPOWERBI from './powerbi';
-import mountFourKites from './fourkites';
 import mountPinc from './pinc';
 
 export default function mountAPI(router: Router) {
@@ -19,10 +18,6 @@ export default function mountAPI(router: Router) {
     const powerbi = express.Router();
     mountPOWERBI(powerbi);
     router.use('/powerbi', powerbi);
-
-    const fourkites = express.Router();
-    mountFourKites(fourkites);
-    router.use('/fourkites', fourkites);
 
     const pinc = express.Router();
     mountPinc(pinc);

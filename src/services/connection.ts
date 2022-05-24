@@ -4,19 +4,14 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import createLogger from 'src/services/logger';
 const logger = createLogger('eradani-inc/eradani-connect');
 
-const transport = new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc, {
-    ...config.eradaniConnect.odbcOptions,
-    logger
-});
-
 export const powerbiTransports = {
     wolf: new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc, {
-        ...Object.assign({}, config.eradaniConnect.odbcOptions, { noPool: true }),
+        ...config.eradaniConnect.odbcOptions,
         logger
     }),
 
     lawson: new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc2, {
-        ...Object.assign({}, config.eradaniConnect.odbcOptions, { noPool: true }),
+        ...config.eradaniConnect.odbcOptions,
         logger
     })
 };
@@ -32,4 +27,4 @@ const transport = new eradaniConnect.transports.Xml(
 */
 
 // X export default transport;
-export default transport;
+export default powerbiTransports.wolf;

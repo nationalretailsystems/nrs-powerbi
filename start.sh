@@ -7,7 +7,5 @@ export NODE_ENV
 
 PATH=$NODE_HOME:$PATH
 
-nginx -s reload || nginx
-
 cd $ECNCT_HOME
 npm start

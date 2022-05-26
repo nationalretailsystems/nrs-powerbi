@@ -38,6 +38,14 @@ Follow this steps to get started:
       
       npm start
 
+- after server starts in bottom right corner there will be popup 
+
+  > Your application running on port 3001 is available.
+
+  You can now visit following links in your browser:
+
+  - http://localhost:3001/dashboard/docs/
+  - http://localhost:3001/dashboard/stats/
 
 ## Features
 

@@ -213,4 +213,8 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getWeights),
         respond((req: any) => sqlController.getWeights(req.query))
     );
+    router.get(
+        '/locations',
+        respond(() => sqlController.getLocations())
+    );
 }

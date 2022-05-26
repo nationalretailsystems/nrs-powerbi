@@ -2,6 +2,43 @@
 
 This server provides a Template API, using Eradani Connect to access the required IBM i resources. 
 
+## Setup using developer container and vscode
+
+The fastest way to start working with this project is by using dev container and vscode.
+
+Follow this steps to get started:
+
+- [install docker](https://docs.docker.com/get-docker/)
+
+- [install vscode](https://code.visualstudio.com/Download)
+
+- open this folder using vscode
+
+- setup config file
+
+- in vscode install extension: [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+- after extension is installed press F1 and enter/select: "Remote-Containers: Reopen in Container"
+
+  On first time installation takes some time, you can look at install log by pressing "(show log)" in bottom right corner.
+
+  Next time you open project in container it will start faster.
+
+  > **💡 Tip:**
+  > 
+  > If installation seems to be frozen for a long time as indicated by no change in logs, it is safe to close vscode and try again.
+
+- all commands execute using build in vscode terminal
+
+- after editing code compile project
+
+      npm run package:dev
+
+- now you can start server if you want 
+      
+      npm start
+
+
 ## Features
 
 This application is a production-ready TypeScript/Express webserver preconfigured with several helpful programming tools:

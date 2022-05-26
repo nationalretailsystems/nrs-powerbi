@@ -60,6 +60,7 @@ import SQLTemplateNRT2PORT, { SQLTemplateOutputNRT2PORT } from 'src/models/power
 import SQLTemplatePORT2NRT, { SQLTemplateOutputPORT2NRT } from 'src/models/powerbi-port80turnsport2nrt';
 import SQLTemplateCONT, { SQLTemplateInputCONT, SQLTemplateOutputCONT } from 'src/models/powerbi-containers';
 import SQLTemplateWEIGHTS, { SQLTemplateInputWEIGHTS, SQLTemplateOutputWEIGHTS } from 'src/models/powerbi-weights';
+import SQLTemplateLOCATION, { SQLTemplateOutputLOCATION } from 'src/models/powerbi-locations';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -407,4 +408,8 @@ export async function getWeights(inputs: JSONObject): Promise<SQLTemplateOutputW
         building: inputs.building
     };
     return powerbiTransports.wolf.execute(SQLTemplateWEIGHTS, params) as Promise<SQLTemplateOutputWEIGHTS>;
+}
+export async function getLocations(): Promise<SQLTemplateOutputLOCATION> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateLOCATION) as Promise<SQLTemplateOutputLOCATION>;
 }

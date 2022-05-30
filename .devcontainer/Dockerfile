@@ -16,7 +16,8 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 # RUN su node -c "npm install -g <your-package-list -here>"
 
 # https://github.com/mkleehammer/pyodbc/issues/441
-RUN apt-get update && apt-get install -y unixodbc-dev
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get install -y unixodbc-dev
 
 COPY ./ibm-iaccess-1.1.0.15-1.0.amd64.deb ./
 # https://askubuntu.com/questions/40011/how-to-let-dpkg-i-install-dependencies-for-me

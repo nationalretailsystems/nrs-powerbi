@@ -32,7 +32,7 @@
     // "shutdownAction": "none",
 
     // Uncomment the next line to run commands after the container is created - for example installing curl.
-    // 
+    //
     // Warning:
     // git is customized after this command, so global author wont be used if this command fails
     "postCreateCommand": "npm install && npm run package:dev",

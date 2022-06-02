@@ -29,5 +29,10 @@
     "postCreateCommand": "npm install && npm run package:dev",
 
     // Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
-    "remoteUser": "node"
+    "remoteUser": "node",
+
+    // Allows running as rootless podman container
+    // see: https://www.troykershaw.com/posts/vscode-dev-containers-podman/
+    "runArgs": ["--userns=keep-id"],
+    "containerEnv": { "HOME": "/home/node" }
 }

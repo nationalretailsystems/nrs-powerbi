@@ -16,8 +16,9 @@ export default new eradaniConnect.run.Sql(
              ON BLDT.SDESCD = TDESC.DCODEC
              WHERE ((PRODTH BETWEEN ? AND ?))
              AND ACCT#H between  ? and ?
-             AND ORICCH IN ( ? )         
+             AND ORICCH BETWEEN ? and ?       
             `,
+                       //  AND ORICCH IN ( ? )  
     {
         params: [
             {
@@ -33,7 +34,10 @@ export default new eradaniConnect.run.Sql(
                 name: 'customer2'
             },
             {
-                name: 'costcenter'
+                name: 'costcenter1'
+            },
+            {
+                name: 'costcenter2'
             }
         ]
     }
@@ -56,7 +60,11 @@ export interface SQLTemplateInput2 {
     /**
      * @description Cost Center
      */
-    costcenter: string | string;
+    costcenter1: string | string;
+    /**
+     * @description Cost Center
+     */
+    costcenter2: string | string;
     /**
      * @description Customer Number
      */

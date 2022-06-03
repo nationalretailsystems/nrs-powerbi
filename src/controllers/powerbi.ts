@@ -93,7 +93,8 @@ export async function getCCRevenue(inputs: JSONObject): Promise<SQLTemplateOutpu
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
         customer1: inputs.customer || '1',
         customer2: inputs.customer || '99999',
-        costcenter: inputs.costcenter
+        costcenter1: inputs.costcenter || '    ',
+        costcenter2: inputs.costcenter || '9999'
     };
     return powerbiTransports.wolf.execute(SQLTemplate2, params) as Promise<SQLTemplateOutput2>;
 }

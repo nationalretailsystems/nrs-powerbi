@@ -33,6 +33,6 @@
 
     // Allows running as rootless podman container
     // see: https://www.troykershaw.com/posts/vscode-dev-containers-podman/
-    "runArgs": ["--userns=keep-id"], // for docker comment out this line
+    // "runArgs": ["--userns=keep-id"], // for podman uncomment this line
     "containerEnv": { "HOME": "/home/node" }
 }

@@ -31,25 +31,31 @@ function setup_nginx(){
   # Unzip nginx configuration
   printf "Unzipping nginx configuration\n\n"
   unzip nginx-configuration.zip
+
   # Copy nginx.conf over existing one
   printf "Copying nginx.conf over existing one\n\n"
   cp nginx-configuration/nginx.conf $NGINX_ETC_FOLDER/nginx.conf
+
   # Create directories: logs, sites-available, sites-enabled, tls
   printf "Creating directories: logs, sites-available, sites-enabled, tls\n\n"
   mkdir -p $NGINX_ETC_FOLDER/logs
   mkdir -p $NGINX_ETC_FOLDER/sites-available
   mkdir -p $NGINX_ETC_FOLDER/sites-enabled
   mkdir -p $NGINX_ETC_FOLDER/tls
+
   # copy template site configuration into sites-available twice (once as template, once as ec-app.conf )
   printf "Copying template site configuration into sites-available\n\n"
   cp nginx-configuration/sites-available/template.conf $NGINX_ETC_FOLDER/sites-available/template.conf
   cp nginx-configuration/sites-available/template.conf $NGINX_ETC_FOLDER/sites-available/ec-app.conf
+
   # symlink ec-app.conf to sites-enabled
   printf "Enabling site: ec-app\n\n"
   ln -s $NGINX_ETC_FOLDER/sites-available/ec-app.conf $NGINX_ETC_FOLDER/sites-enabled/ec-app.conf
+
   # copy our tls.conf into tls directory
   printf "Copying TLS settings\n\n"
   cp nginx-configuration/tls/tls.conf $NGINX_ETC_FOLDER/tls/tls.conf
+
   # generate self-signed cert
   printf "Generating Self-Signed TLS Certificate\n"
   printf "  Certificate Location: $NGINX_ETC_FOLDER/tls/certificate.pem\n"
@@ -61,6 +67,7 @@ function setup_nginx(){
   openssl x509 -req -days 365 -in cert.csr -signkey key.pem -out certificate.pem
   rm cert.csr
   mv key.pem certificate.pem $NGINX_ETC_FOLDER/tls
+
   # generate dhparams
   printf "Generating dhparams\n\n"
   openssl dhparam -dsaparam -out $NGINX_ETC_FOLDER/tls/dhparam.pem 4096

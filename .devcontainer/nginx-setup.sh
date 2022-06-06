@@ -57,3 +57,5 @@ function setup_nginx(){
   (date +"%Y-%m-%d %T") 
   printf "Finished NginX Configuration\n\n"
 }
+
+setup_nginx

@@ -1,4 +1,9 @@
 
+# Exit on error
+# https://stackoverflow.com/questions/64786/error-handling-in-bash
+# https://mywiki.wooledge.org/BashFAQ/105
+set -e
+
 function setup_nginx(){
   printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
   printf "Setting up NginX TLS Reverse Proxy Server\n\n"

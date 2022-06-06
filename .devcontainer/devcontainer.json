@@ -37,7 +37,7 @@
     //
     // Warning:
     // git is customized after this command, so global author wont be used if this command fails
-    "postCreateCommand": "sudo service nginx start && npm install && npm run package:dev",
+    "postCreateCommand": "sudo service nginx start; npm install; npm run package:dev; exit 0",
 
     // Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "node",

@@ -4,6 +4,9 @@
 # https://mywiki.wooledge.org/BashFAQ/105
 set -e
 
+# Variables
+NGINX_ETC_FOLDER=/QOpenSys/etc/nginx
+
 function setup_nginx(){
   printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
   printf "Setting up NginX TLS Reverse Proxy Server\n\n"
@@ -25,27 +28,27 @@ function setup_nginx(){
   unzip nginx-configuration.zip
   # Copy nginx.conf over existing one
   printf "Copying nginx.conf over existing one\n\n"
-  cp nginx-configuration/nginx.conf /QOpenSys/etc/nginx/nginx.conf
+  cp nginx-configuration/nginx.conf $NGINX_ETC_FOLDER/nginx.conf
   # Create directories: logs, sites-available, sites-enabled, tls
   printf "Creating directories: logs, sites-available, sites-enabled, tls\n\n"
-  mkdir /QOpenSys/etc/nginx/logs
-  mkdir /QOpenSys/etc/nginx/sites-available
-  mkdir /QOpenSys/etc/nginx/sites-enabled
-  mkdir /QOpenSys/etc/nginx/tls
+  mkdir $NGINX_ETC_FOLDER/logs
+  mkdir $NGINX_ETC_FOLDER/sites-available
+  mkdir $NGINX_ETC_FOLDER/sites-enabled
+  mkdir $NGINX_ETC_FOLDER/tls
   # copy template site configuration into sites-available twice (once as template, once as ec-app.conf )
   printf "Copying template site configuration into sites-available\n\n"
-  cp nginx-configuration/sites-available/template.conf /QOpenSys/etc/nginx/sites-available/template.conf
-  cp nginx-configuration/sites-available/template.conf /QOpenSys/etc/nginx/sites-available/ec-app.conf
+  cp nginx-configuration/sites-available/template.conf $NGINX_ETC_FOLDER/sites-available/template.conf
+  cp nginx-configuration/sites-available/template.conf $NGINX_ETC_FOLDER/sites-available/ec-app.conf
   # symlink ec-app.conf to sites-enabled
   printf "Enabling site: ec-app\n\n"
-  ln -s /QOpenSys/etc/nginx/sites-available/ec-app.conf /QOpenSys/etc/nginx/sites-enabled/ec-app.conf
+  ln -s $NGINX_ETC_FOLDER/sites-available/ec-app.conf $NGINX_ETC_FOLDER/sites-enabled/ec-app.conf
   # copy our tls.conf into tls directory
   printf "Copying TLS settings\n\n"
-  cp nginx-configuration/tls/tls.conf /QOpenSys/etc/nginx/tls/tls.conf
+  cp nginx-configuration/tls/tls.conf $NGINX_ETC_FOLDER/tls/tls.conf
   # generate self-signed cert
   printf "Generating Self-Signed TLS Certificate\n"
-  printf "  Certificate Location: /QOpenSys/etc/nginx/tls/certificate.pem\n"
-  printf "  Key Location: /QOpenSys/etc/nginx/tls/key.pem\n"
+  printf "  Certificate Location: $NGINX_ETC_FOLDER/tls/certificate.pem\n"
+  printf "  Key Location: $NGINX_ETC_FOLDER/tls/key.pem\n"
   printf "Replace these files if you have your own publicly trusted TLS certificate\n\n"
   read -p "Enter hostname for this machine: " host
   sed -i "s/IBMI_HOSTNAME/$host/g" nginx-configuration/tls/openssl.conf
@@ -53,10 +56,10 @@ function setup_nginx(){
   openssl req -new -key key.pem -out cert.csr -config nginx-configuration/tls/openssl.conf > cert.csr
   openssl x509 -req -days 365 -in cert.csr -signkey key.pem -out certificate.pem
   rm cert.csr
-  mv key.pem certificate.pem /QOpenSys/etc/nginx/tls
+  mv key.pem certificate.pem $NGINX_ETC_FOLDER/tls
   # generate dhparams
   printf "Generating dhparams\n\n"
-  openssl dhparam -dsaparam -out /QOpenSys/etc/nginx/tls/dhparam.pem 4096
+  openssl dhparam -dsaparam -out $NGINX_ETC_FOLDER/tls/dhparam.pem 4096
   printf "Testing NginX Configuration"
   nginx -t
   (date +"%Y-%m-%d %T") 

@@ -18,14 +18,15 @@
 
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
-        "dbaeumer.vscode-eslint",
-        "MariusAlchimavicius.json-to-ts",
-        "HalcyonTechLtd.ibm-i-development-pack",
-        "HookyQR.beautify",
-        "Kelvin.vscode-sshfs",
-        "ExodiusStudios.comment-anchors",
-        "mhutchie.git-graph"
-    ],
+		"dbaeumer.vscode-eslint",
+		"MariusAlchimavicius.json-to-ts",
+		"HalcyonTechLtd.ibm-i-development-pack",
+		"HookyQR.beautify",
+		"Kelvin.vscode-sshfs",
+		"ExodiusStudios.comment-anchors",
+		"mhutchie.git-graph",
+		"streetsidesoftware.code-spell-checker"
+	],
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],

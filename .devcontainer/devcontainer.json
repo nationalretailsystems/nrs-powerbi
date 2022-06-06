@@ -26,7 +26,8 @@
 		"ExodiusStudios.comment-anchors",
 		"mhutchie.git-graph",
 		"streetsidesoftware.code-spell-checker",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"yzhang.markdown-all-in-one"
 	],
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.

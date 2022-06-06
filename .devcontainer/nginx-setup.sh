@@ -31,10 +31,10 @@ function setup_nginx(){
   cp nginx-configuration/nginx.conf $NGINX_ETC_FOLDER/nginx.conf
   # Create directories: logs, sites-available, sites-enabled, tls
   printf "Creating directories: logs, sites-available, sites-enabled, tls\n\n"
-  mkdir $NGINX_ETC_FOLDER/logs
-  mkdir $NGINX_ETC_FOLDER/sites-available
-  mkdir $NGINX_ETC_FOLDER/sites-enabled
-  mkdir $NGINX_ETC_FOLDER/tls
+  mkdir -p $NGINX_ETC_FOLDER/logs
+  mkdir -p $NGINX_ETC_FOLDER/sites-available
+  mkdir -p $NGINX_ETC_FOLDER/sites-enabled
+  mkdir -p $NGINX_ETC_FOLDER/tls
   # copy template site configuration into sites-available twice (once as template, once as ec-app.conf )
   printf "Copying template site configuration into sites-available\n\n"
   cp nginx-configuration/sites-available/template.conf $NGINX_ETC_FOLDER/sites-available/template.conf

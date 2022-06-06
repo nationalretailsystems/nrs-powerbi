@@ -5,7 +5,7 @@
 set -e
 
 # Variables
-NGINX_ETC_FOLDER=/QOpenSys/etc/nginx
+NGINX_ETC_FOLDER=/etc/nginx
 
 function setup_nginx(){
   printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")

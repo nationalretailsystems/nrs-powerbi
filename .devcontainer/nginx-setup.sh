@@ -6,6 +6,7 @@ set -e
 
 # Variables
 NGINX_ETC_FOLDER=/etc/nginx
+HOSTNAME=dev
 
 function setup_nginx(){
   printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
@@ -50,8 +51,7 @@ function setup_nginx(){
   printf "  Certificate Location: $NGINX_ETC_FOLDER/tls/certificate.pem\n"
   printf "  Key Location: $NGINX_ETC_FOLDER/tls/key.pem\n"
   printf "Replace these files if you have your own publicly trusted TLS certificate\n\n"
-  read -p "Enter hostname for this machine: " host
-  sed -i "s/IBMI_HOSTNAME/$host/g" nginx-configuration/tls/openssl.conf
+  sed -i "s/IBMI_HOSTNAME/$HOSTNAME/g" nginx-configuration/tls/openssl.conf
   openssl genrsa -out key.pem 4096
   openssl req -new -key key.pem -out cert.csr -config nginx-configuration/tls/openssl.conf > cert.csr
   openssl x509 -req -days 365 -in cert.csr -signkey key.pem -out certificate.pem

@@ -72,6 +72,7 @@ function setup_nginx(){
   printf "Generating dhparams\n\n"
   openssl dhparam -dsaparam -out $NGINX_ETC_FOLDER/tls/dhparam.pem 4096
 
+  # Replace production values with development values in configuration files
   printf "Replace production values with development values\n\n"
 
   sed -i "s/user  $USER_IN_CONFIGURATION;/user  $USER;/g" $NGINX_ETC_FOLDER/nginx.conf

@@ -7,6 +7,10 @@ set -e
 # Variables
 NGINX_ETC_FOLDER=/etc/nginx
 HOSTNAME=dev
+USER=www-data
+
+NGINX_ETC_FOLDER_IN_CONFIGURATION=/QOpenSys/etc/nginx
+USER_IN_CONFIGURATION=ecnct
 
 function setup_nginx(){
   printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
@@ -60,6 +64,15 @@ function setup_nginx(){
   # generate dhparams
   printf "Generating dhparams\n\n"
   openssl dhparam -dsaparam -out $NGINX_ETC_FOLDER/tls/dhparam.pem 4096
+
+  printf "Replace production values with development values\n\n"
+
+  sed -i "s/user  $USER_IN_CONFIGURATION;/user  $USER;/g" $NGINX_ETC_FOLDER/nginx.conf
+
+  # Fix sed error due to `/` in path
+  # https://stackoverflow.com/questions/15509098/sed-error-sed-e-expression-1-char-25-unknown-option-to-s
+  sed -i "s!$NGINX_ETC_FOLDER_IN_CONFIGURATION!$NGINX_ETC_FOLDER!g" $NGINX_ETC_FOLDER/tls/tls.conf
+
   printf "Testing NginX Configuration"
   nginx -t
   (date +"%Y-%m-%d %T") 

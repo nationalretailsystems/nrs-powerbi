@@ -42,6 +42,16 @@ function check_comand() {
     fi
 }
 
+function check_file() {
+    if [ -f "$1" ] ; 
+    then
+        success "$2 check"
+    else
+        fail "$2 check" "$3"
+    fi
+}
+
+# Tests
 function test_docker(){
     title "Checking docker command"
     check_comand "docker --version" "docker command" "Check docker installation"
@@ -51,9 +61,18 @@ function test_docker(){
 function test_code() {
     title "Checking code command (Visual Studio Code)"
     check_comand "code --version" "docker command" "Check docker installation"
-    printf ""
+    echo
+}
+
+function test_ibm_iaccess() {
+    local filename
+    filename=ibm-iaccess-1.1.0.15-1.0.amd64.deb
+    title "Checking for $filename"
+    check_file "$filename" "$filename" "Please download and put $filename into current directory"
+    echo
 }
 
 # Checks execution
 test_docker
 test_code
+test_ibm_iaccess

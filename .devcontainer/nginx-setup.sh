@@ -35,7 +35,7 @@ function setup_nginx(){
   printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
   printf "Setting up NginX TLS Reverse Proxy Server\n\n"
 
-  unzip_nginx_configuration
+  # unzip_nginx_configuration
 
   # Copy nginx.conf over existing one
   printf "Copying nginx.conf over existing one\n\n"

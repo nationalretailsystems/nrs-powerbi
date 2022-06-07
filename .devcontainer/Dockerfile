@@ -29,7 +29,7 @@ RUN apt-get install -y ./ibm-iaccess-1.1.0.15-1.0.amd64.deb
 RUN rm ibm-iaccess-1.1.0.15-1.0.amd64.deb
 
 # nginx setup
-COPY ./.devcontainer/nginx-configuration.zip ./
+COPY ./.devcontainer/nginx-configuration ./nginx-configuration
 COPY ./.devcontainer/nginx-setup.sh ./
 RUN bash nginx-setup.sh
-RUN rm -rf nginx-configuration nginx-configuration.zip nginx-setup.sh
+RUN rm -rf nginx-configuration nginx-setup.sh

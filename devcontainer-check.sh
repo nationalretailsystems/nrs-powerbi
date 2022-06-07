@@ -63,13 +63,13 @@ function check_file() {
 # Tests
 function test_docker(){
     title "Checking docker command"
-    check_comand "docker --version" "docker command" "Please check docker installation"
+    check_comand "docker --version" "\"docker --version\" command works" "Please check docker installation"
     echo
 }
 
 function test_code() {
     title "Checking code command (Visual Studio Code)"
-    check_comand "code --version" "code command (Visual Studio Code)" "Please check vscode installation"
+    check_comand "code --version" "\"code --version\" command works (Visual Studio Code)" "Please check vscode installation"
     echo
 }
 
@@ -77,10 +77,10 @@ function test_npmrc() {
     local filename
     filename=.npmrc
     title "Checking $filename"
-    check_file "$filename" "$filename" "Please create $filename in current directory and add auth token"
+    check_file "$filename" "\"$filename\" file exists" "Please create $filename in current directory and add auth token"
     if [ -f "$filename" ] ; 
     then
-        check_comand "grep -q '//registry.npmjs.org/:_authToken=' $filename" "Auth token in $filename" "Please add auth token to $filename"
+        check_comand "grep -q '//registry.npmjs.org/:_authToken=' $filename" "Auth token is defined in \"$filename\" file" "Please add auth token to $filename"
     fi
     echo
 }
@@ -89,7 +89,7 @@ function test_ibm_iaccess() {
     local filename
     filename=ibm-iaccess-1.1.0.15-1.0.amd64.deb
     title "Checking for $filename"
-    check_file "$filename" "$filename" "Please download and put $filename into current directory"
+    check_file "$filename"  "\"$filename\" file exists" "Please download and put \"$filename\" into current directory"
     echo
 }
 
@@ -99,7 +99,7 @@ function test_development_config() {
     config_folder=src/config
     filename=$config_folder/development.json
     title "Checking for $filename"
-    check_file "$filename" "$filename" "Please copy $config_folder/default.json into $filename and change required fields"
+    check_file "$filename"  "\"$filename\" file exists" "Please copy $config_folder/default.json into $filename and change required fields"
     echo
 }
 

@@ -53,13 +53,13 @@ function check_file() {
 # Tests
 function test_docker(){
     title "Checking docker command"
-    check_comand "docker --version" "docker command" "Check docker installation"
+    check_comand "docker --version" "docker command" "Please check docker installation"
     echo
 }
 
 function test_code() {
     title "Checking code command (Visual Studio Code)"
-    check_comand "code --version" "docker command" "Check docker installation"
+    check_comand "code --version" "docker command" "Please check docker installation"
     echo
 }
 

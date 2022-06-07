@@ -5,6 +5,9 @@
 # https://mywiki.wooledge.org/BashFAQ/105
 set -e
 
+successes=()
+failures=()
+
 # Echo with colors
 function echo_red() {
     echo -e "\e[31m$1\e[0m"
@@ -24,11 +27,17 @@ function title() {
 }
 
 function success() {
-    echo_green "$1 - success"
+    local text
+    text="$1 - success"
+    echo_green "$text"
+    successes+=$text
 }
 
 function fail() {
-    echo_red "$1 - failed - $2"
+    local text
+    text="$1 - failed - $2"
+    echo_red "$text"
+    failures+="$text"
 }
 
 # Checks
@@ -93,9 +102,32 @@ function test_development_config() {
     echo
 }
 
+# Summary
+function line() {
+    echo "------------------------------------------------------------"
+}
+
+function summary() {
+    line
+    echo
+    title "Summary"
+    echo
+    for i in "${successes[@]}"
+    do
+        echo_green $i
+    done
+    for i in "${failures[@]}"
+    do
+        echo_red $i
+    done
+}
+
 # Checks execution
 test_docker
 test_code
 test_ibm_iaccess
 test_npmrc
 test_development_config
+
+# Execute summary
+summary

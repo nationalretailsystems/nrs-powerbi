@@ -28,8 +28,7 @@ function success() {
 }
 
 function fail() {
-    echo_red "$1 - failed"
-    echo_red "$2"
+    echo_red "$1 - failed - $2"
 }
 
 # Checks

@@ -5,6 +5,7 @@
 # https://mywiki.wooledge.org/BashFAQ/105
 set -e
 
+# Echo with colors
 function echo_red() {
     echo -e "\e[31m$1\e[0m"
 }
@@ -17,6 +18,7 @@ function echo_cyan() {
     echo -e "\e[36m$1\e[0m"
 }
 
+# Helper functions
 function title() {
     echo_cyan "$1:"
 }
@@ -30,6 +32,7 @@ function fail() {
     echo_red "$2"
 }
 
+# Checks
 function check_comand() {
     if eval "$1" ;
     then
@@ -51,5 +54,6 @@ function test_code() {
     printf ""
 }
 
+# Checks execution
 test_docker
 test_code

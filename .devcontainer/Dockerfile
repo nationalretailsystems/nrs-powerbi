@@ -32,6 +32,4 @@ RUN rm ibm-iaccess-1.1.0.15-1.0.amd64.deb
 COPY ./.devcontainer/nginx-configuration.zip ./
 COPY ./.devcontainer/nginx-setup.sh ./
 RUN bash nginx-setup.sh
-RUN rm -rf nginx-configuration
-RUN rm nginx-configuration.zip
-RUN rm nginx-setup.sh
+RUN rm -rf nginx-configuration nginx-configuration.zip nginx-setup.sh

@@ -64,6 +64,18 @@ function test_code() {
     echo
 }
 
+function test_npmrc() {
+    local filename
+    filename=.npmrc
+    title "Checking $filename"
+    check_file "$filename" "$filename" "Please create $filename in current directory and add auth token"
+    if [ -f "$filename" ] ; 
+    then
+        check_comand "grep -q '//registry.npmjs.org/:_authToken=' $filename" "Auth token in $filename" "Please add auth token to $filename"
+    fi
+    echo
+}
+
 function test_ibm_iaccess() {
     local filename
     filename=ibm-iaccess-1.1.0.15-1.0.amd64.deb
@@ -76,3 +88,4 @@ function test_ibm_iaccess() {
 test_docker
 test_code
 test_ibm_iaccess
+test_npmrc

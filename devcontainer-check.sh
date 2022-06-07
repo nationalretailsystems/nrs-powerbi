@@ -45,18 +45,18 @@ function fail() {
 function check_comand() {
     if eval "$1" ;
     then
-        success "$2 check"
+        success "$2"
     else
-        fail "$2 check" "$3"
+        fail "$2" "$3"
     fi
 }
 
 function check_file() {
     if [ -f "$1" ] ; 
     then
-        success "$2 check"
+        success "$2"
     else
-        fail "$2 check" "$3"
+        fail "$2" "$3"
     fi
 }
 

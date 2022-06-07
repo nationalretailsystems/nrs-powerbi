@@ -30,14 +30,14 @@ function success() {
     local text
     text="$1 - success"
     echo_green "$text"
-    successes+=$text
+    successes+=("$text")
 }
 
 function fail() {
     local text
     text="$1 - failed - $2"
     echo_red "$text"
-    failures+="$text"
+    failures+=("$text")
 }
 
 # Checks
@@ -114,11 +114,11 @@ function summary() {
     echo
     for i in "${successes[@]}"
     do
-        echo_green $i
+        echo_green "$i"
     done
     for i in "${failures[@]}"
     do
-        echo_red $i
+        echo_red "$i"
     done
 }
 

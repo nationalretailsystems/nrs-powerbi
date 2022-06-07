@@ -28,7 +28,7 @@ function title() {
 
 function success() {
     local text
-    text="✓ $1 - success"
+    text="✓ [ ok ] $1"
     echo_green "$text"
     successes+=("$text")
 }
@@ -36,7 +36,7 @@ function success() {
 function fail() {
     local text
     # https://stackoverflow.com/questions/5353461/unicode-character-for-x-cancel-close
-    text="✕ $1 - failed - $2"
+    text="✕ [fail] $1 - $2"
     echo_red "$text"
     failures+=("$text")
 }

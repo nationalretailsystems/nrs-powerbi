@@ -6,7 +6,7 @@ set -e
 
 # Variables
 NGINX_ETC_FOLDER=/etc/nginx
-HOSTNAME=dev
+HOSTNAME=localhost
 USER=www-data
 
 NGINX_ETC_FOLDER_IN_CONFIGURATION=/QOpenSys/etc/nginx

@@ -69,7 +69,7 @@ function test_docker(){
 
 function test_code() {
     title "Checking code command (Visual Studio Code)"
-    check_comand "code --version" "docker command" "Please check docker installation"
+    check_comand "code --version" "code command (Visual Studio Code)" "Please check vscode installation"
     echo
 }
 

@@ -12,9 +12,7 @@ USER=www-data
 NGINX_ETC_FOLDER_IN_CONFIGURATION=/QOpenSys/etc/nginx
 USER_IN_CONFIGURATION=ecnct
 
-function setup_nginx(){
-  printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
-  printf "Setting up NginX TLS Reverse Proxy Server\n\n"
+function unzip_nginx_configuration(){
 
   # Check if nginx configuration file is present. If no, exit with error
   printf "Checking for nginx-configuration.zip\n\n"
@@ -31,6 +29,13 @@ function setup_nginx(){
   # Unzip nginx configuration
   printf "Unzipping nginx configuration\n\n"
   unzip nginx-configuration.zip
+}
+
+function setup_nginx(){
+  printf "\n%60s\n" " " | tr " " "-" && (date +"%Y-%m-%d %T")
+  printf "Setting up NginX TLS Reverse Proxy Server\n\n"
+
+  unzip_nginx_configuration
 
   # Copy nginx.conf over existing one
   printf "Copying nginx.conf over existing one\n\n"

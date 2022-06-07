@@ -76,7 +76,9 @@ function setup_nginx(){
   # generate dhparams
   printf "Generating dhparams\n\n"
   openssl dhparam -dsaparam -out $NGINX_ETC_FOLDER/tls/dhparam.pem 4096
+}
 
+replace_nginx_production_values_with_development() {
   # Replace production values with development values in configuration files
   printf "Replace production values with development values\n\n"
 
@@ -85,7 +87,9 @@ function setup_nginx(){
   # Fix sed error due to `/` in path
   # https://stackoverflow.com/questions/15509098/sed-error-sed-e-expression-1-char-25-unknown-option-to-s
   sed -i "s!$NGINX_ETC_FOLDER_IN_CONFIGURATION!$NGINX_ETC_FOLDER!g" $NGINX_ETC_FOLDER/tls/tls.conf
+}
 
+function test_nginx_configuration(){
   printf "Testing NginX Configuration"
   nginx -t
   (date +"%Y-%m-%d %T") 
@@ -93,3 +97,6 @@ function setup_nginx(){
 }
 
 setup_nginx
+replace_nginx_production_values_with_development
+test_nginx_configuration
+

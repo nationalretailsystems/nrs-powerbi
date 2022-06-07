@@ -84,8 +84,19 @@ function test_ibm_iaccess() {
     echo
 }
 
+function test_development_config() {
+    local filename
+    local config_folder
+    config_folder=src/config
+    filename=$config_folder/development.json
+    title "Checking for $filename"
+    check_file "$filename" "$filename" "Please copy $config_folder/default.json into $filename and change required fields"
+    echo
+}
+
 # Checks execution
 test_docker
 test_code
 test_ibm_iaccess
 test_npmrc
+test_development_config

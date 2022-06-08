@@ -61,6 +61,8 @@ function check_file() {
 }
 
 # Tests
+
+# This test will fail inside devcontainer
 function test_docker(){
     title "Checking docker command"
     check_comand "docker --version" "\"docker --version\" command works" "Please check docker installation"

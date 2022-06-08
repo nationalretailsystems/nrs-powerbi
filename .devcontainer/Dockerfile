@@ -23,10 +23,10 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y unixodbc-dev
 
-COPY ./ibm-iaccess-1.1.0.15-1.0.amd64.deb ./
+COPY ./ibm-iaccess-*.amd64.deb ./
 # https://askubuntu.com/questions/40011/how-to-let-dpkg-i-install-dependencies-for-me
-RUN apt-get install -y ./ibm-iaccess-1.1.0.15-1.0.amd64.deb 
-RUN rm ibm-iaccess-1.1.0.15-1.0.amd64.deb
+RUN apt-get install -y ./ibm-iaccess-*.amd64.deb 
+RUN rm ibm-iaccess-*.amd64.deb
 
 # nginx setup
 COPY ./.devcontainer/nginx-configuration ./nginx-configuration

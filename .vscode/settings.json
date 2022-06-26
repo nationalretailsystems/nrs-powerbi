@@ -1,0 +1,15 @@
+{
+    "makefile.extensionOutputFolder": "./.vscode",
+    "cSpell.words": [
+        "Alchimavicius",
+        "dbaeumer",
+        "eamodio",
+        "Exodius",
+        "mhutchie",
+        "sshfs",
+        "userns",
+        "yzhang"
+    ],
+    "cSpell.allowCompoundWords": true,
+    "cSpell.includeRegExpList": ["CStyleComment"]
+}

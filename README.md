@@ -2,6 +2,83 @@
 
 This server provides a Template API, using Eradani Connect to access the required IBM i resources. 
 
+## Setup using developer container and vscode
+
+The fastest way to start working with this project is by using dev container and vscode.
+
+Follow this steps to get started:
+
+- [install docker](https://docs.docker.com/get-docker/)
+
+- [install vscode](https://code.visualstudio.com/Download)
+
+- open this folder using vscode
+
+- setup config file
+
+- in vscode install extension: [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+- after extension is installed press F1 and enter/select: "Remote-Containers: Reopen in Container"
+
+  On first time installation takes some time, you can look at install log by pressing "(show log)" in bottom right corner.
+
+  Next time you open project in container it will start faster.
+
+  > **💡 Tip:**
+  > 
+  > If installation seems to be frozen for a long time as indicated by no change in logs, it is safe to close vscode and try again.
+
+- all commands execute using build in vscode terminal
+
+- after editing code compile project
+
+      npm run package:dev
+
+- now you can start server if you want 
+      
+      npm start
+
+- after server starts in bottom right corner there will be popup 
+
+  > Your application running on port 3001 is available.
+
+  You can now visit following links in your browser:
+
+  - http://localhost:3001/dashboard/docs/
+  - http://localhost:3001/dashboard/stats/
+
+### Use podman instead of docker
+
+> **⚠️ Warning:**
+>
+> Use of podman in Windows is currently not recommended
+
+To use podman instead of docker:
+
+- [install podman](https://podman.io/getting-started/installation.html)
+
+    > **⚠️ Warning:**
+    >
+    > On linux there is no problem to have podman and docker installed at the same time, however on Windows only one is recommended.
+
+    > **Note:**
+    >
+    > Tested with podman 3 on linux
+
+- change command used by vscode to `podman`
+
+    - open "File / Preferences / Settings"
+
+    - in "Extensions / Remote - Containers" change "docker path" to `podman`
+
+- in `.devcontainer/devcontianer.json` add/uncomment following line:
+
+    ```
+    "runArgs": ["--userns=keep-id"], // for podman uncomment this line
+    ```
+
+- after extension is installed press F1 and enter/select: "Remote-Containers: Rebuild and Reopen in Container"
+
 ## Features
 
 This application is a production-ready TypeScript/Express webserver preconfigured with several helpful programming tools:

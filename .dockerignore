@@ -1,0 +1,4 @@
+# https://kevinpollet.dev/posts/how-to-use-your-dockerignore-as-a-whitelist/
+*
+!ibm-iaccess-*.amd64.deb
+!.devcontainer

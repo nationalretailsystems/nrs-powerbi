@@ -41,7 +41,7 @@
         "@eradani-inc/ecc-router": "^0.6.5",
         "@eradani-inc/eradani-connect": "^2.6.2",
         "@eradani-inc/gui-generator": "^0.12.2",
-        "@eradani-inc/gui-generator-outbound": "^0.8.1",
+        "@eradani-inc/gui-generator-outbound": "^0.8.3",
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.12",
         "@types/es6-promisify": "^6.0.1",

@@ -1,0 +1,23 @@
+---
+name: simplecalc
+codeblocks:
+  typescript:
+    - ""
+    - // Manually entered import
+    - import config from "config";
+pgmmodels:
+  simplecalc:
+    library: \config.eradaniConnect.native.templateLib
+    mode: ile
+    procedures:
+      MainProc:
+        params:
+          input:
+            type: Packed
+            length: 15
+            comment: Input
+          output:
+            type: Packed
+            length: 16
+            outputOnly: true
+            comment: Output

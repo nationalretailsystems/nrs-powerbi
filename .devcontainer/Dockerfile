@@ -1,7 +1,7 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/containers/typescript-node/.devcontainer/base.Dockerfile
 
 # [Choice] Node.js version (use -bullseye variants on local arm64/Apple Silicon): 18, 16, 14, 18-bullseye, 16-bullseye, 14-bullseye, 18-buster, 16-buster, 14-buster
-ARG VARIANT="18-bullseye"
+ARG VARIANT="16-bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
 # [Optional] Uncomment this section to install additional OS packages.
@@ -27,6 +27,10 @@ COPY ./ibm-iaccess-*.amd64.deb ./
 # https://askubuntu.com/questions/40011/how-to-let-dpkg-i-install-dependencies-for-me
 RUN apt-get install -y ./ibm-iaccess-*.amd64.deb 
 RUN rm ibm-iaccess-*.amd64.deb
+
+# vim
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get install -y vim
 
 # nginx setup
 COPY ./.devcontainer/nginx-configuration ./nginx-configuration

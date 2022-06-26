@@ -30,3 +30,4 @@ temp/**
 !temp/**/.gitignore
 qsys/*.js
 qsys/*.ts
+.gitconfig

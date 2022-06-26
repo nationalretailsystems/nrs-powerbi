@@ -40,7 +40,7 @@
         "@eradani-inc/ec-client": "^3.6.3",
         "@eradani-inc/ecc-router": "^0.6.5",
         "@eradani-inc/eradani-connect": "^2.6.2",
-        "@eradani-inc/gui-generator": "^0.12.3",
+        "@eradani-inc/gui-generator": "^0.12.4",
         "@eradani-inc/gui-generator-outbound": "^0.8.5",
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.12",

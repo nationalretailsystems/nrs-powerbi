@@ -15,5 +15,6 @@
     "git.autofetch": true,
     "git.showPushSuccessNotification": true,
     "git.showProgress": true,
-    "git.autorefresh": true
+    "git.autorefresh": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

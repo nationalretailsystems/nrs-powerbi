@@ -1,6 +1,5 @@
 import { ECCHandlerFunction } from '@eradani-inc/ecc-router/types';
 import axios from 'axios';
-import download from 'download';
 import config from 'config';
 import createLogger from 'src/services/logger';
 const logger = createLogger('commands/shipping');
@@ -112,11 +111,13 @@ export const getLabel: ECCHandlerFunction = async (reqkey, data, ecc) => {
 
     logger.debug('Writing label files (async)');
 
+    /* Uncomment to download label files *
     await Promise.all([
         download(result.data.label_download.pdf, 'temp/usps'),
         download(result.data.label_download.png, 'temp/usps'),
         download(result.data.label_download.zpl, 'temp/usps')
     ]);
+    */
 
     // Send success result to client
     nextReqKey = await ecc.sendEccResult('ECC0000', 'Success', nextReqKey);

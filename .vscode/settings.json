@@ -11,5 +11,9 @@
         "yzhang"
     ],
     "cSpell.allowCompoundWords": true,
-    "cSpell.includeRegExpList": ["CStyleComment"]
+    "cSpell.includeRegExpList": ["CStyleComment"],
+    "git.autofetch": true,
+    "git.showPushSuccessNotification": true,
+    "git.showProgress": true,
+    "git.autorefresh": true
 }

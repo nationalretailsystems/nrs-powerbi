@@ -19,5 +19,5 @@ pgmmodels:
           output:
             type: Packed
             length: 16
-            outputOnly: true
             comment: Output
+            outputOnly: true

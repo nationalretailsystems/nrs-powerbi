@@ -1,0 +1,28 @@
+---
+name: WebSvc
+rpgIncName: WebSvc_h
+datastructures:
+  Addr:
+    subfields:
+      Addr1:
+        type: Character
+        length: 30
+      Addr2:
+        type: Character
+        length: 30
+formats:
+  ReqData:
+    recordType: request
+    subfields:
+      CustId:
+        type: Packed
+        length: 10
+  ResData:
+    recordType: response
+    subfields:
+      CustId:
+        type: Packed
+        length: 10
+      CustAddr:
+        type: DataStruct
+        dsName: Addr

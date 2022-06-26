@@ -1,0 +1,56 @@
+---
+name: MyPgmMod
+codeblocks:
+  typescript:
+    - ""
+    - // Manually entered import
+    - import config from "config";
+  rpg:
+    - "      ************************************"
+    - "      * Manually entered code block"
+    - "      ************************************"
+    - "      /include GlbDefs"
+    - "     DPerson           DS                  Qualified"
+    - "     DFName                          20A"
+    - "     DLName                          20A"
+datastructures:
+  Addr:
+    subfields:
+      Addr1:
+        type: Character
+        length: 30
+      Addr2:
+        type: Character
+        length: 30
+pgmmodels:
+  MyPgm:
+    library: MYLIB
+    mode: ile
+    procedures:
+      MainProc:
+        return:
+          name: retValue
+          type: Character
+          length: 30
+        params:
+          CustId:
+            type: Packed
+            length: 5
+            default: \defaults.custid
+            comment: Customer ID
+            dim: 2
+          MyDS:
+            type: DataStruct
+            dsName: Addr
+            dim: 2
+            outputOnly: true
+      Procedure1:
+        return:
+          name: CustName
+          type: Character
+          length: 30
+        params:
+          CustId:
+            type: Packed
+            length: 5
+            comment: Customer ID

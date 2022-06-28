@@ -16,7 +16,7 @@
         "test": "npx mocha ./dist/tests",
         "docs": "ls /QOpenSys/opt || npx typedoc --cleanOutputDir --entryPointStrategy expand src && printf \"\u001b[1;36mView Generated Documentation with \u001b[1;32mnpm run view-docs\u001b[0m\"",
         "view-docs": "start docs/index.html",
-        "link-settings": "cp ~/.gitconfig .",
+        "link-settings": "cp ~/.gitconfig ~/.npmrc .",
         "rotate-keys": "(npx shx rm ./src/config/keys/*.key || npx shx echo \"Generating first-time keys\") && ssh-keygen -f ./src/config/keys/jwt-private.key -P '' && npx shx mv ./src/config/keys/jwt-private.key.pub ./src/config/keys/jwt-public.key",
         "setup": "npm run link-keys && npm install && npm run generate-config && npm run build-qsys && npm run package:release && npm run update-eol && npm run set-permissions",
         "generate-config": "npx shx cp ./src/config/default.json ./src/config/development.json && npx shx mkdir -p ./src/config/keys && npm run rotate-keys",

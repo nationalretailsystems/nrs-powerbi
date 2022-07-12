@@ -217,4 +217,31 @@ export default function mountPOWERBI(router: Router) {
         '/locations',
         respond(() => sqlController.getLocations())
     );
+    router.get(
+        '/sa-rls-inq',
+        respond(() => sqlController.getSARlsInq())
+    );
+    router.get(
+        '/sa-hd-ld-vur',
+        respond(() => sqlController.getSAHdLdVur())
+    );
+    router.get(
+        '/sa-ct-dt',
+        validate(validators.getSACtDt),
+        respond((req: any) => sqlController.getSACtDT(req.query))
+    );
+    router.get(
+        '/sa-yd3-inq',
+        respond(() => sqlController.getSAYd3Inq())
+    );
+    router.get(
+        '/sa-ob-scans',
+        validate(validators.getSAObScans),
+        respond((req: any) => sqlController.getSAObScans(req.query))
+    );
+    router.get(
+        '/sa-hd-po',
+        validate(validators.getSAHdPo),
+        respond((req: any) => sqlController.getSAHdPo(req.query))
+    );
 }

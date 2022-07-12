@@ -126,3 +126,13 @@ export const getWeights: InputCheckChain[] = [
     query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
     query('building').exists().isAlpha().isIn(['S','R','V','P','O','H','N','W']).isLength({ min: 1, max: 1 }).withMessage('Must 1 character V N W H O R P S'),
 ];
+export const getSACtDt: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getSAObScans: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];
+export const getSAHdPo: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];

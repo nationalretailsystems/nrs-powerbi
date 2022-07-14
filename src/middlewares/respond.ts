@@ -98,7 +98,7 @@ export default function respond(handler: (req: any, res: Response) => any | Redi
                 }
                 res.status(error.status || error.statusCode || 500).json({
                     message: error.status && error.status !== 500 ? error.message : 'Unknown Error',
-                    data: error.additionalData ? error.additionalData.send : null
+                    data: error.additionalData ? error.additionalData.send : undefined
                 });
             })
             .catch((error) => {

@@ -11,4 +11,8 @@ export default function mountKEYCAP(router: Router) {
         '/kc-prowso',
         respond(() => sqlController.getKCProWSO())
     );
+    router.get(
+        '/kc-prowoso',
+        respond(() => sqlController.getKCProWoSO())
+    );
 }

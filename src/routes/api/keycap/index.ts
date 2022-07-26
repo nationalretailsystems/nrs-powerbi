@@ -15,4 +15,12 @@ export default function mountKEYCAP(router: Router) {
         '/kc-prowoso',
         respond(() => sqlController.getKCProWoSO())
     );
+    router.get(
+        '/kc-dupinvpro',
+        respond(() => sqlController.getKCDupInvPro())
+    );
+    router.get(
+        '/kc-dupinvscac',
+        respond(() => sqlController.getKCDupInvScac())
+    );
 }

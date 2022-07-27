@@ -23,4 +23,28 @@ export default function mountKEYCAP(router: Router) {
         '/kc-dupinvscac',
         respond(() => sqlController.getKCDupInvScac())
     );
+    router.get(
+        '/kc-carriers',
+        respond(() => sqlController.getCarriers())
+    );
+    router.get(
+        '/kc-checkpayments',
+        respond(() => sqlController.getChecks())
+    );
+    router.get(
+        '/kc-checkvoids',
+        respond(() => sqlController.getVoids())
+    );
+    router.get(
+        '/kc-orderlatereasons',
+        respond(() => sqlController.getLateOrders())
+    );
+    router.get(
+        '/kc-invoicesytd',
+        respond(() => sqlController.getYtdInvoices())
+    );
+    router.get(
+        '/kc-mgnrtinvoicesytd',
+        respond(() => sqlController.getMgNrtYtdInvoices())
+    );
 }

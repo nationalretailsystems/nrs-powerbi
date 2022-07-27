@@ -3,6 +3,12 @@ import SQLTemplateKCPROWSO, { SQLTemplateOutputKCPROWSO } from 'src/models/keyca
 import SQLTemplateKCPROWOSO, { SQLTemplateOutputKCPROWOSO } from 'src/models/keycap-kc-prowoso';
 import SQLTemplateKCDUPINVPRO, { SQLTemplateOutputKCDUPINVPRO } from 'src/models/keycap-kc-dupinvpro';
 import SQLTemplateKCDUPINVSCAC, { SQLTemplateOutputKCDUPINVSCAC } from 'src/models/keycap-kc-dupinvscac';
+import SQLTemplateKCCARRIERS, { SQLTemplateOutputKCCARRIERS } from 'src/models/keycap-kc-carriers';
+import SQLTemplateKCCHECKS, { SQLTemplateOutputKCCHECKS } from 'src/models/keycap-kc-checks';
+import SQLTemplateKCVOIDS, { SQLTemplateOutputKCVOIDS } from 'src/models/keycap-kc-voids';
+import SQLTemplateKCLATEORDERS, { SQLTemplateOutputKCLATEORDERS } from 'src/models/keycap-kc-lateorders';
+import SQLTemplateKCYTDINV, { SQLTemplateOutputKCYTDINV } from 'src/models/keycap-kc-ytdinvoices';
+import SQLTemplateKCMGNRTYTDINV, { SQLTemplateOutputKCMGNRTYTDINV } from 'src/models/keycap-kc-mgnrtytdinvoices';
 // import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 // import { DateTime } from 'luxon';
@@ -28,4 +34,28 @@ export async function getKCDupInvPro(): Promise<SQLTemplateOutputKCDUPINVPRO> {
 export async function getKCDupInvScac(): Promise<SQLTemplateOutputKCDUPINVSCAC> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateKCDUPINVSCAC) as Promise<SQLTemplateOutputKCDUPINVSCAC>;
+}
+export async function getCarriers(): Promise<SQLTemplateOutputKCCARRIERS> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateKCCARRIERS) as Promise<SQLTemplateOutputKCCARRIERS>;
+}
+export async function getChecks(): Promise<SQLTemplateOutputKCCHECKS> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateKCCHECKS) as Promise<SQLTemplateOutputKCCHECKS>;
+}
+export async function getVoids(): Promise<SQLTemplateOutputKCVOIDS> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateKCVOIDS) as Promise<SQLTemplateOutputKCVOIDS>;
+}
+export async function getLateOrders(): Promise<SQLTemplateOutputKCLATEORDERS> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateKCLATEORDERS) as Promise<SQLTemplateOutputKCLATEORDERS>;
+}
+export async function getYtdInvoices(): Promise<SQLTemplateOutputKCYTDINV> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateKCYTDINV) as Promise<SQLTemplateOutputKCYTDINV>;
+}
+export async function getMgNrtYtdInvoices(): Promise<SQLTemplateOutputKCMGNRTYTDINV> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateKCMGNRTYTDINV) as Promise<SQLTemplateOutputKCMGNRTYTDINV>;
 }

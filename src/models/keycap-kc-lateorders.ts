@@ -7,7 +7,7 @@ export default new eradaniConnect.run.Sql(
     `SELECT 
 	* 
 FROM 
-	WOLFIASP.OLFILE5.OL1092WZ`
+	WOLFIASP.POWERBI.OL1092WZ`
 );
 
 /**

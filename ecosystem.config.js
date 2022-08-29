@@ -5,16 +5,19 @@ module.exports = {
             script: 'dist/src/app.js',
 
             // Options reference: https://pm2.keymetrics.io/docs/usage/application-declaration/
-            instances: 'max',
+            instances: '1',
             exec_mode: 'cluster',
             autorestart: true,
             restart_delay: 5000,
             cron_restart: '0 0 * * *',
             env: {
-                APP_ENV: 'development'
+                NODE_ENV: 'development'
+            },
+            env_test: {
+                NODE_ENV: 'test'
             },
             env_production: {
-                APP_ENV: 'production'
+                NODE_ENV: 'production'
             }
         }
     ]

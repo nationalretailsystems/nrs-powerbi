@@ -9,7 +9,6 @@ dist/**
 .coverage/**
 docs/**
 .DS_Store
-.npmrc
 *.savf
 *.swp
 /.psa*
@@ -32,4 +31,3 @@ qsys/*.js
 qsys/*.ts
 .gitconfig
 native
-.npmrc

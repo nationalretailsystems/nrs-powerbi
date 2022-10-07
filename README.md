@@ -1,310 +1,308 @@
-# Template API
+# Local Development Environment Setup Guide
 
-This server provides a Template API, using Eradani Connect to access the required IBM i resources. 
+Congratulations on getting started with Next-Gen Applications with Eradani Connect! This guide will provide a walkthrough of the steps required to set up a Next-Gen development environment on a new Windows PC.
 
-## Setup using developer container and vscode
+**Most of this guide assumes that all prerequisites have already been met. If you are not sure if that is the case, refer to the "Check Prerequisites" section for a list of required software.**
 
-The fastest way to start working with this project is by using dev container and vscode.
+Let's get started!
 
-Follow this steps to get started:
+## Install Prerequisites
 
-- [install docker](https://docs.docker.com/get-docker/)
+Before we can set up a new PC for Next-Gen Application development, 5 requirements must be met:
 
-- [install vscode](https://code.visualstudio.com/Download)
+- The PC must have WSL (Windows Subsystem for Linux) enabled with an Ubuntu distro installed
+- Docker Desktop must be installed
+- Postman must be installed
+- Visual Studio Code (VSCode) must be installed
+- You must have an account on github.com or with your company's git source control system (Azure DevOps, Bitbucket, GitLab, etc)
 
-- open this folder using vscode
+For more information about these prerequisites and why they were chosen, check the "Eradani Connect Open Source Development Environment" document.
 
-- setup config file
+### WSL - Windows Subsystem for Linux
 
-- in vscode install extension: [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+> *Note: This is only required for Windows users. Mac and Linux users do not need to install WSL.*
 
-- after extension is installed press F1 and enter/select: "Remote-Containers: Reopen in Container"
+The Windows Subsystem for Linux allows Windows PCs to run an embedded Linux container to better support popular open source software, including Node.js. 
 
-  On first time installation takes some time, you can look at install log by pressing "(show log)" in bottom right corner.
+> *Note: This system requires WSL2 to be installed. If you previously had WSL1 installed, it will need to be upgraded.*
 
-  Next time you open project in container it will start faster.
+To install WSL on your Windows PC, follow [this guide from Microsoft](https://docs.microsoft.com/en-us/windows/wsl/install).
 
-  > **💡 Tip:**
-  > 
-  > If installation seems to be frozen for a long time as indicated by no change in logs, it is safe to close vscode and try again.
-
-- all commands execute using build in vscode terminal
-
-- after editing code compile project
-
-      npm run package:dev
-
-- now you can start server if you want 
-      
-      npm start
-
-- after server starts in bottom right corner there will be popup 
-
-  > Your application running on port 3001 is available.
-
-  You can now visit following links in your browser:
-
-  - http://localhost:3001/dashboard/docs/
-  - http://localhost:3001/dashboard/stats/
-
-### Use podman instead of docker
-
-> **⚠️ Warning:**
->
-> Use of podman in Windows is currently not recommended
-
-To use podman instead of docker:
-
-- [install podman](https://podman.io/getting-started/installation.html)
-
-    > **⚠️ Warning:**
-    >
-    > On linux there is no problem to have podman and docker installed at the same time, however on Windows only one is recommended.
-
-    > **Note:**
-    >
-    > Tested with podman 3 on linux
-
-- change command used by vscode to `podman`
-
-    - open "File / Preferences / Settings"
-
-    - in "Extensions / Remote - Containers" change "docker path" to `podman`
-
-- in `.devcontainer/devcontianer.json` add/uncomment following line:
-
-    ```
-    "runArgs": ["--userns=keep-id"], // for podman uncomment this line
-    ```
-
-- after extension is installed press F1 and enter/select: "Remote-Containers: Rebuild and Reopen in Container"
-
-## Features
-
-This application is a production-ready TypeScript/Express webserver preconfigured with several helpful programming tools:
-
-- [TypeScript](#typescript)
-- [Automatic Code Formatting with Prettier](#automatic-code-formatting-with-prettier)
-- [Code Linting with ESLint](#code-linting-with-eslint)
-- [Automatic Documentation with TypeDoc](#automatic-documentation-with-typedoc)
-- [Automated Testing with Mocha and Chai](#automated-testing-with-mocha-and-chai)
-- [Process Management with PM2](#process-management-with-pm2)
-- [Development Management Scripts](#development-management-scripts)
-
-### TypeScript
-
-JavaScript is a loosely-typed programming language. That means that there are no compile-time restrictions on data types whatsoever. On small projects, this is a powerful asset in JavaScript's corner; developers are able to save the significant amounts of time required to develop and synchronize the data types used throughout their applications. However, on larger projects this can become an issue, as one developer has no assurances that they are using another developer's code interfaces correctly. As a result, hard-to-find bugs often arise in normal JavaScript applications.
-
-TypeScript is a superset of JavaScript which encompases all of the features of normal JavaScript but also provides strict compile-time type-checking. When developers incorrectly configure a data structure in TypeScript, a compilation error is generated before the code is run.
-
-You can run the TypeScript compiler using the `npm run build:dev` or `npm run build:release` commands.
-
-### Automatic Code Formatting with Prettier
-
-On larger teams, it is valuable to have all code in an application written using the same style standards. This helps developers easily read each other's code, since they all code in the same style.
-
-Prettier is an automatic code formatting tool. Before a developer's code is compiled, Prettier will process the code and format it based on the standards set in your project's `.prettierrc` file. This means that developers can code in their own styles, and the entire codebase will still be automatically transformed to meet the style guidelines you set!
-
-You can run Prettier using the `npm run format` command.
-
-### Code Linting with ESLint
-
-In the same vein as Prettier, ESLint helps ensure more detailed coding standards are met by developers on your team.
-
-ESLint is the industry-standard among JavaScript developers for code-linting. Before the code is compiled, ESLint will check to make sure the new code conforms to the standards you configure in the project's `.eslintrc.js` file. If any standards are violated, a compilation error will be generated and the build process will be stopped. ESLint is included alongside Prettier because it provides more detailed checking options.
-
-You can run ESLint using the `npm run lint` command.
-
-### Automatic Documentation with TypeDoc
-
-When a developer needs to work with a part of the application they didn't build, a centralized documentation system is extremely valuable. Instead of having to ask another developer how their code works or read the source code, the relevant information is presented in an easily-digestible web-based format.
-
-TypeDoc will take your TypeScript source code and automatically generate web documentation for your entire application based only on source code and comments. To add additional notes to the documentation, you can add standard JSDoc comments to your code, and they will be parsed and included in the generated documentation pages.
-
-You can run TypeDoc using the `npm run docs` command.
-You can then view your generated docs using the `npm run view-docs` command.
-
-### Automated Testing with Mocha and Chai
-
-As an application grows, manual testing can become extremely inefficient, especially for quickly-changing applications. Adding automated tests will help your team focus on development, rather than having to retest the entire application every time they make a change.
-
-Mocha is the most popular automated testing framework for Node.js applications. It allows you to quickly define test cases, setup, and teardown, all in JavaScript. Chai is an extremely english-like assertion library built for Mocha. It allows you to check test case outputs with code like `expect(result).to.be.a('number')` so you can read, write, and reason about test cases very quickly.
-
-You can run your testing suite using the `npm run test` command.
-
-### Process Management with PM2
-
-While Node.js applications can be run using the `node` command, there are a few problems here when your applicatino goes into production. First, what happens if your Node.js application fails? The `node` command will simply exit and leave it down. Second, the `node` command only creates one instance of your Node.js application, which is far from the most efficient way to run a Node.js application.
-
-PM2 is a process manager for Node.js applications. PM2's features include automatically restarting your Node.js application on failure, and simple integration with Node.js's `cluster` mode. In Node.js, your business logic is run in a single thread. When you run your application in `cluster` mode via PM2, your Node.js application will be replicated once for each CPU core on your machine. PM2 will also automatically load-balance between these processes, ensuring you get maximum performance out of your Node.js application. This project comes pre-configured with a PM2 configuration file so that you can run your application in cluster mode easily with `pm2 start`.
-
-You can start the application using the `npm run start` command.
-
-### Development Management Scripts
-
-As you develop your Node.js application, it is important that your build process and integration pipeline are followed by developers. That is, when code is developed, it should be formatted, linted, compiled, tested, and documented. These steps can be difficult to manage manually, so this application comes with several development scripts to help your team.
-
-These scripts are configured in the `package.json` file. The most important script is the `package:dev` script, run in your terminal with `npm run package:dev`. This script runs through the entire series of scripts in the pipeline so that your developers can focus on developing code, and automate the rest. Check out the `scripts` section of the `package.json` file to see the other available scripts!
-
-The `npm run package:dev` command will run all of the scripts in the previous sections in sequence.
-
-## Configuration
-
-This is a list of steps that need to be completed in order to get the Template API Server configured and up and running _after cloning the git repository_. This guide will follow the steps assuming that you are setting up the application on an IBM i or Linux server via SSH.
-
-Contact Eradani Support at (510) 239-7331 or info@eradani.com if you need help with any part of this guide.
-
-### Create configuration file
-
-Make a copy of the file `config/development.json.sample` and name it `config/development.json`. As a general rule, configuration files for open source applications are not added to the git repository because they may contain sensitive configuration data such as user profiles or API keys. The `development.json.sample` file is included in the git repository and has the structure expected by the application so that you can simply fill in the values you need. As you develop, a good rule of thumb is to add non-sensitive data into the `development.json.sample` file so that those configuration values will be tracked by git.
-
-To set up the server, there are a few configuration values we need to set. Open your new `config/development.json` file 
-
-- Set app.port to an available port
-- Set the xml.* options to match those of the XMLSERVICE instance you will be using
-- Set the logger.maxLoggingLevel option to your desired level of logging. Available levels are listed below in order of increasing severity. Once you set a logging level, **all levels below it in this list will also be enabled!** For example, if you set the logging level to _"info"_, the server will also store _"warn"_ and _"error"_ level logs, but not _"verbose"_, _"debug"_, or _"silly"_ level logs.
-    - "silly"
-    - "debug"
-    - "verbose"
-    - "info"
-    - "warn"
-    - "error"
-
-After setting the values copy `config/development.json` to `config/production.json`.
-
-### Create JWT keys
-
-Run the following commands from a PASE shell to create the JWT keys and rename the public key with the name the server expects:
-
-```sh
-$ ssh-keygen -f config/keys/jwt-private.key
-$ mv config/keys/jwt-private.key.pub config/keys/jwt-public.key
-```
-
-### Create the logs directory
-
-Run the following the command to create the directory for the log files:
-
-```sh
-$ mkdir logs
-```
-
-### Set up Native IBM i Access
-
-In this section, we are going to create a user profile which will own the application source code. We do this because when you run the Node.js application via PM2, it runs with the authority of the user who started it. Creating a specific user for the application will allow your various developers to all work with the application with a standard user profile which has access only to its own source code and relevant objects.
-
-#### Create user profile
-
-Create a user profile for the server. We typically create a user called `ECNCT`, but feel free to use any user you like. All objects will be owned by this user and the server will run as this user. This will make it easy to manage the application's permissions and access.
+Once WSL is installed use the `wsl -l -v` command to check the installation. If you see output like this:
 
 ```
-CRTUSRPRF USRPRF(ECNCT) PWDEXP(*YES) INLPGM(QSYS/QCMD) TEXT('Eradani Connect user profile') JOBD(QGPL/QDFTJOBD) MSGQ(QUSRSYS/ECNCT)
+  NAME                   STATE           VERSION
+* Ubuntu                 Running         2
 ```
 
-#### Create libraries
+then you are done with this step!
 
-Create the program and data libraries.
+If you instead see a message saying that no distributions have been installed, install the Ubuntu distribution with the command: `wsl --install -d Ubuntu` 
 
-```
-CRTLIB LIB(ECNCT) TEXT('Eradani Connect program data')
+> *Note: You may need to reboot your PC and open the Ubuntu app to complete the Ubuntu install.*
 
-CHGOBJOWN OBJ(ECNCT) OBJTYPE(*LIB) NEWOWN(ECNCT)
+Then check the output of `wsl -l -v` again to ensure it looks like the above output.
 
-CRTLIB LIB(ECNCTUSR) TEXT('Eradani Connect user data')
-
-CHGOBJOWN OBJ(ECNCTUSR) OBJTYPE(*LIB) NEWOWN(ECNCT)
-```
-
-#### Change application's owner
-
-Change the owner of the server application source code:
+If you have a version 1 installation of WSL / Ubuntu, run the following two commands to upgrade it:
 
 ```
-CHGOWN OBJ('/path/to/template-application/in/ifs') NEWOWN(ECNCT) SUBTREE(*ALL)
+wsl --set-version Ubuntu 2
+wsl --set-default-version 2
 ```
 
-## Updating the server application
+> *Note: WSL2 with Ubuntu must be installed <u>before</u> Docker Desktop. If you notice problems with WSL after installing Docker Desktop, you will need to fully uninstall and reinstall Docker Desktop once the WSL problems have been resolved.*
 
-Once you have committed and pushed your updated code to GitHub, there are 4 steps you will need to take to update the live application:
+### Docker Desktop
 
-1. Download the updated code on to your IBM i
-2. Make any required configuration changes
-3. Compile the TypeScript code to executable JavaScript
-4. Restart the application to apply the changes
+Docker Desktop (and its behind-the-scenes engine) will allow us to run Container software on your PC so that you can share the standard development environment with a minimal install process.
 
-### Downloading the updated code
+Docker Desktop can be downloaded and installed from [docker.com](https://docker.com).
 
-By default, this application is set up to use Git to ship source code to the server. However, any deployment method is acceptable - the important part is that the TypeScript code on the IBM i gets updated with your changes. This guide will show you how to do this using Git.
+Once Docker Desktop has been installed and is running, you should see a green bar in the bottom-left corner of the Docker Desktop window. Hovering over that green box should show a small message saying "Engine Running". If the box is orange, give it a few minutes to start up.
 
-First, open an SSH session (PuTTY) into the PASE environment on your IBM i.
+When Docker Desktop is installed and running, open the Settings screen by clicking the gear icon in the top-right of the Docker Desktop Window. In the Settings screen under the "General" tab, make sure that "Start Docker Desktop when you log in" is checked. Then go to the "Resources" tab and the "WSL Integration" section and make sure "Enable integration with my default WSL distro" is checked. 
 
-Once there, move to the directory where the application source code resides:
-```sh
-$ cd /opt/eradani/eradani-connect-template
+> *Note: WSL2 with Ubuntu must be installed <u>before</u> Docker Desktop. If you notice problems with WSL after installing Docker Desktop, you will need to fully uninstall and reinstall Docker Desktop once the WSL problems have been resolved.*
+
+Once Docker has been fully installed and configured, reopen Windows Powershell as Administrator and run the `wsl -l -v` command again. This time, the output should look like this:
+
+```
+  NAME                   STATE           VERSION
+* Ubuntu                 Running         2
+  docker-desktop-data    Running         2
+  docker-desktop         Running         2
 ```
 
-Then, tell Git to pull down the latest code from the cloud-hosted repository:
-```sh
-$ git pull
+If you see that output, you have Docker fully installed and are ready to move on!
+
+### Postman
+
+Postman is an API testing tool that we will use to gather information about APIs we want to call with Eradani Connect Outbound integrations as well as to test our own Eradani Connect Inbound APIs.
+
+Postman can be downloaded from [postman.com](https://postman.com).
+
+> *Note: You do not need to create an account to use Postman. When you open it for the first time it will ask you to sign in or create an account. If you would prefer not to create an account, there is a small gray "skip and go to the app" button below the sign in boxes.*
+
+Once Postman is installed, you're ready to keep moving!
+
+### Visual Studio Code
+
+Visual Studio Code (VSCode) is a cutting-edge IDE (Integrated Development Environment) for all programming languages. It includes top-tier support for open source languages like JavaScript, TypeScript, and Python, as well as great support for IBM i languages like RPG, CL, and COBOL.
+
+And the best part is it's completely free.
+
+You can download VSCode from [code.visualstudio.com](https://code.visualstudio.com).
+
+> *Note: Visual Studio Code and Visual Studio are two very different systems. We want to install Visual Studio <u>Code</u>, NOT Visual Studio. You can tell the difference by their logo colors: Visual Studio's logo is purple while Visual Studio Code's logo is blue. We want the blue one.*
+
+Once VSCode is installed, you're done with this step.
+
+### Git Source Control Account
+
+While Git is completely free to use, most companies set up a centralized source code storage system like GitHub, Azure DevOps, Bitbucket, or GitLab, to name a just few of the options.
+
+When working with industry-standard open source technology as part of your Next-Gen Applications, you will also be using the industry-standard source control technology: Git. If your company has a central system, make sure you have an account there to access your source code. If your company does not have a central system already, create an account on [GitHub.com](https://github.com).
+
+If you are using GitHub, send your GitHub username to Eradani to be invited to the team to work on the project. If you have just been invited, you can go to [github.com](http://github.com), click your profile icon, go to Your Organizations, and the invitation to join `eradani-inc` should be there with a Join button.
+
+Once your account is created, you're done with this step!
+
+## Check Prerequisites
+
+Once you have installed all of the prerequisite software on your PC, run through this section to ensure everything is installed properly.
+
+As a refresher, there are 5 requirements that must be met in order to develop Next-Gen Applications:
+
+- The PC must have WSL (Windows Subsystem for Linux) enabled with an Ubuntu distro installed
+- Docker Desktop must be installed
+- Postman must be installed
+- Visual Studio Code (VSCode) must be installed
+- You must have an account on github.com or with your company's git source control system (Azure DevOps, Bitbucket, GitLab, etc)
+
+### WSL
+
+Open a Windows Powershell as Administrator and run the command `wsl -l -v` . You should see three entries in the list like this:
+
+```
+  NAME                   STATE           VERSION
+* Ubuntu                 Running         2
+  docker-desktop-data    Running         2
+  docker-desktop         Running         2
 ```
 
-This command may ask you for your GitHub credentials.
+If you don't see output like that, check the install steps for WSL again in the "Installing Prerequisites" section of this guide. If any of the States are "Stopped", that's OK as long as the list contains all of the right entries at version 2.
 
-Once the command finishes, the code on the server will be updated.
+If you see those three entries, WSL is ready!
 
-### Updating the application's configuration files
+### Docker Desktop
 
-All of the application's configuration files are available on your IBM i at `/opt/eradani/eradani-connect-template/config`. By default, configuration files are automatically ignored by Git because they often include sensitive data such as API keys and passwords. So, if you have made changes to the configuration files in your development environment, you will also need to change them directly on the IBM i to make them match.
+Open Docker Desktop and check to make sure the box in the bottom-left turns green. If you hover over it, it should say "ENGINE RUNNING". If you see that, Docker Desktop is good to go!
 
-The main configuration file is `development.json`. You can edit it with the following command:
-```sh
-nano /opt/eradani-connect-template/config/development.json
+### Postman
+
+Open Postman and make sure it starts and that you get past the Create Account screen.
+
+### Visual Studio Code
+
+Open VSCode and make sure it opens successfully.
+
+### Git Source Control Account
+
+Sign in to your company's Git source control system (GitHub, Azure DevOps, Bitbucket, GitLab, etc). If you can sign in to a valid account on that system, your account is set up!
+
+## Project Setup
+
+Once all of the prerequisites have been met, we can move on to setting up your specific project on your PC!
+
+Our environment setup process will follow these major steps:
+
+1. Download the Open Source side of your project onto your PC with all of its source code
+2. Configure your user profile and project settings on your PC
+3. Set up the IBM i portion of your development environment on your IBM i
+4. Connect the environment on your PC to the one on your IBM i and test the connection
+
+### Download the Project
+
+Most of the steps in this section will be done within the Ubuntu app on your PC which was installed along with WSL.
+
+Open the Ubuntu app (orange circular icon) and run the command `pwd` by typing `pwd` and pressing `Enter` . This will display your current working directory in your filesystem. It should be `/home/<your-username>`.
+
+If the `pwd` command did NOT show `/home/<your-username>`, then run the command **_cd /home_** to go to your linux home directory in WSL. Then, go to your user's home directory with **_cd <your-user-name>_** You can find your user name by running the command `id -un`
+
+Once you have moved to your user's home directory, create a directory for all eradani projects on this machine with `mkdir eradani` and then move to the new *eradani* directory with `cd eradani`
+
+We will now need to create a Personal Access Token so that your PC can access your project on your behalf. Open your web browser, log into [github.com](http://github.com/), and generate a Personal Access Token. You can do this by going to [github.com](http://github.com/), clicking on your user profile icon in the top-right corner, going to Settings, then Developer Settings, then Personal Access Tokens, and finally clicking *Generate New Token*. Give the token a name like "My PC", set the expiration to "No Expiration", check the box that says "repo", and then generate the token and copy it.
+
+Back in the Ubuntu app, clone the project to your local PC with the command `git clone https://<your-github-username>:<your-personal-access-token>@<your-repository-url>`. For example, if your github username is `eradani`, your personal access token is `abc123`, and your repository URL is `github.com/eradani-inc/test-project`, the command would be `git clone https://eradani:abc123@github.com/eradani-inc/test-project`.
+
+If the access permissions are right and the clone succeeds, the `git clone` command will create a directory with the name of your repository (`test-project` in the above example) with all of your project's source code in it. Move into that directory with the command: `cd <repository-name>`
+
+Once you can move into that directory, your project has been downloaded!
+
+### Configure User Profile and Project Settings
+
+Now that your project source code has been downloaded, the next step is to configure your user profile and project settings.
+
+Git does not allow any developer to modify the source code of your project until that developer has added at least their full name and email address to their Git configuration. That allows Git to track every change to your application, who changed it, when they changed it, and why they changed it.
+
+Configure your git user settings with the following four commands:
+
+```
+git config --global user.name "Your Full Name"
+git config --global user.email "Your Email"
+git config --global core.editor nano
+git config --global pull.rebase false
 ```
 
-Once you make your changes and save the file, you're done with this section!
+Once your Git profile has been configured, copy your git user settings into your project with the command `cp ~/.gitconfig .` 
 
-### Compiling the TypeScript code
+> *Note the "." at the end of the command with a space between "gitconfig" and "." - it's important!*
 
-At the base level, all that needs to be done here is run the package script that came with the application. You can find this script in the `package.json` file under `package:dev` and `package:release`. It is up to you whether you would like to run `package:dev` or `package:release` to generate the executable JavaScript. Essentially, the difference is that `package:dev` will run much more quickly than `package:release` because `package:dev` writes over the previously generated JavaScript while `package:release` fully deletes the previous version before re-generating. `package:dev` also creates sourcemaps will make the application significantly easier to debug, but also increase the size of the generated JavaScript code. In general, we recommend running `package:dev` while your application is in development, and only running `package:release` on major version updates.
+Once that command completes successfully, your user profile has been configured, and we can move on to your project settings!
 
-Run the package script:
+Open Docker Desktop and make sure the Docker daemon is running by hovering over the bar in the bottom-left corner and checking that it is green and opens a popup saying "Engine Running".
 
-```sh
-$ npm run package:dev
+In your Ubuntu app, open your project in VSCode with the command `code .`
+
+> *Note the "." at the end of the command with a space between "code" and "."*
+
+Once VSCode opens, it should prompt you with messages in the bottom-right corner so watch closely.
+
+You may first be prompted to install an extension called _Remote - Containers_. If you get that message, install it. If you don't get that message, open the Extensions tab in VSCode (the icon on the left with the 4 squares where one is slightly removed from the other 3) and search for "Remote - Containers" and install the extension.
+
+Then, once that's done, you should be prompted with an option to **_Reopen In Container_**. Click that button. If a minute goes by and you do not get the message with the *Reopen In Container* option, click the green box in the extreme bottom-left corner of VSCode, go to the popup at the top-center of the screen which will open when you click the green box, and select "Reopen In Container".
+
+VSCode should blank out for a second and reload with a message in the bottom-right corner (keep watching there) that shows a message like "Starting Container (Show Log)". Click on "Show Log" and watch as the container builds itself. Keep an eye out for red error messages. The output will be in the terminal at the bottom-half of VSCode.
+
+> *Note: You may also be prompted with a popup to confirm that you trust the directory and its authors. If you see this popup, click the blue button to confirm that you trust the application and its authors.*
+
+When the container has opened for the first time, click the three-dots button at the top-right corner of the Explorer tab (left side) and make sure "NPM Scripts" is checked. If it isn't, click it to enable it. A small tab at the bottom-left of the Explorer tab should appear saying "NPM Scripts". Open that up, find the script that says `generate-config`, and click the Run button next to it to run it. The Run button will appear when you hover over the `generate-config` script. Then find the script that says `package:dev` in the same list and click the play button on that one.
+
+Once those scripts have completed, press the F5 key to start the application. If it starts up, then gives an *Error Connecting to the Database* message and then shuts down, your application is installed and running - we just haven't told it the IP address of your IBM i to connect to yet!
+
+### Set Up IBM i Environment
+
+In order to build a Next-Gen Application, the Open Source application on your PC needs an IBM i side to connect to.
+
+> *Before continuing, first check: Do you have automated (scheduled) jobs on the IBM i that run as your development user profile? If yes, pause here and create a new user profile for your development with Eradani Connect. That way, any settings we change for your development user profile will not affect your automated jobs. We will change some defaults in your development user profile to better facilitate development of Next-Gen Applications.*
+
+In VSCode on the leftmost column of the window, select the "IBM i" tab. If you have not yet connected VSCode to an IBM i, click the blue button that says "Connect to an IBM i" and fill out the form that pops up to configure your session.
+
+Once your session is configured, a small button should appear in the bottom bar of VSCode that says "Terminals". Click that, and then in the menu that opens in the top-center of the VSCode window, select "PASE" to open an SSH session to the Open Source environment on your IBM i.
+
+In your SSH session, make sure your user profile has a home directory with the command  `cd /home/<your-userprofile>` If that command fails, create a home directory for your user profile by running the command `cd /home` and then `mkdir <your-userprofile>`. Be sure to not include the angle brackets (`<` and `>`) around your actual user profile name in the command.
+
+Once your home directory on the IBM i exists, open a terminal session on your PC. You can do this in VSCode by clicking the `+` icon in the top-right corner of the Terminal window (bottom-half of VSCode). The terminal session on your PC should prompt you for commands  with something like this:
+
+```
+node ➜ /workspaces/your-project-name (integration) $
 ```
 
--- OR --
+Once you see that prompt, upload the default `.profile` and `.bashrc` files to your home directory on the IBM i with the command `scp .devcontainer/.profile .devcontainer/.bashrc YOURUSERPROFILE@your.ibmi.ip.address:/home/YOURUSERPROFILE`. For example, if your user profile name on the IBM i is `ERADANI` and the IP address of your IBM i is `10.0.0.1`, the full command would be:
 
-```sh
-$ npm run package:release
+```
+scp .devcontainer/.profile .devcontainer/.bashrc ERADANI@10.0.0.1:/home/ERADANI
 ```
 
-Once this command finishes, the JavaScript code will have been updated.
+When the upload completes, open a new SSH session to the IBM i by clicking the "Terminals" button in the bottom bar of VSCode and selecting "PASE" again. This will open a new SSH session to your IBM i. You should get an error about unexpected characters - we will resolve that next.
 
-### Restarting the application
+In your SSH session, set your development library by editing the `.profile` file with the command `nano .profile` 
 
-This application is managed by an open-source tool called PM2. PM2 is a Process Manager (PM) build specifically for Node.js, and provides a series of useful commands for managing the server. You can find a complete list [here](https://pm2.keymetrics.io/docs/usage/quick-start/#managing-processes).
+> *Note: The Nano editor does not support mouse movements. You will need to move your cursor with the arrow keys.*
 
-To perform a zero-downtime reload of the application, use the following command:
-```sh
-$ pm2 reload eradani-connect-template
-```
+In Nano, change `LIB=YOUR_DEVELOPMENT_LIBRARY` so that it sets the `LIB` variable equal to the library on your IBM i which you would like to use for development. 
 
-We recommend checking the application logs to make sure it restarts successfully. You can do that with the following command:
-```sh
-pm2 logs
-```
+> *Note: Each developer must have a separate, personal development library.*
 
-If you see a message in the logs like "Server listening on Port XXXX", you're done!
+For example, if my development library is `MYLIB`, then the line should read: `LIB=MYLIB` 
 
-Congratulations, your application is now updated!
+Once you have changed the `LIB` setting, save and exit from Nano by first pressing `Ctrl+O`, then `Enter` to save, and finally `Ctrl+X` to exit. Close and reopen your SSH session to make sure everything is set up correctly. When you reopen your SSH session with the "Terminals > PASE" selection again, you should see a prompt that says `eradani-connect [userprofile] >` where `userprofile` is the name of your user profile on the IBM i.
 
-## Final Notes
+> *Note: You can always tell the difference between an SSH session connected to an IBM i and a terminal session on your PC by looking at the prompt. If you see something like "eradani-connect [userprofile] >", then you are connected to the IBM i and any command you run will be run on the IBM i against the IBM i IFS. If you see a prompt like "node ➜ /workspaces/your-project-name (integration) $ ", then you are in a terminal session on your PC and any command you run will be run on your PC against your PC's filesystem. Always check the prompt before running commands to make sure you are on the right system!*
 
-If you need any help managing or developing on this application, Eradani is here to help!
+In your IBM i SSH session, create a directory for your Next Gen application development by running the command `mkdir eradani` Then, switch back to your "Bash" terminal session for a moment.
 
-You can reach the Eradani office by calling (510) 239-7331 or emailing info@eradani.com.
+> *Note: You can see all of your active terminal sessions in the rightmost column of the Terminal section (bottom half) of VSCode. Sessions labeled "bash" are your local PC sessions. Sessions labeled "IBM i PASE" are your IBM i remote SSH sessions.*
 
-If you have a direct technical question about this application, you can reach out to your application rep, Aaron Magid, directly at (510) 295-9297 or aaron@eradani.com.
+In your local Bash terminal, run the command `git remote -v` That command will report back the URL you can use to clone your project onto the IBM i. Copy the URL in the command output. It doesn't matter which URL you copy - both are the same.
 
-Happy Coding!
+Once you have copied your project URL, switch back to your IBM i SSH session by selecting the "IBM i PASE" session in the sessions list on the right side of the Terminal section of VSCode.
+
+In your IBM i SSH session, run the command `git clone <project url>` For example, if your project url is `https://eradani:abc123@github.com/eradani-inc/test-project`, your command here would be `git clone https://eradani:abc123@github.com/eradani-inc/test-project` This will download an exact copy of your project into your IBM i development environment which we will now set up.
+
+First, we will check the version of NPM you have installed with the command `npm -v`.
+
+> *Note: If your NPM version is under version 8, you will need to update NPM to version 8.16. Log into SSH with a user who has \*ALLOBJ authority and run the command: `PATH=/QOpenSys/pkgs/bin:$PATH npm install -g npm@8.16`*
+
+Once you have a compatible version of NPM installed (8.16), in your personal IBM i SSH session run the command `npm install` to install all of the open source packages required for your Next Gen application. This process may take a few minutes - a typical Next Gen application requires over a thousand open source modules to operate! NPM will figure out for us how to safely install all of the required modules at the required versions and end with an automatic vulnerability scan.
+
+After the NPM installation completes, open a 5250 session as the same user you are using for your Next Gen application development. We will now create a channel for your RPG programs to communicate with your Open Source programs. In your 5250 session, first add the `ECNCT` library to your library list with the command `ADDLIBLE ECNCT`. Then run the command `ECCCRTDTAQ` and pres `F4` to prompt the command. In the `Library` field, enter the name of your personal development library. In the `Request Size` and `Response Size` fields, enter `32767` (maximum size). We recommend using the maximum size for development unless you have a strong reason not to.
+
+Once your channel has been created, we will compile the sample Next Gen RPG programs that come with your base project. Back in your IBM i SSH session, run the command `make -C qsys library` and then `make -C qsys`. The first command will set up source files in your development library for RPG development, and the second will copy in your sample RPG code and compile it.
+
+Remember: during this installation we are setting up a Next Gen IBM i application which includes an Open Source program talking to RPG programs over an Eradani Connect channel. You now have the Open Source program, the RPG programs, and the channel all created - the last step is to point them at each other so that they send their messages to the right place.
+
+Back in your VSCode window, open your Explorer tab (the tab at the top-left corner of the VSCode window that looks like two pages. In that window, open the file at `src > config > development.json` This is your local development configuration file. In there, we will change a few configuration values. This is a JSON file, so we will reference fields in JSON format. That means that if we reference a field called "ecclient.appLibrary", you should first look for a field named "ecclient", and then inside of that look for a field called "appLibrary":
+
+- Change the `ecclient.appLibrary` to the name of your personal development library on the IBM i
+
+- Change the `ecclient.requestLen` and `ecclient.responseLen` to `32767` Note that these are the same values that you entered when you ran the `ECCCRTDTAQ` command on your 5250 session earlier. This information will allow the Open Source program to talk to the correct RPG programs.
+
+- Lower down you should see two ODBC connection strings which look like this: `DSN=*LOCAL;NAM=1;CCSID=1208` That connection string is great on an IBM i, but won't work on your local PC. Change both of the connection strings that look like that to this:
+
+  ```
+  Driver={IBM i Access ODBC Driver};System=your.ibmi.ip.address;UserID=YOURUSERPROFILE;Password=YOURPASSWORD;NAM=1;CCSID=1208
+  ```
+
+  Make sure to set your actual development user profile and password where it says `YOURUSERPROFILE` and `YOURPASSWORD`!
+
+Once you have changed your configuration file, apply your configuration changes by saving the file and then running the config script by clicking the Run button for `config` under NPM SCRIPTS in your Explorer tab.
+
+> *Note: the "config" script is different from the "generate-config" script! We want to run "config", not "generate-config"!*
+
+Once the configuration script completes, start your Open Source application on your PC by pressing `F5`. You should see messages in your terminal at the bottom of VSCode saying "App Startup Complete!" after a few seconds. Once you see that message, test your application's inbound and outbound functionalities with the following two tests:
+
+- Inbound: Open your web browser and navigate to https://localhost:4001/dashboard/docs. In this page, you should be able to open up the api route that says `GET /api/rpg/simple-calc/{num}`. This will display the documentation for one of the sample api endpoints in your application. This particular endpoint calls an RPG program and returns the result. Click the "Try it out" button, then click "Execute". The system should run your api call, execute the RPG program, and return a result. If you get back a result with a status code of `200`, your inbound APIs are working!
+- Outbound: Open a 5250 session to your IBM i as your development user profile. In that session, set your library list for Eradani Connect development by adding the `ECNCT` library to your list along with your personal development library (the one that you gave to the `ECCCRTDTAQ` command earlier). Once your library list is set, run the command `dspvhcl` (Display Vehicle) and prompt it with `F4`. This is a sample integration which calls a public api to retrieve the type of fuel used by a vehicle given its VIN and model year. *On your first call, you may want to set the wait time in this command to a higher value than the default (such as 10 or 15) to give the system time to wake up when it processes your first call*. Once the command completes, check the output by running the command `WRKJOB`, then taking option `4` in the resulting menu, and taking option `5` (Display) on the spooled output file from your `DSPVHCL` call. That spooled file should contain a message saying the fuel type of the vehicle whose VIN you entered in the `DSPVHCL` command. If you kept the default VIN, the fuel type should be `Gasoline`.
+
+If both of those tests pass, congratulations! Your Eradani Connect development environment is fully configured and ready to go!

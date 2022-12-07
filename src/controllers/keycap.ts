@@ -9,9 +9,10 @@ import SQLTemplateKCVOIDS, { SQLTemplateOutputKCVOIDS } from 'src/models/keycap-
 import SQLTemplateKCLATEORDERS, { SQLTemplateOutputKCLATEORDERS } from 'src/models/keycap-kc-lateorders';
 import SQLTemplateKCYTDINV, { SQLTemplateOutputKCYTDINV } from 'src/models/keycap-kc-ytdinvoices';
 import SQLTemplateKCMGNRTYTDINV, { SQLTemplateOutputKCMGNRTYTDINV } from 'src/models/keycap-kc-mgnrtytdinvoices';
-// import { JSONObject } from 'src/types';
+import SQLTemplateKCALLSHIP, { SQLTemplateInputKCALLSHIP,SQLTemplateOutputKCALLSHIP } from 'src/models/keycap-kc-allshipments';
+import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
-// import { DateTime } from 'luxon';
+import { DateTime } from 'luxon';
 // import { promises as fs } from 'fs';
 // import APIError from 'src/APIError';
 
@@ -58,4 +59,14 @@ export async function getYtdInvoices(): Promise<SQLTemplateOutputKCYTDINV> {
 export async function getMgNrtYtdInvoices(): Promise<SQLTemplateOutputKCMGNRTYTDINV> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateKCMGNRTYTDINV) as Promise<SQLTemplateOutputKCMGNRTYTDINV>;
+}
+export async function getAllShipments(inputs: JSONObject): Promise<SQLTemplateOutputKCALLSHIP> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputKCALLSHIP = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        // X toDate: inputs.toDate,
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };    
+    return powerbiTransports.wolf.execute(SQLTemplateKCALLSHIP, params) as Promise<SQLTemplateOutputKCALLSHIP>;
 }

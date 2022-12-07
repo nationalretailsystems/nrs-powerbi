@@ -136,3 +136,7 @@ export const getSAObScans: InputCheckChain[] = [
 export const getSAHdPo: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
 ];
+export const getAllShipments: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];

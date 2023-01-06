@@ -84,7 +84,7 @@ function _stringify(data: any, depth: number = 0): string {
 }
 
 function _clean(str: string) {
-    return str.replace(/[\r\n]/g, '');
+    return str?.replace?.(/[\r\n]/g, '') ?? str;
 }
 
 const formatter = winston.format.combine(

@@ -5,6 +5,8 @@ import SQLTemplate3, { SQLTemplateInput3, SQLTemplateOutput3 } from 'src/models/
 import SQLTemplate4, { SQLTemplateInput4, SQLTemplateOutput4 } from 'src/models/powerbi-template4';
 import SQLTemplate5, { SQLTemplateInput5, SQLTemplateOutput5 } from 'src/models/powerbi-template5';
 import SQLTemplate6, { SQLTemplateInput6, SQLTemplateOutput6 } from 'src/models/powerbi-template6';
+import SQLTemplateSALESPRO, { SQLTemplateInputSALESPRO, SQLTemplateOutputSALESPRO } from 'src/models/powerbi-salespro';
+import SQLTemplateSALESPRODSC, { SQLTemplateInputSALESPRODSC, SQLTemplateOutputSALESPRODSC } from 'src/models/powerbi-salesprodsc';
 import SQLTemplateBLHD2AR, { SQLTemplateInputBLHD2AR, SQLTemplateOutputBLHD2AR } from 'src/models/powerbi-blhd2ar';
 import SQLTemplateBLHD2ARKY, {
     SQLTemplateInputBLHD2ARKY,
@@ -155,6 +157,26 @@ export async function getSales(inputs: JSONObject): Promise<SQLTemplateOutput6> 
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
     return powerbiTransports.wolf.execute(SQLTemplate6, params) as Promise<SQLTemplateOutput6>;
+}
+export async function getSalesPro(inputs: JSONObject): Promise<SQLTemplateOutputSALESPRO> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputSALESPRO = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        // X toDate: inputs.toDate,
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateSALESPRO, params) as Promise<SQLTemplateOutputSALESPRO>;
+}
+export async function getSalesProDsc(inputs: JSONObject): Promise<SQLTemplateOutputSALESPRODSC> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputSALESPRODSC = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        // X toDate: inputs.toDate,
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateSALESPRODSC, params) as Promise<SQLTemplateOutputSALESPRODSC>;
 }
 export async function getBlhd2Ar(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2AR> {
     logger.debug('Calling SQLTemplate program');

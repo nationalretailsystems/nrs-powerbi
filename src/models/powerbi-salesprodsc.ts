@@ -5,11 +5,11 @@ import { JSONObject } from 'src/types';
 
 export default new eradaniConnect.run.Sql(
     `with sales as (
-        select 'WS' as company,acct#h,totalh, prodth, ORICCH, DSTCCH, pro##h from wsfile2.blhd
+        select 'NRT' as company,acct#h,totalh, prodth, ORICCH, DSTCCH, pro##h from wsfile2.blhd
          union all
-        select 'KY' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from kyfile.blhd
+        select 'KEY' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from kyfile.blhd
          union all
-        select 'WL' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h from wlfile.blhd
+        select 'WOR' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h from wlfile.blhd
          union all
         select 'MIT' as company, acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from mitfile.blhd
         ),

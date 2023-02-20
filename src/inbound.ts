@@ -13,6 +13,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
+import * as prometheus from 'src/services/inbound-metrics';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
@@ -144,10 +145,29 @@ function setUpAPI(swaggerSpec?: any) {
         })
     );
 
+    app.use(prometheus.requestCounters);
+    app.use(prometheus.responseCounters);
+
+    /**
+     * Enable metrics endpoint
+     */
+    prometheus.injectMetricsRoute(app);
+
+    /**
+     * Enable collection of default metrics
+     */
+    prometheus.startCollection();
+
     // Mount routes
     const router = express.Router();
     routes(router);
+    const end = prometheus.httpRequestTimer.startTimer();
     app.use('/', router);
+
+    app.use(async (req, res) => {
+        const route = req.route?.path || req.url;
+        end({ method: req.method, route, code: res.statusCode });
+    });
 
     if (generateSwagger) {
         expressOASGenerator.handleRequests();

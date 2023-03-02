@@ -5,13 +5,13 @@ import { JSONObject } from 'src/types';
 
 export default new eradaniConnect.run.Sql(
     `with sales as (
-        select acct#h,totalh, prodth, ORICCH, DSTCCH, pro##h from wsfile2.blhd
+        select acct#h,totalh, prodth, ORICCH, DSTCCH, pro##h  from wsfile2.blhd where stat2h <> 'V'
          union all
-        select acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from kyfile.blhd
+        select acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from kyfile.blhd where stat2h <> 'V'
          union all
-        select acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h from wlfile.blhd
-         union all
-        select acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from mitfile.blhd
+       select acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h from wlfile.blhd where stat2h <> 'V'
+        union all
+       select acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from mitfile.blhd where stat2h <> 'V'
         )
        SELECT
         CASE WHEN ORIGNA > ' ' THEN ORIGNA

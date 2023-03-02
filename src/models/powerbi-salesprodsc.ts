@@ -5,13 +5,13 @@ import { JSONObject } from 'src/types';
 
 export default new eradaniConnect.run.Sql(
     `with sales as (
-        select 'NRT' as company,acct#h,totalh, prodth, ORICCH, DSTCCH, pro##h from wsfile2.blhd
+        select 'NRT' as company,acct#h,totalh, prodth, ORICCH, DSTCCH, pro##h from wsfile2.blhd where stat2h <> 'V'
          union all
-        select 'KEY' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from kyfile.blhd
+        select 'KEY' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from kyfile.blhd where stat2h <> 'V'
          union all
-        select 'WOR' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h from wlfile.blhd
+        select 'WOR' as company,acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h from wlfile.blhd where stat2h <> 'V'
          union all
-        select 'MIT' as company, acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from mitfile.blhd
+        select 'MIT' as company, acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from mitfile.blhd where stat2h <> 'V'
         ),
 details as (
         select pro##D,totald, descrd, sdescd from wsfile2.bldt where totald <> 0
@@ -38,7 +38,7 @@ summary as (
          join sales ON acct#a = acct#h
         WHERE sales.PRODTH BETWEEN ? AND ?
        GROUP BY  
-         company,
+         sales.company,
          CASE WHEN ORIGNA > ' ' THEN ORIGNA
             ELSE CAST(acct#a AS CHAR(5)) END,
          CASE WHEN ORIGNA > ' ' THEN DESCR1 ELSE NAMEAA END,

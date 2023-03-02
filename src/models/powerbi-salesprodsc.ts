@@ -14,13 +14,13 @@ export default new eradaniConnect.run.Sql(
         select 'MIT' as company, acct#h, totalh, prodth, ORICCH, DSTCCH, pro##h  from mitfile.blhd where stat2h <> 'V'
         ),
 details as (
-        select pro##D,totald, descrd, sdescd from wsfile2.bldt where totald <> 0
+        select 'NRT' as company,pro##D,totald, descrd, sdescd from wsfile2.bldt where totald <> 0
          union all
-        select pro##D,totald, descrd, sdescd  from kyfile.bldt where totald <> 0
+        select 'KEY' as company,pro##D,totald, descrd, sdescd  from kyfile.bldt where totald <> 0
          union all
-        select pro##D,totald, descrd, sdescd from wlfile.bldt where totald <> 0
+        select 'WOR' as company,pro##D,totald, descrd, sdescd from wlfile.bldt where totald <> 0
          union all
-        select pro##D,totald, descrd, sdescd  from mitfile.bldt where totald <> 0
+        select 'MIT' as company,pro##D,totald, descrd, sdescd  from mitfile.bldt where totald <> 0
         ),
 summary as (
        SELECT

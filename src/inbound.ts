@@ -145,29 +145,12 @@ function setUpAPI(swaggerSpec?: any) {
         })
     );
 
-    app.use(prometheus.requestCounters);
-    app.use(prometheus.responseCounters);
-
-    /**
-     * Enable metrics endpoint
-     */
-    prometheus.injectMetricsRoute(app);
-
-    /**
-     * Enable collection of default metrics
-     */
-    prometheus.startCollection();
+    app.use(prometheus.metricsMiddleware);
 
     // Mount routes
     const router = express.Router();
     routes(router);
-    const end = prometheus.httpRequestTimer.startTimer();
     app.use('/', router);
-
-    app.use(async (req, res) => {
-        const route = req.route?.path || req.url;
-        end({ method: req.method, route, code: res.statusCode });
-    });
 
     if (generateSwagger) {
         expressOASGenerator.handleRequests();

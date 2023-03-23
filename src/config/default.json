@@ -10,7 +10,12 @@
         "shutdownTimeout": 6000,
         "healthCheckTimeout": 3000,
         "inbound": true,
-        "outbound": true
+        "outbound": true,
+        "metrics": {
+            "inbound": true,
+            "outbound": false,
+            "kafka": false
+        }
     },
 
     "debug": true,

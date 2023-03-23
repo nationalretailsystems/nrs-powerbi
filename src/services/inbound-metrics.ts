@@ -4,14 +4,6 @@ import promBundle from 'express-prom-bundle';
 
 const logger = createLogger('services/inbound-metrics');
 
-/**
- * This funtion will start the collection of metrics and should be called from within in the main js file
- */
-function startCollection() {
-    logger.debug(`Starting the collection of metrics, the metrics are available on /metrics`);
-    require('prom-client').collectDefaultMetrics();
-}
-
 const metricsMiddleware = promBundle({
     includeMethod: true,
     includePath: true,
@@ -24,4 +16,4 @@ const metricsMiddleware = promBundle({
 });
 
 // Add the middleware to express
-export { metricsMiddleware, startCollection };
+export { metricsMiddleware };

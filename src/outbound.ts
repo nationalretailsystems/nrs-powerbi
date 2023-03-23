@@ -7,8 +7,7 @@ import config from 'config';
 import createLogger from 'src/services/logger';
 const { ecclient, debug } = config;
 import registerCommands from 'src/commands';
-import { Register } from 'src/services/inbound-metrics';
-
+import * as prometheus from 'src/services/outbound-metrics';
 import * as shutdownService from 'src/services/shutdown';
 
 const logger = createLogger('outbound');

@@ -145,7 +145,9 @@ function setUpAPI(swaggerSpec?: any) {
         })
     );
 
-    app.use(prometheus.metricsMiddleware);
+    if (config?.app?.metrics?.inbound) {
+        app.use(prometheus.metricsMiddleware);
+    }
 
     // Mount routes
     const router = express.Router();

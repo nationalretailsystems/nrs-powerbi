@@ -1,10 +1,10 @@
 import { body } from 'express-validator';
 import { InputCheckChain } from 'src/types';
-import { regexService } from 'src/services/regexes-service';
+import { regexes } from 'src/services/regexes';
 
 
 export const login: InputCheckChain[] = [
         body('username').exists().isString(),
-        body('password').exists().isString().matches(regexService().password)
+        body('password').exists().isString().matches(regexes.password)
 ]
 

@@ -1,9 +1,9 @@
 import { body } from 'express-validator';
 import { InputCheckChain } from 'src/types';
-import { regexService } from 'src/services/regexes-service';
+import { regexes } from 'src/services/regexes';
 
 export const xauth: InputCheckChain[] = [
         body('client_id').exists().isString(),
-        body('client_secret').exists().isString().matches(regexService().password)
+        body('client_secret').exists().isString().matches(regexes.password)
 ]
 

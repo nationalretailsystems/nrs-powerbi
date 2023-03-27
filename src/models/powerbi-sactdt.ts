@@ -62,7 +62,7 @@ ORDER BY
             },
             {
                 name: 'toDate'
-            }                        
+            }
         ]
     }
 );
@@ -83,7 +83,7 @@ export interface SQLTemplateInputSACTDT {
     fromDate2: number | string;
     toDate2: number | string;
     fromDate3: number | string;
-    toDate3: number | string;    
+    toDate3: number | string;
 }
 
 /**

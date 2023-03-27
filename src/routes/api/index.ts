@@ -21,4 +21,5 @@ export default function mountAPI(router: Router) {
 
     const keycap = express.Router();
     mountKEYCAP(keycap);
-    router.use('/keycap', keycap);}
+    router.use('/keycap', keycap);
+}

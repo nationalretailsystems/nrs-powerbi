@@ -1,6 +1,6 @@
 #!/bin/sh
 NODE_HOME=/QOpenSys/pkgs/bin
-ECNCT_HOME=/QOpenSys/opt/eradani/dev/eradani-inout-template
+ECNCT_HOME=/QOpenSys/opt/eradani/dev/nrs-powerbi
 
 NODE_ENV=development
 export NODE_ENV

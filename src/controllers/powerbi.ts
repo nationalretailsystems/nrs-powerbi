@@ -6,7 +6,10 @@ import SQLTemplate4, { SQLTemplateInput4, SQLTemplateOutput4 } from 'src/models/
 import SQLTemplate5, { SQLTemplateInput5, SQLTemplateOutput5 } from 'src/models/powerbi-template5';
 import SQLTemplate6, { SQLTemplateInput6, SQLTemplateOutput6 } from 'src/models/powerbi-template6';
 import SQLTemplateSALESPRO, { SQLTemplateInputSALESPRO, SQLTemplateOutputSALESPRO } from 'src/models/powerbi-salespro';
-import SQLTemplateSALESPRODSC, { SQLTemplateInputSALESPRODSC, SQLTemplateOutputSALESPRODSC } from 'src/models/powerbi-salesprodsc';
+import SQLTemplateSALESPRODSC, {
+    SQLTemplateInputSALESPRODSC,
+    SQLTemplateOutputSALESPRODSC
+} from 'src/models/powerbi-salesprodsc';
 import SQLTemplateBLHD2AR, { SQLTemplateInputBLHD2AR, SQLTemplateOutputBLHD2AR } from 'src/models/powerbi-blhd2ar';
 import SQLTemplateBLHD2ARKY, {
     SQLTemplateInputBLHD2ARKY,
@@ -67,7 +70,10 @@ import SQLTemplateSARLSINQ, { SQLTemplateOutputSARLSINQ } from 'src/models/power
 import SQLTemplateSAHDLDVUR, { SQLTemplateOutputSAHDLDVUR } from 'src/models/powerbi-sahdldvur';
 import SQLTemplateSACTDT, { SQLTemplateInputSACTDT, SQLTemplateOutputSACTDT } from 'src/models/powerbi-sactdt';
 import SQLTemplateSAYD3INQ, { SQLTemplateOutputSAYD3INQ } from 'src/models/powerbi-sayd3inq';
-import SQLTemplateSAOBSCANS, { SQLTemplateInputSAOBSCANS, SQLTemplateOutputSAOBSCANS } from 'src/models/powerbi-saobscans';
+import SQLTemplateSAOBSCANS, {
+    SQLTemplateInputSAOBSCANS,
+    SQLTemplateOutputSAOBSCANS
+} from 'src/models/powerbi-saobscans';
 import SQLTemplateSAHDPO, { SQLTemplateInputSAHDPO, SQLTemplateOutputSAHDPO } from 'src/models/powerbi-sahdpo';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
@@ -108,16 +114,15 @@ export async function getCCRevenue(inputs: JSONObject) {
         costcenter1: inputs.costcenter || '    ',
         costcenter2: inputs.costcenter || '9999'
     };
-    filename = '/eradani/CCRevenue_'  + inputs.fromDate + inputs.toDate + 'json';
-    var jsonFile = {"fileName":filename};
+    filename = '/eradani/CCRevenue_' + inputs.fromDate + inputs.toDate + 'json';
+    let jsonFile = { fileName: filename };
     try {
-        result = await powerbiTransports.wolf.execute(SQLTemplate2, params) as Promise<SQLTemplateOutput2>;
-        await fs.writeFile(filename,JSON.stringify(result),'utf-8');
+        result = (await powerbiTransports.wolf.execute(SQLTemplate2, params)) as Promise<SQLTemplateOutput2>;
+        await fs.writeFile(filename, JSON.stringify(result), 'utf-8');
         return jsonFile;
     } catch (err) {
         throw new APIError(450, 'Api failure file not created');
-    }    
-
+    }
 }
 export async function getHours(inputs: JSONObject): Promise<SQLTemplateOutput3> {
     logger.debug('Calling SQLTemplate program');
@@ -466,14 +471,14 @@ export async function getSAHdLdVur(): Promise<SQLTemplateOutputSAHDLDVUR> {
 export async function getSACtDT(inputs: JSONObject): Promise<SQLTemplateOutputSACTDT> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputSACTDT = {
-        fromDate: inputs.fromDate, 
-        toDate: inputs.toDate, 
+        fromDate: inputs.fromDate,
+        toDate: inputs.toDate,
         fromDate2: inputs.fromDate,
-        toDate2:  inputs.toDate, 
-        fromDate3: inputs.fromDate, 
+        toDate2: inputs.toDate,
+        fromDate3: inputs.fromDate,
         toDate3: inputs.toDate
     };
-    return powerbiTransports.wolf.execute(SQLTemplateSACTDT,params) as Promise<SQLTemplateOutputSACTDT>;
+    return powerbiTransports.wolf.execute(SQLTemplateSACTDT, params) as Promise<SQLTemplateOutputSACTDT>;
 }
 export async function getSAYd3Inq(): Promise<SQLTemplateOutputSAYD3INQ> {
     logger.debug('Calling SQLTemplate program');
@@ -484,12 +489,12 @@ export async function getSAObScans(inputs: JSONObject): Promise<SQLTemplateOutpu
     const params: SQLTemplateInputSAOBSCANS = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
     };
-    return powerbiTransports.wolf.execute(SQLTemplateSAOBSCANS,params) as Promise<SQLTemplateOutputSAOBSCANS>;
+    return powerbiTransports.wolf.execute(SQLTemplateSAOBSCANS, params) as Promise<SQLTemplateOutputSAOBSCANS>;
 }
 export async function getSAHdPo(inputs: JSONObject): Promise<SQLTemplateOutputSAHDPO> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputSAHDPO = {
         fromDate: inputs.fromDate
     };
-    return powerbiTransports.wolf.execute(SQLTemplateSAHDPO,params) as Promise<SQLTemplateOutputSAHDPO>;
+    return powerbiTransports.wolf.execute(SQLTemplateSAHDPO, params) as Promise<SQLTemplateOutputSAHDPO>;
 }

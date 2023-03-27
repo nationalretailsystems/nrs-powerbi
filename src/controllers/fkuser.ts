@@ -1,6 +1,5 @@
 import * as jwt from 'src/services/jwt';
-import * as configService from 'config';
-const config = configService.get();
+import config from 'config';
 const credentials = config.credentials;
 import APIError from 'src/APIError';
 import { JWTUserData } from 'src/types';
@@ -21,6 +20,7 @@ export function generateJWT(userData: JWTUserData) {
     };
 
     return jwt.sign(user).then((token: string) => {
+        /* eslint-disable-next-line */
         return { access_token: token };
     });
 }

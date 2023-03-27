@@ -9,16 +9,19 @@ import SQLTemplateKCVOIDS, { SQLTemplateOutputKCVOIDS } from 'src/models/keycap-
 import SQLTemplateKCLATEORDERS, { SQLTemplateOutputKCLATEORDERS } from 'src/models/keycap-kc-lateorders';
 import SQLTemplateKCYTDINV, { SQLTemplateOutputKCYTDINV } from 'src/models/keycap-kc-ytdinvoices';
 import SQLTemplateKCMGNRTYTDINV, { SQLTemplateOutputKCMGNRTYTDINV } from 'src/models/keycap-kc-mgnrtytdinvoices';
-import SQLTemplateKCALLSHIP, { SQLTemplateInputKCALLSHIP,SQLTemplateOutputKCALLSHIP } from 'src/models/keycap-kc-allshipments';
+import SQLTemplateKCALLSHIP, {
+    SQLTemplateInputKCALLSHIP,
+    SQLTemplateOutputKCALLSHIP
+} from 'src/models/keycap-kc-allshipments';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
+/* eslint-disable capitalized-comments */
 // import { promises as fs } from 'fs';
 // import APIError from 'src/APIError';
+/* eslint-enable capitalized-comments */
 
 const logger = createLogger('controllers/keycap');
-
-
 
 export async function getKCProWSO(): Promise<SQLTemplateOutputKCPROWSO> {
     logger.debug('Calling SQLTemplate program');
@@ -67,6 +70,6 @@ export async function getAllShipments(inputs: JSONObject): Promise<SQLTemplateOu
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
-    };    
+    };
     return powerbiTransports.wolf.execute(SQLTemplateKCALLSHIP, params) as Promise<SQLTemplateOutputKCALLSHIP>;
 }

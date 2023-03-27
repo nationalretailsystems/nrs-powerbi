@@ -18,7 +18,7 @@ export default new eradaniConnect.run.Sql(
              AND ACCT#H between  ? and ?
              AND ORICCH BETWEEN ? and ?       
             `,
-                       //  AND ORICCH IN ( ? )  
+    //  AND ORICCH IN ( ? )
     {
         params: [
             {

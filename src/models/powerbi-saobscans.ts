@@ -24,7 +24,7 @@ WHERE
         params: [
             {
                 name: 'fromDate'
-            }                        
+            }
         ]
     }
 );

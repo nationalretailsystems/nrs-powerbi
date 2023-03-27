@@ -1,5 +1,5 @@
 {
-    "name": "eradani-inout-template",
+    "name": "nrs-powerbi",
     "version": "2.0.0",
     "description": "Eradani Connect InOut Template Application",
     "main": "dist/src/app.js",
@@ -38,7 +38,7 @@
     "dependencies": {
         "@eradani-inc/ec-client": "^3.6.3",
         "@eradani-inc/ecc-router": "^0.6.5",
-        "@eradani-inc/eradani-connect": "^2.6.2",
+        "@eradani-inc/eradani-connect": "^2.8.3",
         "@eradani-inc/gui-generator": "^0.12.4",
         "@eradani-inc/gui-generator-outbound": "^0.8.5",
         "@types/bcrypt": "^5.0.0",
@@ -48,6 +48,7 @@
         "@types/express-validator": "^3.0.0",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/morgan": "^1.9.3",
+        "@types/passport": "^1.0.9",
         "@types/passport-http-bearer": "^1.0.37",
         "@types/safe-json-stringify": "^1.1.2",
         "@types/swagger-stats": "^0.95.4",

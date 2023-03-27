@@ -1,7 +1,9 @@
 import eradaniConnect from '@eradani-inc/eradani-connect';
-// XXX import configService from 'config';
 import { JSONObject } from 'src/types';
+/* eslint-disable capitalized-comments */
+// XXX import configService from 'config';
 // XXX const config = configService.get().eradaniConnect.native;
+/* eslint-enable capitalized-comments */
 
 export default new eradaniConnect.run.Sql(
     `SELECT 
@@ -31,10 +33,12 @@ WHERE
  * Input Structure for SQLTemplate. Includes detailed field information such as
  * field length, format, numerical precision, and default values.
  */
+/* eslint-disable-next-line */
 // export interface SQLTemplateInputMANIF {
 /**
  * @description From Date
  */
+/* eslint-disable-next-line */
 //    fromDate: number | string;
 // }
 /**

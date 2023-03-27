@@ -30,7 +30,7 @@ ORDER BY
         params: [
             {
                 name: 'fromDate'
-            }                        
+            }
         ]
     }
 );

@@ -40,12 +40,12 @@ export default function mountPOWERBI(router: Router) {
         '/sales-pro',
         validate(validators.getSalesPro),
         respond((req: any) => sqlController.getSalesPro(req.query))
-    );  
+    );
     router.get(
         '/sales-pro-dsc',
         validate(validators.getSalesProDsc),
         respond((req: any) => sqlController.getSalesProDsc(req.query))
-    );       
+    );
     router.get(
         '/blhd-to-ar',
         validate(validators.getBlhd2Ar),
@@ -68,16 +68,19 @@ export default function mountPOWERBI(router: Router) {
     );
     router.get(
         '/blex',
+        /* eslint-disable-next-line */
         // validate(validators.getBlex),
         respond(() => sqlController.getBlex())
     );
     router.get(
         '/blpr',
+        /* eslint-disable-next-line */
         // validate(validators.getBlpr),
         respond(() => sqlController.getBlpr())
     );
     router.get(
         '/blsj',
+        /* eslint-disable-next-line */
         // validate(validators.getBlsj),
         respond(() => sqlController.getBlsj())
     );

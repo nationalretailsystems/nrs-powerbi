@@ -10,12 +10,7 @@
         "shutdownTimeout": 6000,
         "healthCheckTimeout": 3000,
         "inbound": true,
-        "outbound": true,
-        "metrics": {
-            "inbound": true,
-            "outbound": false,
-            "kafka": false
-        }
+        "outbound": true
     },
 
     "debug": true,
@@ -102,13 +97,13 @@
 
     "eradaniConnect": {
         "xml": {
-            "host": "bravebartik.eradani-inc.skytapdns.com",
+            "host": "localhost",
             "port": 47700,
             "path": "/cgi-bin/xmlcgi.pgm",
             "usePOST": true,
             "debug": true
         },
-        "odbc": "DRIVER={IBM i Access ODBC Driver};SYSTEM=bravebartik.eradani-inc.skytapdns.com;UID=GTYAGI;PWD=3r@d@n!;NAM=1;CCSID=1208",
+        "odbc": "DSN=*LOCAL;NAM=1;CCSID=1208",
         "odbcOptions": {
             "debug": true,
             "noPool": false,
@@ -120,8 +115,8 @@
             "useLuxon": true
         },
         "credentials": {
-            "username": "GTYAGI",
-            "password": "3r@d@n!"
+            "username": "ECNCT",
+            "password": "ecnctpassword"
         },
         "native": {
             "templateLib": "ECNCTAPP",

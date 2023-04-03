@@ -1,8 +1,5 @@
-import promClient from 'prom-client';
 import createLogger from 'src/services/logger';
 import promBundle from 'express-prom-bundle';
-
-const logger = createLogger('services/inbound-metrics');
 
 const metricsMiddleware = promBundle({
     includeMethod: true,
@@ -11,7 +8,7 @@ const metricsMiddleware = promBundle({
     includeUp: true,
     customLabels: { app: 'ec-inbound' },
     promClient: {
-        collectDefaultMetrics: {}
+        collectDefaultMetrics: { labels: { app: 'ec-inbound' } }
     }
 });
 

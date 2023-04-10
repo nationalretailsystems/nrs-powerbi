@@ -146,14 +146,14 @@ function setUpAPI(swaggerSpec?: any) {
         })
     );
 
-    if (config?.app?.metrics?.inbound) {
-        app.use(prometheus.metricsMiddleware);
-    }
+    // if (config?.app?.metrics?.inbound) {
+    //     app.use(prometheus.metricsMiddleware);
+    // }
 
-    app.get('/metrics', async (req, res) => {
-        res.set('Content-type', outboundRegister.contentType);
-        res.end(await outboundRegister.metrics());
-    });
+    // app.get('/metrics', async (req, res) => {
+    //     res.set('Content-type', outboundRegister.contentType);
+    //     res.end(await outboundRegister.metrics());
+    // });
 
     // Mount routes
     const router = express.Router();

@@ -1,16 +1,18 @@
 import createLogger from 'src/services/logger';
-import promBundle from 'express-prom-bundle';
+import swStats from 'swagger-stats';
 
-const metricsMiddleware = promBundle({
-    includeMethod: true,
-    includePath: true,
-    includeStatusCode: true,
-    includeUp: true,
-    customLabels: { app: 'ec-inbound' },
-    promClient: {
-        collectDefaultMetrics: { labels: { app: 'ec-inbound' } }
-    }
+let promClient = swStats.getPromClient();
+
+let Register = new promClient.Registry();
+
+Register.setDefaultLabels({
+    prefix: 'ec_inbound_'
+});
+
+swStats.getPromClient().collectDefaultMetrics({
+    prefix: 'ec_inbound_default_',
+    register: Register
 });
 
 // Add the middleware to express
-export { metricsMiddleware };
+export { swStats };

@@ -10,191 +10,213 @@ import {
     RequestKey
 } from '@eradani-inc/ec-client';
 import { ECCCommand } from '@eradani-inc/ecc-router/types/ecc-handler';
+import * as uuid from 'uuid';
+export class OutboundMetricsClass {
+    public Register: client.Registry;
+    private end: Function;
+    private numOfCommandCalls: client.Counter<string>;
+    private commandCallDetails: client.Counter<string>;
+    private numOfCommandErrors: client.Counter<string>;
+    private commandErrorsDetails: client.Counter<string>;
+    private commandAllRequestTotal: client.Counter<string>;
+    private commandAllSuccessTotal: client.Counter<string>;
+    private commandAllErrorsTotal: client.Counter<string>;
+    private commandAllClientErrorTotal: client.Counter<string>;
+    private commandAllServerErrorTotal: client.Counter<string>;
+    private commandAllRequestInProcessingTotal: client.Gauge<string>;
+    private commandRequestDurationMilliseconds: client.Histogram<string>;
+    private commandRequestDurationSeconds: client.Summary<string>;
+    private commandRequestSizeBytes: client.Histogram<string>;
+    private commandResponseSizeBytes: client.Histogram<string>;
 
-const Register = new client.Registry();
+    constructor() {
+        this.Register = new client.Registry();
+        this.Register.setDefaultLabels({
+            prefix: 'ec_outbound_'
+        });
 
-Register.setDefaultLabels({
-    app: 'ec-outbound'
-});
+        client.collectDefaultMetrics({
+            register: this.Register,
+            labels: { uuid: uuid.v4() }
+        });
 
-client.collectDefaultMetrics({ register: Register });
+        this.numOfCommandCalls = new client.Counter({
+            name: 'numOfCommandCalls',
+            help: 'Number of command calls made',
+            labelNames: ['command', 'data']
+        });
 
-const numOfCommandCalls = new client.Counter({
-    name: 'numOfCommandCalls',
-    help: 'Number of command calls made',
-    labelNames: ['command', 'key', 'data']
-});
+        this.commandCallDetails = new client.Counter({
+            name: 'commandCallDetails',
+            help: 'Details of command calls made',
+            labelNames: ['command', 'key', 'data', 'ecc']
+        });
 
-const commandCallDetails = new client.Counter({
-    name: 'commandCallDetails',
-    help: 'Details of command calls made',
-    labelNames: ['command', 'key', 'data', 'ecc']
-});
+        this.numOfCommandErrors = new client.Counter({
+            name: 'numOfCommandErrors',
+            help: 'Number of command ended in error',
+            labelNames: ['command']
+        });
 
-const numOfCommandErrors = new client.Counter({
-    name: 'numOfCommandErrors',
-    help: 'Number of command ended in error with error details',
-    labelNames: ['command', 'key', 'data', 'ecc']
-});
+        this.commandErrorsDetails = new client.Counter({
+            name: 'commandErrorsDetails',
+            help: 'Number of command ended in error with error details',
+            labelNames: ['command', 'key', 'data', 'ecc']
+        });
 
-// Histograms track sizes and frequency of events.
-const commandResponseTimeHistogram = new client.Histogram({
-    name: 'commandResponseTimeHistogram',
-    help: 'Command response time in millis histogram',
-    labelNames: ['command', 'key', 'data'],
-    buckets: [0.1, 5, 15, 50, 100, 500]
-});
+        // # HELP api_all_request_total The total number of all API requests received
+        // # TYPE api_all_request_total counter
 
-// Summaries track the trends in events over time (e.g. p99 latency). Summaries calculate percentiles of observed values.
-const commandResponseTimeSummary = new client.Summary({
-    name: 'commandResponseTimeSummary',
-    help: 'Command response time in millis summary',
-    labelNames: ['command', 'key']
-});
+        this.commandAllRequestTotal = new client.Counter({
+            name: 'command_all_request_total',
+            help: 'The total number of all command requests received'
+        });
 
-Register.registerMetric(numOfCommandCalls);
-Register.registerMetric(commandCallDetails);
-Register.registerMetric(numOfCommandErrors);
-Register.registerMetric(commandResponseTimeHistogram);
-Register.registerMetric(commandResponseTimeSummary);
+        // # HELP api_all_success_total The total number of all API requests with success response
+        // # TYPE api_all_success_total counter
 
-const end = commandResponseTimeHistogram.startTimer();
+        this.commandAllSuccessTotal = new client.Counter({
+            name: 'command_all_success_total',
+            help: 'The total number of all command requests with success response'
+        });
 
-const endTimer: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-    end({ command: ecc.command, key, data: 'end time' });
-    void Promise.resolve();
-};
+        // # HELP api_all_errors_total The total number of all API requests with error response
+        // # TYPE api_all_errors_total counter
 
-const countCommandCalls: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-    ecc.startEpoch = Date.now();
-    numOfCommandCalls.inc({ command: ecc.command, key, data }, 1);
-    commandAllRequestTotal.inc(1);
-    commandRequestSize.observe({},1)
-    void Promise.resolve();
-};
+        this.commandAllErrorsTotal = new client.Counter({
+            name: 'command_all_errors_total',
+            help: 'The total number of all command requests with error response'
+        });
 
-const commandDetails: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-    commandCallDetails.inc(
-        {
-            command: ecc.command,
-            data,
-            ecc: `ECCRESULT - ${JSON.stringify(ecc.eccResult)}  ECCMESSAGE ${ecc.messages.join(', ') || 'No messages'}}`
-        },
-        1
-    );
-};
+        // # HELP api_all_client_error_total The total number of all API requests with client error response
+        // # TYPE api_all_client_error_total counter
+        // TODO: add client error codes
+        this.commandAllClientErrorTotal = new client.Counter({
+            name: 'command_all_client_error_total',
+            help: 'The total number of all command requests with client error response'
+        });
 
-const countCommandErrors: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-    if (ecc.error) {
-        numOfCommandErrors.inc(
+        // # HELP api_all_server_error_total The total number of all API requests with server error response
+        // # TYPE api_all_server_error_total counter
+        // TODO: add server error codes
+        this.commandAllServerErrorTotal = new client.Counter({
+            name: 'command_all_server_error_total',
+            help: 'The total number of all command requests with server error response'
+        });
+
+        // # HELP api_all_request_in_processing_total The total number of all API requests currently in processing (no response yet)
+        // # TYPE api_all_request_in_processing_total gauge
+        // TODO: add request in processing
+        this.commandAllRequestInProcessingTotal = new client.Gauge({
+            name: 'command_all_request_in_processing_total',
+            help: 'The total number of all command requests currently in processing (no response yet)'
+        });
+
+        // # HELP api_request_duration_milliseconds API requests duration
+        // # TYPE api_request_duration_milliseconds histogram
+        // Start with request received till response sent
+        this.commandRequestDurationMilliseconds = new client.Histogram({
+            name: 'command_request_duration_milliseconds',
+            help: 'Command requests duration in milliseconds',
+            labelNames: ['command', 'data'],
+            buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 50000, Infinity]
+        });
+
+        this.commandRequestDurationSeconds = new client.Summary({
+            name: 'command_request_duration',
+            help: 'Command requests duration in seconds',
+            labelNames: ['command', 'data'],
+            percentiles: [0.5, 0.9, 0.95, 0.99, 0.999, 1, 1.5, 2, 2.5, 3, 5, 10, Infinity]
+        });
+
+        // # HELP api_request_size_bytes API requests size
+        // # TYPE api_request_size_bytes histogram
+
+        this.commandRequestSizeBytes = new client.Histogram({
+            name: 'command_request_size_bytes',
+            help: 'Command requests size',
+            labelNames: ['command'],
+            buckets: [0.1, 1, 2, 3, 4, 5, 10, 20, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000]
+        });
+
+        // # HELP api_response_size_bytes API requests size
+        // # TYPE api_response_size_bytes histogram
+
+        this.commandResponseSizeBytes = new client.Histogram({
+            name: 'command_response_size_bytes',
+            help: 'Command response size',
+            labelNames: ['command'],
+            buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000]
+        });
+
+        this.Register.registerMetric(this.numOfCommandCalls);
+        this.Register.registerMetric(this.commandCallDetails);
+        this.Register.registerMetric(this.numOfCommandErrors);
+        this.Register.registerMetric(this.commandErrorsDetails);
+        this.Register.registerMetric(this.commandAllRequestTotal);
+        this.Register.registerMetric(this.commandAllSuccessTotal);
+        this.Register.registerMetric(this.commandAllErrorsTotal);
+        // this.Register.registerMetric(this.commandAllClientErrorTotal);
+        // this.Register.registerMetric(this.commandAllServerErrorTotal);
+        // this.Register.registerMetric(this.commandAllRequestInProcessingTotal);
+        this.Register.registerMetric(this.commandRequestDurationMilliseconds);
+        this.Register.registerMetric(this.commandRequestDurationSeconds);
+        this.Register.registerMetric(this.commandRequestSizeBytes);
+        this.Register.registerMetric(this.commandResponseSizeBytes);
+
+        this.end = this.commandRequestDurationMilliseconds.startTimer();
+    }
+
+    endTimer = (ecc: ECCCommand) => this.end({ command: ecc.command });
+
+    countCommandCalls: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
+        ecc.startEpoch = Date.now();
+        this.numOfCommandCalls.inc({ command: ecc.command, data }, 1);
+        this.commandAllRequestTotal.inc(1);
+        this.commandRequestSizeBytes.labels(ecc.command).observe(data.length);
+    };
+
+    commandDetails: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
+        this.commandCallDetails.inc(
             {
                 command: ecc.command,
-                key,
                 data,
-                ecc: `ECCERROR: ${ecc.error}`
+                ecc: `ECCRESULT - ${JSON.stringify(ecc.eccResult)}  ECCMESSAGE ${
+                    ecc.messages.join(', ') || 'No messages'
+                }}`
             },
             1
         );
-        commandAllErrorsTotal.inc(1);
-    } else {
-        commandAllSuccessTotal.inc(1);
-    }
+    };
 
-    void Promise.resolve();
-};
+    countCommandErrors: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
+        if (ecc.error) {
+            this.commandErrorsDetails.inc(
+                {
+                    command: ecc.command,
+                    key,
+                    data,
+                    ecc: `ECCERROR: ${ecc.error}`
+                },
+                1
+            );
+            this.numOfCommandErrors.inc({ command: ecc.command }, 1);
+            this.commandAllErrorsTotal.inc(1);
+        } else {
+            this.commandAllSuccessTotal.inc(1);
+        }
+    };
 
-const observeCommandResponseTime: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-    commandResponseTimeHistogram.observe({ command: ecc.command, key }, 1);
-    commandResponseTimeSummary.observe({ command: ecc.command, key }, 1);
-    void Promise.resolve();
-};
+    // Combine all command handlers into a single function
+    afterCommandParams: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
+        const responseTimeInMilliseconds = Date.now() - ecc.startEpoch;
+        this.commandRequestDurationMilliseconds.labels(ecc.command, data).observe(responseTimeInMilliseconds);
+        this.commandRequestDurationSeconds.labels(ecc.command, data).observe(this.endTimer(ecc));
+        this.countCommandErrors(key, data, ecc);
+        this.commandResponseSizeBytes.labels(ecc.command).observe(ecc.messages.join('').length);
+    };
+}
 
-// Combine all command handlers into a single function
-const afterCommandParams: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-    const responseTimeInMilliseconds = Date.now() - ecc.startEpoch;
-    commandRequestDuration.labels(ecc.command, key, data).observe(responseTimeInMilliseconds)
-    endTimer(key, data, ecc);
-    commandDetails(key, data, ecc);
-    countCommandErrors(key, data, ecc);
-    observeCommandResponseTime(key, data, ecc);
-};
+const OutboundMetrics = new OutboundMetricsClass();
 
-export { Register, countCommandCalls, afterCommandParams };
-
-// # HELP api_all_request_total The total number of all API requests received
-// # TYPE api_all_request_total counter
-
-const commandAllRequestTotal = new client.Counter({
-    name: 'command_all_request_total',
-    help: 'The total number of all command requests received',
-});
-
-// # HELP api_all_success_total The total number of all API requests with success response
-// # TYPE api_all_success_total counter
-
-const commandAllSuccessTotal = new client.Counter({
-    name: 'command_all_success_total',
-    help: 'The total number of all command requests with success response',
-});
-
-// # HELP api_all_errors_total The total number of all API requests with error response
-// # TYPE api_all_errors_total counter
-
-const commandAllErrorsTotal = new client.Counter({
-    name: 'command_all_errors_total',
-    help: 'The total number of all command requests with error response',
-});
-
-// # HELP api_all_client_error_total The total number of all API requests with client error response
-// # TYPE api_all_client_error_total counter
-// TODO: add client error codes
-const commandAllClientErrorTotal = new client.Counter({
-    name: 'command_all_client_error_total',
-    help: 'The total number of all command requests with client error response',
-});
-
-// # HELP api_all_server_error_total The total number of all API requests with server error response
-// # TYPE api_all_server_error_total counter
-// TODO: add server error codes
-const commandAllServerErrorTotal = new client.Counter({
-    name: 'command_all_server_error_total',
-    help: 'The total number of all command requests with server error response',
-});
-
-// # HELP api_all_request_in_processing_total The total number of all API requests currently in processing (no response yet)
-// # TYPE api_all_request_in_processing_total gauge
-// TODO: add request in processing
-const commandAllRequestInProcessingTotal = new client.Gauge({
-    name: 'command_all_request_in_processing_total',
-    help: 'The total number of all command requests currently in processing (no response yet)',
-});
-
-// # HELP api_request_duration_milliseconds API requests duration
-// # TYPE api_request_duration_milliseconds histogram
-// Start with request received till response sent
-const commandRequestDuration = new client.Histogram({
-    name: 'command_request_duration_milliseconds',
-    help: 'Command requests duration in milliseconds',
-    labelNames: ['command', 'key', 'data'],
-    buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 60000]
-});
-
-// # HELP api_request_size_bytes API requests size
-// # TYPE api_request_size_bytes histogram
-
-const commandRequestSize = new client.Histogram({
-    name: 'command_request_size_bytes',
-    help: 'Command requests size',
-    labelNames: ['command', 'key', 'data'],
-    buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 60000]
-});
-
-// # HELP api_response_size_bytes API requests size
-// # TYPE api_response_size_bytes histogram
-
-const commandResponseSize = new client.Histogram({
-    name: 'command_response_size_bytes',
-    help: 'Command response size',
-    labelNames: ['command', 'key', 'data'],
-    buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 60000]
-});
+export { OutboundMetrics };

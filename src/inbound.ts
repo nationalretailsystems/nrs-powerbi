@@ -13,8 +13,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
-import * as prometheus from 'src/services/inbound-metrics';
-import { Register as outboundRegister } from 'src/services/outbound-metrics';
+import { swStats as InboundMetrics } from 'src/services/inbound-metrics';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
@@ -146,14 +145,10 @@ function setUpAPI(swaggerSpec?: any) {
         })
     );
 
-    // if (config?.app?.metrics?.inbound) {
-    //     app.use(prometheus.metricsMiddleware);
-    // }
-
-    // app.get('/metrics', async (req, res) => {
-    //     res.set('Content-type', outboundRegister.contentType);
-    //     res.end(await outboundRegister.metrics());
-    // });
+    app.get('/metrics', async (req, res) => {
+        res.set('Content-type', InboundMetrics.getPromClient().register.contentType);
+        res.end(await InboundMetrics.getPromStats());
+    });
 
     // Mount routes
     const router = express.Router();

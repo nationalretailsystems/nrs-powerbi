@@ -95,6 +95,10 @@
         }
     },
 
+    "metrics": {
+        "enabled": true
+    },
+
     "eradaniConnect": {
         "xml": {
             "host": "localhost",

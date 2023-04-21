@@ -143,3 +143,6 @@ export const getSAObScans: InputCheckChain[] = [
 export const getSAHdPo: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
 ];
+export const getSATJOnDock: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+];

@@ -75,6 +75,9 @@ import SQLTemplateSAOBSCANS, {
     SQLTemplateOutputSAOBSCANS
 } from 'src/models/powerbi-saobscans';
 import SQLTemplateSAHDPO, { SQLTemplateInputSAHDPO, SQLTemplateOutputSAHDPO } from 'src/models/powerbi-sahdpo';
+import SQLTemplateSATJONDOCK, { SQLTemplateInputSATJONDOCK, SQLTemplateOutputSATJONDOCK } from 'src/models/powerbi-satjondock';
+import SQLTemplateSAOBATDOOR, { SQLTemplateOutputSAOBATDOOR } from 'src/models/powerbi-saobatdoor';
+import SQLTemplateSAANDREA, { SQLTemplateOutputSAANDREA } from 'src/models/powerbi-saandrearpt';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -497,4 +500,19 @@ export async function getSAHdPo(inputs: JSONObject): Promise<SQLTemplateOutputSA
         fromDate: inputs.fromDate
     };
     return powerbiTransports.wolf.execute(SQLTemplateSAHDPO, params) as Promise<SQLTemplateOutputSAHDPO>;
+}
+export async function getSATJOnDock(inputs: JSONObject): Promise<SQLTemplateOutputSATJONDOCK> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputSATJONDOCK = {
+        fromDate: inputs.fromDate
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateSATJONDOCK, params) as Promise<SQLTemplateOutputSATJONDOCK>;
+}
+export async function getSAOBatDoor(): Promise<SQLTemplateOutputSAOBATDOOR> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateSAOBATDOOR) as Promise<SQLTemplateOutputSAOBATDOOR>;
+}
+export async function getSAAndreaRpt(): Promise<SQLTemplateOutputSAANDREA> {
+    logger.debug('Calling SQLTemplate program');
+    return powerbiTransports.wolf.execute(SQLTemplateSAANDREA) as Promise<SQLTemplateOutputSAANDREA>;
 }

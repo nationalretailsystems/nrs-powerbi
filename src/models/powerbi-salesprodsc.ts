@@ -46,7 +46,7 @@ summary as (
         ORDER BY 5,4,1,6,7,8)
 select a.company, a.account, A.ACCOUNT_NAME, A."MONTH", a."YEAR", 
 A.ORIGCC, A.DESTCC,  b.* from summary a, details b 
-where a.pro##h = b.pro##D order by 4,3,1,5,6,7`,
+where a.pro##h = b.pro##D and a.company = b.company order by 4,3,1,5,6,7`,
     {
         params: [
             {

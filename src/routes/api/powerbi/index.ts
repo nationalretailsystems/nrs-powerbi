@@ -257,4 +257,17 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getSAHdPo),
         respond((req: any) => sqlController.getSAHdPo(req.query))
     );
+    router.get(
+        '/sa-tj-ondock',
+        validate(validators.getSATJOnDock),
+        respond((req: any) => sqlController.getSATJOnDock(req.query))
+    );
+    router.get(
+        '/sa-ob-atdoor',
+        respond((req: any) => sqlController.getSAOBatDoor())
+    );
+    router.get(
+        '/sa-andrea-rpt',
+        respond((req: any) => sqlController.getSAAndreaRpt())
+    );    
 }

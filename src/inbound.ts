@@ -14,11 +14,13 @@ import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
 import { swStats as InboundMetrics } from 'src/services/inbound-metrics';
+import { OutboundMetrics } from './services/outbound-metrics';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 let _server: http.Server;
+let metrics = config?.metrics;
 
 export const start = () => {
     shutdownService.register('inbound', { close: () => stop() });
@@ -146,8 +148,14 @@ function setUpAPI(swaggerSpec?: any) {
     );
 
     app.get('/metrics', async (req, res) => {
-        res.set('Content-type', InboundMetrics.getPromClient().register.contentType);
-        res.end(await InboundMetrics.getPromStats());
+        res.set('Content-type', swStats.getPromClient().register.contentType);
+        if (metrics.outbound) {
+            res.write(await OutboundMetrics.getPromStats());
+        }
+        if (metrics.inbound) {
+            res.write(await InboundMetrics.getPromStats());
+        }
+        res.end();
     });
 
     // Mount routes

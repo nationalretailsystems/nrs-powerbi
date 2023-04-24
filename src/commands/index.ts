@@ -5,9 +5,13 @@ import registerTraffic from './traffic';
 import registerVehicle from './vehicle';
 import registerWeather from './weather';
 import registerShipping from './shipping';
+import config from 'src/config';
+let metrics = config?.metrics?.outbound;
 
 export default async function registerCommands(router: ECCRouter) {
-    router.use(OutboundMetrics.countCommandCalls);
+    if (metrics) {
+        router.use(OutboundMetrics.countCommandCalls);
+    }
     const jokes = new ECCRouter.Router();
     registerJokes(jokes);
     router.use('jokes', jokes);
@@ -28,6 +32,8 @@ export default async function registerCommands(router: ECCRouter) {
     registerShipping(shipping);
     router.use('shipping', shipping);
 
-    router.use(OutboundMetrics.afterCommandParams);
+    if (metrics) {
+        router.use(OutboundMetrics.afterCommandParams);
+    }
     return router;
 }

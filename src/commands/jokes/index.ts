@@ -4,7 +4,5 @@ import * as icndbapi from 'src/interfaces/icndbapi';
 import { OutboundMetrics } from 'src/services/outbound-metrics';
 
 export default function registerJokes(router: ECCInternalRouter) {
-    router.use(OutboundMetrics.countCommandCalls);
     router.use('getjoke', icndbapi, getJoke);
-    router.use(OutboundMetrics.afterCommandParams);
 }

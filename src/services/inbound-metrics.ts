@@ -1,17 +1,10 @@
-import createLogger from 'src/services/logger';
 import swStats from 'swagger-stats';
+import * as uuid from 'uuid';
 
-let promClient = swStats.getPromClient();
-
-let Register = new promClient.Registry();
-
-Register.setDefaultLabels({
-    prefix: 'ec_inbound_'
-});
-
-swStats.getPromClient().collectDefaultMetrics({
-    prefix: 'ec_inbound_default_',
-    register: Register
+swStats.getPromClient().register.setDefaultLabels({
+    app: 'eradani-connect',
+    type: 'inbound',
+    uuid: uuid.v4()
 });
 
 // Add the middleware to express

@@ -146,3 +146,6 @@ export const getSAHdPo: InputCheckChain[] = [
 export const getSATJOnDock: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
 ];
+export const getControlListing: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 8, max: 8 }).withMessage('Must be date yyyymmdd'),
+];

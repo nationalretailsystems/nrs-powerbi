@@ -269,5 +269,10 @@ export default function mountPOWERBI(router: Router) {
     router.get(
         '/sa-andrea-rpt',
         respond((req: any) => sqlController.getSAAndreaRpt())
-    );    
+    );
+    router.get(
+        '/control-listing',
+        validate(validators.getControlListing),
+        respond((req: any) => sqlController.getControlListing(req.query))
+    );        
 }

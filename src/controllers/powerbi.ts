@@ -78,6 +78,7 @@ import SQLTemplateSAHDPO, { SQLTemplateInputSAHDPO, SQLTemplateOutputSAHDPO } fr
 import SQLTemplateSATJONDOCK, { SQLTemplateInputSATJONDOCK, SQLTemplateOutputSATJONDOCK } from 'src/models/powerbi-satjondock';
 import SQLTemplateSAOBATDOOR, { SQLTemplateOutputSAOBATDOOR } from 'src/models/powerbi-saobatdoor';
 import SQLTemplateSAANDREA, { SQLTemplateOutputSAANDREA } from 'src/models/powerbi-saandrearpt';
+import SQLTemplateCTRLLIST, { SQLTemplateInputCTRLLIST, SQLTemplateOutputCTRLLIST } from 'src/models/powerbi-controllisting';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -515,4 +516,11 @@ export async function getSAOBatDoor(): Promise<SQLTemplateOutputSAOBATDOOR> {
 export async function getSAAndreaRpt(): Promise<SQLTemplateOutputSAANDREA> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateSAANDREA) as Promise<SQLTemplateOutputSAANDREA>;
+}
+export async function getControlListing(inputs: JSONObject): Promise<SQLTemplateOutputCTRLLIST> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputCTRLLIST = {
+        fromDate: inputs.fromDate
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateCTRLLIST, params) as Promise<SQLTemplateOutputCTRLLIST>;
 }

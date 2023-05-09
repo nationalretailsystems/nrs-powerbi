@@ -13,8 +13,9 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
-import { swStats as InboundMetrics } from 'src/services/inbound-metrics';
+import { InboundMetrics } from 'src/services/inbound-metrics';
 import { OutboundMetrics } from './services/outbound-metrics';
+import swaggerStatsMetrics from './services/prom-client-pm2-cluster';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
@@ -148,14 +149,19 @@ function setUpAPI(swaggerSpec?: any) {
     );
 
     app.get('/metrics', async (req, res) => {
-        res.set('Content-type', swStats.getPromClient().register.contentType);
-        if (metrics.outbound) {
-            res.write(await OutboundMetrics.getPromStats());
+        try {
+            res.write(await swaggerStatsMetrics(req, res));
+            res.end();
+        } catch (e) {
+            console.log(e);
         }
-        if (metrics.inbound) {
-            res.write(await InboundMetrics.getPromStats());
-        }
-        res.end();
+        // res.set('Content-type', swStats.getPromClient().register.contentType);
+        // if (metrics.outbound) {
+        //     res.write(await OutboundMetrics.getPromStats());
+        // }
+        // if (metrics.inbound) {
+        //     res.write(await InboundMetrics.getPromStats());
+        // }
     });
 
     // Mount routes

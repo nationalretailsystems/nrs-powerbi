@@ -1,11 +1,30 @@
 import swStats from 'swagger-stats';
 import * as uuid from 'uuid';
 
-swStats.getPromClient().register.setDefaultLabels({
-    app: 'eradani-connect',
-    type: 'inbound',
-    uuid: uuid.v4()
-});
+export class InboundMetrics {
+    constructor() {
+        swStats.getPromClient().register.setDefaultLabels({
+            app: 'eradani-connect',
+            type: 'inbound',
+            uuid: uuid.v4()
+        });
+    }
 
-// Add the middleware to express
-export { swStats };
+    static getPromClient() {
+        return swStats.getPromClient();
+    }
+
+    static getMetricsAsArray() {
+        return swStats.getPromClient().register.getMetricsAsArray();
+    }
+
+    static getPromStats() {
+        return swStats.getPromStats();
+    }
+
+    static async getMetricsAsJSON() {
+        return swStats.getPromClient().register.getMetricsAsJSON();
+    }
+}
+
+export default InboundMetrics;

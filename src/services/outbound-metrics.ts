@@ -14,7 +14,6 @@ import * as uuid from 'uuid';
 import { register } from './shutdown';
 export class OutboundMetricsClass {
     public outboundRegister: client.Registry;
-    private end: Function;
     private uuid: string;
     private command_num_of_command_calls: client.Counter<string>;
     private command_num_of_command_errors: client.Counter<string>;
@@ -22,8 +21,8 @@ export class OutboundMetricsClass {
     private command_All_Request_Total: client.Counter<string>;
     private command_All_Success_Total: client.Counter<string>;
     private command_All_Errors_Total: client.Counter<string>;
-    private command_Request_Duration_Milliseconds: client.Histogram<string>;
-    private command_Request_Duration_Seconds: client.Summary<string>;
+    private command_request_duration_seconds: client.Histogram<string>;
+    private command_all_request_duration_seconds: client.Histogram<string>;
     private command_Request_Size_Bytes: client.Histogram<string>;
 
     constructor() {
@@ -31,8 +30,7 @@ export class OutboundMetricsClass {
         this.uuid = uuid.v4();
         this.outboundRegister.setDefaultLabels({
             app: 'eradani-connect',
-            type: 'outbound',
-            uuid: this.uuid
+            type: 'outbound'
         });
 
         this.command_num_of_command_calls = new client.Counter({
@@ -86,19 +84,18 @@ export class OutboundMetricsClass {
         // # HELP api_request_duration_milliseconds API requests duration
         // # TYPE api_request_duration_milliseconds histogram
         // Start with request received till response sent
-        this.command_Request_Duration_Milliseconds = new client.Histogram({
+        this.command_request_duration_seconds = new client.Histogram({
             name: 'command_request_duration_milliseconds',
             help: 'Command requests duration in milliseconds',
             labelNames: ['command'],
-            buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 50000, Infinity],
+            buckets: [0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 60, 120, 300],
             registers: [this.outboundRegister]
         });
 
-        this.command_Request_Duration_Seconds = new client.Summary({
-            name: 'command_request_duration',
-            help: 'Command requests duration in seconds',
-            labelNames: ['command', 'data'],
-            percentiles: [0.5, 0.9, 0.95, 0.99, 0.999, 1, 1.5, 2, 2.5, 3, 5, 10, Infinity],
+        this.command_all_request_duration_seconds = new client.Histogram({
+            name: 'command_all_request_duration_seconds',
+            help: 'All commands requests duration in milliseconds',
+            buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 50000, 100000, Infinity],
             registers: [this.outboundRegister]
         });
 
@@ -119,14 +116,10 @@ export class OutboundMetricsClass {
         this.outboundRegister.registerMetric(this.command_All_Request_Total);
         this.outboundRegister.registerMetric(this.command_All_Success_Total);
         this.outboundRegister.registerMetric(this.command_All_Errors_Total);
-        this.outboundRegister.registerMetric(this.command_Request_Duration_Milliseconds);
-        this.outboundRegister.registerMetric(this.command_Request_Duration_Seconds);
+        this.outboundRegister.registerMetric(this.command_all_request_duration_seconds);
+        this.outboundRegister.registerMetric(this.command_request_duration_seconds);
         this.outboundRegister.registerMetric(this.command_Request_Size_Bytes);
-
-        this.end = this.command_Request_Duration_Milliseconds.startTimer();
     }
-
-    endTimer = (ecc: ECCCommand) => this.end({ command: ecc.command });
 
     countCommandCalls: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
         ecc.startEpoch = Date.now();
@@ -135,12 +128,11 @@ export class OutboundMetricsClass {
         this.command_Request_Size_Bytes.labels(ecc.command).observe(data.length);
     };
 
-    countCommandEnds = (key: string, data: string, ecc: ECCCommand, requestTime: number) => {
+    countCommandEnds = (data: string, ecc: ECCCommand, requestTime: number) => {
         if (ecc.error) {
             this.command_Errors_Details.inc(
                 {
                     command: ecc.command,
-                    key,
                     data,
                     requestTime: requestTime.toString(),
                     ecc: `ECCERROR: ${ecc.error}`
@@ -156,10 +148,10 @@ export class OutboundMetricsClass {
 
     // Combine all command handlers into a single function
     afterCommandParams: ECCHandlerFunction = (key: string, data: string, ecc: ECCCommand) => {
-        const responseTimeInMilliseconds = Date.now() - ecc.startEpoch;
-        this.command_Request_Duration_Milliseconds.labels(ecc.command).observe(responseTimeInMilliseconds);
-        this.command_Request_Duration_Seconds.labels(ecc.command, data).observe(this.endTimer(ecc));
-        this.countCommandEnds(key, data, ecc, Math.floor(responseTimeInMilliseconds / 1000));
+        const responseTimeInSeconds = (Date.now() - ecc.startEpoch) / 1000;
+        this.command_request_duration_seconds.labels(ecc.command).observe(responseTimeInSeconds);
+        this.command_all_request_duration_seconds.observe(responseTimeInSeconds);
+        this.countCommandEnds(data, ecc, Math.floor(responseTimeInSeconds));
     };
 
     getPromStats = () => {

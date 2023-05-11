@@ -158,7 +158,7 @@ export class OutboundMetricsClass {
         return this.outboundRegister.metrics();
     };
 
-    getPromStatsAsJSON = () => {
+    getMetricsAsJSON = () => {
         return this.outboundRegister.getMetricsAsJSON();
     };
 }

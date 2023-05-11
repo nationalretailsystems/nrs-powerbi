@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
 import { InboundMetrics } from 'src/services/inbound-metrics';
 import { OutboundMetrics } from 'src/services/outbound-metrics';
+import config from 'config';
 
 /** Total timeout for workers, ms */
 const TIMEOUT = 2000;
@@ -16,6 +17,7 @@ const TOPIC = 'get_prom_register';
 /** Singleton instance of PM2 message bus */
 let pm2Bus: { off: (arg0: string) => void; on: (arg0: string, arg1: (packet: ResponsePacket) => void) => void };
 const instanceId = Number(process.env.pm_id);
+let metrics = config?.metrics;
 
 /* Info returned by pm2.list() */
 interface PM2InstanceData {
@@ -47,14 +49,14 @@ interface RequestPacket {
 // Every process listens on the IPC channel for the metric request TOPIC,
 // Responding with Prometheus metrics when needed.
 
-process.on('message', (packet: RequestPacket) => {
+process.on('message', async (packet: RequestPacket) => {
     try {
         if (packet.topic === TOPIC && process.send) {
             process.send({
                 type: `process:${packet.data.targetInstanceId}`,
                 data: {
                     instanceId,
-                    register: promClient.register.getMetricsAsJSON(),
+                    register: await metricsData(),
                     success: true,
                     reqId: packet.data.reqId
                 }
@@ -101,7 +103,7 @@ async function getAggregatedRegistry(instancesData: any[]) {
         const registersPerInstance: [Object] = [{}];
         const busEventName = `process:${instanceId}`;
         // Master process metrics
-        registersPerInstance[instanceId] = await promClient.register.getMetricsAsJSON();
+        registersPerInstance[instanceId] = await metricsData();
         let registersReady = 1;
 
         const finish = () => {
@@ -141,10 +143,21 @@ async function getAggregatedRegistry(instancesData: any[]) {
     return registryPromise;
 }
 
+async function metricsData(): Promise<any[]> {
+    let metricsData: any[] = [];
+    if (metrics.outbound) {
+        metricsData = await OutboundMetrics.getMetricsAsJSON();
+    }
+    if (metrics.inbound) {
+        // Add inbound metrics to the array
+        metricsData = metricsData.concat(await InboundMetrics.getMetricsAsJSON());
+    }
+    return metricsData;
+}
+
 /** Main middleware function */
 export default async function swaggerStatsMetrics(req: Request, res: Response) {
     return new Promise(async (resolve, reject) => {
-
         try {
             // Create or use bus singleton
             // Listen to messages from application
@@ -160,23 +173,23 @@ export default async function swaggerStatsMetrics(req: Request, res: Response) {
             }
 
             pm2async()
-            .then(async (bus) => {
-                pm2Bus = bus;
-                // Get current instances (threads) data
-                const instancesData = await pm2.listAsync();
-                res.set('Content-type', swStats.getPromClient().register.contentType);
-                if (instancesData.length > 1) {
-                    // Multiple threads - aggregate
-                    const register = await getAggregatedRegistry(instancesData);
-                    resolve(register.metrics());
-                } else {
-                    // 1 thread - send local stats
-                    resolve(await OutboundMetrics.getPromStats() + await InboundMetrics.getPromStats());
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+                .then(async (bus) => {
+                    pm2Bus = bus;
+                    // Get current instances (threads) data
+                    const instancesData = await pm2.listAsync();
+                    res.set('Content-type', swStats.getPromClient().register.contentType);
+                    if (instancesData.length > 0) {
+                        // Multiple threads - aggregate
+                        const register = await getAggregatedRegistry(instancesData);
+                        resolve(register.metrics());
+                    } else {
+                        // 1 thread - send local stats
+                        resolve(await metricsData());
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         } catch (e) {
             reject(e);
         }

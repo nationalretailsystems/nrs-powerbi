@@ -10,7 +10,9 @@ RECMMH,RECDDH,RECYYH
 FROM confile.cntr, confile.rech
 WHERE CONT#X = CONT#H and juliax = REJULH and
 BLDCDX = BLDCDH and
-JULIAX =   (select jd from qgpl.shopcal where date('1900-12-31') + jd days = to_date(?,'YYYYMMDD'))
+JULIAX between   
+(select jd from qgpl.shopcal where date('1900-12-31') + jd days = to_date(?,'YYYYMMDD')) and 
+(select jd from qgpl.shopcal where date('1900-12-31') + jd days = to_date(?,'YYYYMMDD'))
 and BLDCDX in ('68', '69') AND STAT1H <> 'V'
 GROUP BY BLDCDX,CONT#X, JULIAX,VEHIDX,
 RECMMH,RECDDH,RECYYH
@@ -26,6 +28,9 @@ ORDER BY BLDCDX,CONT#X`,
         params: [
             {
                 name: 'fromDate'
+            },
+            {
+                name: 'toDate'
             }
         ]
     }
@@ -40,6 +45,10 @@ export interface SQLTemplateInputCTRLLIST {
      * @description From Date
      */
     fromDate: number | string;
+    /**
+     * @description From Date
+     */
+    toDate: number | string;
 }
 /**
  * Structure of records outputted by SQLTemplate SQL query

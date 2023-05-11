@@ -148,4 +148,5 @@ export const getSATJOnDock: InputCheckChain[] = [
 ];
 export const getControlListing: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 8, max: 8 }).withMessage('Must be date yyyymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 8, max: 8 }).withMessage('Must be date yyyymmdd'),    
 ];

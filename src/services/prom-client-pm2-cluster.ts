@@ -149,7 +149,6 @@ async function metricsData(): Promise<any[]> {
         metricsData = await OutboundMetrics.getMetricsAsJSON();
     }
     if (metrics.inbound) {
-        // Add inbound metrics to the array
         metricsData = metricsData.concat(await InboundMetrics.getMetricsAsJSON());
     }
     return metricsData;
@@ -178,7 +177,7 @@ export default async function swaggerStatsMetrics(req: Request, res: Response) {
                     // Get current instances (threads) data
                     const instancesData = await pm2.listAsync();
                     res.set('Content-type', swStats.getPromClient().register.contentType);
-                    if (instancesData.length > 0) {
+                    if (instancesData.length > 1) {
                         // Multiple threads - aggregate
                         const register = await getAggregatedRegistry(instancesData);
                         resolve(register.metrics());

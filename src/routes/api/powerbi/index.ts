@@ -274,5 +274,5 @@ export default function mountPOWERBI(router: Router) {
         '/control-listing',
         validate(validators.getControlListing),
         respond((req: any) => sqlController.getControlListing(req.query))
-    );        
+    );
 }

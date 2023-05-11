@@ -75,10 +75,16 @@ import SQLTemplateSAOBSCANS, {
     SQLTemplateOutputSAOBSCANS
 } from 'src/models/powerbi-saobscans';
 import SQLTemplateSAHDPO, { SQLTemplateInputSAHDPO, SQLTemplateOutputSAHDPO } from 'src/models/powerbi-sahdpo';
-import SQLTemplateSATJONDOCK, { SQLTemplateInputSATJONDOCK, SQLTemplateOutputSATJONDOCK } from 'src/models/powerbi-satjondock';
+import SQLTemplateSATJONDOCK, {
+    SQLTemplateInputSATJONDOCK,
+    SQLTemplateOutputSATJONDOCK
+} from 'src/models/powerbi-satjondock';
 import SQLTemplateSAOBATDOOR, { SQLTemplateOutputSAOBATDOOR } from 'src/models/powerbi-saobatdoor';
 import SQLTemplateSAANDREA, { SQLTemplateOutputSAANDREA } from 'src/models/powerbi-saandrearpt';
-import SQLTemplateCTRLLIST, { SQLTemplateInputCTRLLIST, SQLTemplateOutputCTRLLIST } from 'src/models/powerbi-controllisting';
+import SQLTemplateCTRLLIST, {
+    SQLTemplateInputCTRLLIST,
+    SQLTemplateOutputCTRLLIST
+} from 'src/models/powerbi-controllisting';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -520,7 +526,8 @@ export async function getSAAndreaRpt(): Promise<SQLTemplateOutputSAANDREA> {
 export async function getControlListing(inputs: JSONObject): Promise<SQLTemplateOutputCTRLLIST> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputCTRLLIST = {
-        fromDate: inputs.fromDate
+        fromDate: inputs.fromDate,
+        toDate: inputs.toDate
     };
     return powerbiTransports.wolf.execute(SQLTemplateCTRLLIST, params) as Promise<SQLTemplateOutputCTRLLIST>;
 }

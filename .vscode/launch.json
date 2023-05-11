@@ -6,10 +6,9 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
+            "request": "launch",
             "name": "Attach Program",
-            "port": 9229,
-            "restart": true,
+
             "processId": "${command:PickProcess}",
             "skipFiles": [
                 "<node_internals>/**"
@@ -18,6 +17,20 @@
                 "${workspaceFolder}/dist/**/*.js",
                 "!**/node_modules/**"
             ],
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js",
+                "!**/node_modules/**"
+            ],
+            "program": "${workspaceFolder}/dist/src/app.js",
+            "console": "integratedTerminal"
         }
     ]
 }

@@ -56,7 +56,7 @@ process.on('message', async (packet: RequestPacket) => {
                 type: `process:${packet.data.targetInstanceId}`,
                 data: {
                     instanceId,
-                    register: await metricsData(),
+                    register: await metricsDataArray(),
                     success: true,
                     reqId: packet.data.reqId
                 }
@@ -103,7 +103,7 @@ async function getAggregatedRegistry(instancesData: any[]) {
         const registersPerInstance: [Object] = [{}];
         const busEventName = `process:${instanceId}`;
         // Master process metrics
-        registersPerInstance[instanceId] = await metricsData();
+        registersPerInstance[instanceId] = await metricsDataArray();
         let registersReady = 1;
 
         const finish = () => {
@@ -143,13 +143,24 @@ async function getAggregatedRegistry(instancesData: any[]) {
     return registryPromise;
 }
 
-async function metricsData(): Promise<any[]> {
+export async function metricsDataArray(): Promise<any[]> {
     let metricsData: any[] = [];
     if (metrics.outbound) {
         metricsData = await OutboundMetrics.getMetricsAsJSON();
     }
     if (metrics.inbound) {
         metricsData = metricsData.concat(await InboundMetrics.getMetricsAsJSON());
+    }
+    return metricsData;
+}
+
+export async function metricsDataString(): Promise<string> {
+    let metricsData: string = '';
+    if (metrics.outbound) {
+        metricsData = await OutboundMetrics.getPromStats();
+    }
+    if (metrics.inbound) {
+        metricsData = metricsData.concat('\n' + (await InboundMetrics.getPromStats()));
     }
     return metricsData;
 }
@@ -183,7 +194,7 @@ export default async function swaggerStatsMetrics(req: Request, res: Response) {
                         resolve(register.metrics());
                     } else {
                         // 1 thread - send local stats
-                        resolve(await metricsData());
+                        resolve(await metricsDataString());
                     }
                 })
                 .catch((err) => {

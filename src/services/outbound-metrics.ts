@@ -1,18 +1,9 @@
 /* eslint-disable camelcase */
 import * as client from 'prom-client';
 import { ECCHandlerFunction } from '@eradani-inc/ecc-router/types';
-import {
-    ECClient,
-    ECCRecordConverter,
-    RawRequestRecord,
-    ECCConfig,
-    ECCResponseConverter,
-    RawDataRecord,
-    RequestKey
-} from '@eradani-inc/ec-client';
 import { ECCCommand } from '@eradani-inc/ecc-router/types/ecc-handler';
 import * as uuid from 'uuid';
-import { register } from './shutdown';
+
 export class OutboundMetricsClass {
     public outboundRegister: client.Registry;
     private uuid: string;
@@ -56,17 +47,11 @@ export class OutboundMetricsClass {
             registers: [this.outboundRegister]
         });
 
-        // # HELP api_all_request_total The total number of all API requests received
-        // # TYPE api_all_request_total counter
-
         this.command_All_Request_Total = new client.Counter({
             name: 'command_all_request_total',
             help: 'The total number of all command requests received',
             registers: [this.outboundRegister]
         });
-
-        // # HELP api_all_success_total The total number of all API requests with success response
-        // # TYPE api_all_success_total counter
 
         this.command_All_Success_Total = new client.Counter({
             name: 'command_all_success_total',
@@ -74,18 +59,12 @@ export class OutboundMetricsClass {
             registers: [this.outboundRegister]
         });
 
-        // # HELP api_all_errors_total The total number of all API requests with error response
-        // # TYPE api_all_errors_total counter
-
         this.command_All_Errors_Total = new client.Counter({
             name: 'command_all_errors_total',
             help: 'The total number of all command requests with error response',
             registers: [this.outboundRegister]
         });
 
-        // # HELP api_request_duration_milliseconds API requests duration
-        // # TYPE api_request_duration_milliseconds histogram
-        // Start with request received till response sent
         this.command_Request_Duration_Seconds = new client.Histogram({
             name: 'command_request_duration_milliseconds',
             help: 'Command requests duration in milliseconds',
@@ -101,9 +80,6 @@ export class OutboundMetricsClass {
             registers: [this.outboundRegister]
         });
 
-        // # HELP api_request_size_bytes API requests size
-        // # TYPE api_request_size_bytes histogram
-
         this.command_Request_Size_Bytes = new client.Histogram({
             name: 'command_request_size_bytes',
             help: 'Command requests size',
@@ -113,7 +89,7 @@ export class OutboundMetricsClass {
         });
 
         this.command_All_Request_Size_Bytes = new client.Histogram({
-            name: 'command_All_ request_size_bytes',
+            name: 'command_All_Request_Size_Bytes',
             help: 'All Commands requests size',
             buckets: [0.1, 1, 2, 3, 4, 5, 10, 20, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000],
             registers: [this.outboundRegister]
@@ -136,7 +112,7 @@ export class OutboundMetricsClass {
         this.command_Num_Of_Command_Calls.inc({ command: ecc.command }, 1);
         this.command_All_Request_Total.inc(1);
         this.command_Request_Size_Bytes.labels(ecc.command).observe(data.length);
-        this.command_Request_Size_Bytes.observe(data.length);
+        this.command_All_Request_Size_Bytes.observe(data.length);
     };
 
     countCommandEnds = (data: string, ecc: ECCCommand, requestTime: number) => {

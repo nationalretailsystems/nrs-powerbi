@@ -166,7 +166,7 @@ export async function metricsDataString(): Promise<string> {
 }
 
 /** Main middleware function */
-export default async function (req: Request, res: Response) {
+export default async function getMetricsFromClusters(req: Request, res: Response) {
     return new Promise(async (resolve, reject) => {
         try {
             // Create or use bus singleton

@@ -13,7 +13,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
-import swaggerStatsMetrics, { metricsDataString } from './services/prom-client-pm2-cluster';
+import getMetricsFromClusters, { metricsDataString } from './services/prom-client-pm2-cluster';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
@@ -153,7 +153,7 @@ function setUpAPI(swaggerSpec?: any) {
             if (!process.env.PM2_HOME) {
                 res.write(await metricsDataString());
             } else {
-                res.write(await swaggerStatsMetrics(req, res));
+                res.write(await getMetricsFromClusters(req, res));
             }
             res.end();
         } catch (e) {

@@ -150,3 +150,7 @@ export const getControlListing: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 8, max: 8 }).withMessage('Must be date yyyymmdd'),
     query('toDate').exists().isNumeric().isLength({ min: 8, max: 8 }).withMessage('Must be date yyyymmdd'),    
 ];
+export const getOl736Data: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),    
+];

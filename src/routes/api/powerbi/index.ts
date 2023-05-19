@@ -275,4 +275,9 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getControlListing),
         respond((req: any) => sqlController.getControlListing(req.query))
     );
+    router.get(
+        '/ol736-data',
+        validate(validators.getOl736Data),
+        respond((req: any) => sqlController.getOl736Data(req.query))
+    );
 }

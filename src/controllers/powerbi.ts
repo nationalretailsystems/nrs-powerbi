@@ -85,6 +85,10 @@ import SQLTemplateCTRLLIST, {
     SQLTemplateInputCTRLLIST,
     SQLTemplateOutputCTRLLIST
 } from 'src/models/powerbi-controllisting';
+import SQLTemplateOL736DATA, {
+    SQLTemplateInputOL736DATA,
+    SQLTemplateOutputOL736DATA
+} from 'src/models/powerbi-ol736data';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -530,4 +534,12 @@ export async function getControlListing(inputs: JSONObject): Promise<SQLTemplate
         toDate: inputs.toDate
     };
     return powerbiTransports.wolf.execute(SQLTemplateCTRLLIST, params) as Promise<SQLTemplateOutputCTRLLIST>;
+}
+export async function getOl736Data(inputs: JSONObject): Promise<SQLTemplateOutputOL736DATA> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputOL736DATA = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateOL736DATA, params) as Promise<SQLTemplateOutputOL736DATA>;
 }

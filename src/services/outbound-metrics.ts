@@ -69,14 +69,14 @@ export class OutboundMetricsClass {
             name: 'command_request_duration_milliseconds',
             help: 'Command requests duration in milliseconds',
             labelNames: ['command'],
-            buckets: [0.1, 0.5, 1, 5, 10, 20, 30, 40, 50, 60, 120, 300],
+            buckets: [1, 5, 10, 50, 100, 500, 1000, 5000, 10000, 30000, 50000, 100000],
             registers: [this.outboundRegister]
         });
 
         this.command_All_Request_Duration_Seconds = new client.Histogram({
             name: 'command_All_Request_Duration_Seconds',
             help: 'All commands requests duration in milliseconds',
-            buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 50000, 100000, Infinity],
+            buckets: [0.1, 5, 15, 50, 100, 500, 1000, 5000, 10000, 30000, 50000, 100000],
             registers: [this.outboundRegister]
         });
 
@@ -84,14 +84,14 @@ export class OutboundMetricsClass {
             name: 'command_request_size_bytes',
             help: 'Command requests size',
             labelNames: ['command'],
-            buckets: [0.1, 1, 2, 3, 4, 5, 10, 20, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000],
+            buckets: [5, 10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000],
             registers: [this.outboundRegister]
         });
 
         this.command_All_Request_Size_Bytes = new client.Histogram({
             name: 'command_All_Request_Size_Bytes',
             help: 'All Commands requests size',
-            buckets: [0.1, 1, 2, 3, 4, 5, 10, 20, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000],
+            buckets: [5, 10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000],
             registers: [this.outboundRegister]
         });
 

@@ -280,4 +280,9 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getOl736Data),
         respond((req: any) => sqlController.getOl736Data(req.query))
     );
+    router.get(
+        '/fed46r',
+        validate(validators.getFed46r),
+        respond((req: any) => sqlController.getFed46r(req.query))
+    );    
 }

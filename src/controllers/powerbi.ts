@@ -89,6 +89,9 @@ import SQLTemplateOL736DATA, {
     SQLTemplateInputOL736DATA,
     SQLTemplateOutputOL736DATA
 } from 'src/models/powerbi-ol736data';
+import SQLTemplateFED46R, {
+    SQLTemplateInputFED46R, SQLTemplateOutputFED46R
+} from 'src/models/powerbi-fed46r';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -542,4 +545,12 @@ export async function getOl736Data(inputs: JSONObject): Promise<SQLTemplateOutpu
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
     return powerbiTransports.wolf.execute(SQLTemplateOL736DATA, params) as Promise<SQLTemplateOutputOL736DATA>;
+}
+export async function getFed46r(inputs: JSONObject): Promise<SQLTemplateOutputFED46R> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputFED46R = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateFED46R, params) as Promise<SQLTemplateOutputFED46R>;
 }

@@ -5,7 +5,7 @@ import APIError from 'src/APIError';
 import { JWTUserData } from 'src/types';
 const key = config.keys.privateKey;
 const options = config.jwt;
-const jwtSign = promisify(jwt.sign) as (data: any, key: string, options?: any) => Promise<string>;
+const jwtSign = promisify(jwt.sign);
 const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promise<any>;
 
 /**

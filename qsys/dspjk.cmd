@@ -7,5 +7,5 @@ DSPJK:CMD PROMPT('Display Joke')
   PARM KWD(WAITTM) TYPE(*DEC) LEN(5 0) DFT(5) +
        PROMPT('Wait time')
 
-  PARM KWD(REQKEY) TYPE(*CHAR) LEN(6) DFT('0     ') +
+  PARM KWD(REQKEY) TYPE(*CHAR) LEN(10) DFT('0         ') +
        PROMPT('Request key')

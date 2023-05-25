@@ -54,14 +54,14 @@
      D DspVhcl         PR                  Extpgm('DSPVHCL')
      D  In_Mode                      10A
      D  In_WaitTm                     5P 0
-     D  In_ReqKey                     6A
+     D  In_ReqKey                    10A
      D  In_Vin                       17A
      D  In_Year                       4P 0
       *
      D DspVhcl         PI
      D  In_Mode                      10A
      D  In_WaitTm                     5P 0
-     D  In_ReqKey                     6A
+     D  In_ReqKey                    10A
      D  In_Vin                       17A
      D  In_Year                       4P 0
 

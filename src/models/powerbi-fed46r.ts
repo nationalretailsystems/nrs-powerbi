@@ -18,7 +18,8 @@ export default new eradaniConnect.run.Sql(
     case when prelwm > 0 then 'H' else ' ' end as "P", 
     scaccm as "SCAC", ocarrm as "CARR", nobilm as "Y/N", 
     prefxm || ' ' || trlr1m as "TRALR", wmanfm as "CONT#", manf#m as "MANF#", winv#m as "INVOICE",  
-    shopdate as "DATE" , mantmm as "TIME", actqtm as "QTY", actwtm as "WGT", 
+    shopdate as "DATE" , time(to_date(digits(mantmm),'HH24MI')) as "TIME", 
+    actqtm as "QTY", actwtm as "WGT", 
     obpr2m as "PRO", comntm as "C O M M E N T" 
     from confile.manf02 
         left join confile.cust on acct#m = acct#c

@@ -81,7 +81,9 @@ async function requestNeighboursData(instancesData: PM2InstanceData[], reqId: st
         let targetId = instanceData.pm_id;
         // Don't send message to self
         if (targetId !== instanceId) {
-            promises.push(pm2.sendDataToProcessIdAsync(targetId, requestData).catch((e) => console.error(e)));
+            promises.push(pm2.sendDataToProcessIdAsync(targetId, requestData)
+            .catch((e) => console.error(e)
+            ));
         }
     }
 

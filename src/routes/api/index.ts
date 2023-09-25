@@ -3,6 +3,8 @@ import mountRPG from './rpg';
 import mountSQL from './sql';
 import mountPOWERBI from './powerbi';
 import mountKEYCAP from './keycap';
+import mountUKG from './ukg';
+import mountPLATSCI from './platsci';
 
 export default function mountAPI(router: Router) {
     // You can set auth requirements on a whole API section by putting `router.use(requireAuth);` here instead of on individual route definitions
@@ -22,4 +24,12 @@ export default function mountAPI(router: Router) {
     const keycap = express.Router();
     mountKEYCAP(keycap);
     router.use('/keycap', keycap);
-}
+
+    const ukg = express.Router();
+    mountUKG(ukg);
+    router.use('/ukg', ukg);   
+    
+    const platsci = express.Router();
+    mountPLATSCI(platsci);
+    router.use('/platsci', platsci);    
+}    

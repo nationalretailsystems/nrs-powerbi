@@ -7,7 +7,7 @@ export default new eradaniConnect.run.Sql(
     `SELECT *
     FROM PLATSCI.PLTMHBDP 
     WHERE substr(PLTHLOGA,1,10) BETWEEN ?  AND ?  
-    AND PLTHTRUCK = ? 
+    AND PLTHTRUCK between ? and ? 
     `,
     {
         params: [
@@ -19,6 +19,9 @@ export default new eradaniConnect.run.Sql(
             },
             {
                 name: 'unit'
+            },
+            {
+                name: 'unit2'
             }
         ]
     }
@@ -41,6 +44,7 @@ export interface SQLTemplateInputGETHEARTBEATS {
      * @description Building Code
      */
     unit: string | string;
+    unit2: string | string;
 }
 
 /**

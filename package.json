@@ -37,6 +37,7 @@
     "homepage": "https://github.com/eradani-inc/eradani-inout-template#readme",
     "dependencies": {
         "@eradani-inc/ec-client": "^3.7.0",
+        "@eradani-inc/ec-metrics": "file:../ec-metrics/dist",
         "@eradani-inc/ecc-router": "file:../ecc-router/dist",
         "@eradani-inc/eradani-connect": "^2.7.0-alpha.20",
         "@eradani-inc/gui-generator": "^0.12.4",
@@ -118,9 +119,9 @@
         "source-map-support": "^0.5.21",
         "tsconfig-paths": "^4.0.0",
         "tslint": "^6.0.0",
-        "ttypescript": "^1.5.13",
+        "ttypescript": "^1.5.15",
         "typedoc": "^0.22.15",
-        "typescript": "^4.6.4",
+        "typescript": "^4.7.4",
         "typescript-transform-paths": "^3.3.1"
     }
 }

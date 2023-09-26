@@ -18,7 +18,7 @@ passport.use(
 );
 
 export default function callback(req: any, res: any, next: any) {
-    passport.authenticate('bearer', function (err, user, _info) {
+    passport.authenticate('bearer', function (err: any, user: any, _info: any) {
         logger.debug('Bearer authentication callback', { err, user, info: _info });
         if (err || !user) {
             return res.status(401).json({ message: 'Authentication Failed' });

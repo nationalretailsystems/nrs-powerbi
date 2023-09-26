@@ -1,17 +1,18 @@
 import ECCRouter from '@eradani-inc/ecc-router';
-import { OutboundMetrics } from 'src/services/outbound-metrics';
+import { OutboundMetricsInstance } from '@eradani-inc/ec-metrics';
 import registerJokes from './jokes';
 import registerTraffic from './traffic';
 import registerVehicle from './vehicle';
 import registerWeather from './weather';
 import registerShipping from './shipping';
 import config from 'src/config';
-let metrics = config?.metrics?.outbound;
+let outboundMetrics = config?.metrics?.outbound || false;
 
 export default async function registerCommands(router: ECCRouter) {
-    if (metrics) {
-        router.use(OutboundMetrics.countCommandCalls);
+    if (outboundMetrics) {
+        router.use(OutboundMetricsInstance.countCommandCalls);
     }
+
     const jokes = new ECCRouter.Router();
     registerJokes(jokes);
     router.use('jokes', jokes);
@@ -32,8 +33,9 @@ export default async function registerCommands(router: ECCRouter) {
     registerShipping(shipping);
     router.use('shipping', shipping);
 
-    if (metrics) {
-        router.use(OutboundMetrics.afterCommandParams);
+    if (outboundMetrics) {
+        router.use(OutboundMetricsInstance.afterCommandParams);
     }
+
     return router;
 }

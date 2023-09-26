@@ -17,13 +17,21 @@ const logger = createLogger('controllers/platsci');
 
 export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutputGETHEARTBEATS> {
     logger.debug('Calling SQLTemplate program');
+    let secondUnit;
     const params: SQLTemplateInputGETHEARTBEATS = {
         // X fromDate: inputs.fromDate,
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         // X toDate: inputs.toDate,
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-        unit: inputs.unit
+        unit: inputs.unit,
+        unit2: inputs.unit2
     };
+    if (inputs.unit === '000000') {
+        secondUnit = '999999'
+     } else {
+        secondUnit = inputs.unit 
+    }
+    params.unit2 = secondUnit;    
     logger.debug('platsci.ts-' + params.toDate + ' ' + params.fromDate + ' ' + params.unit)
     return powerbiTransports.wolf.execute(SQLTemplateHEARTBEATS, params) as Promise<SQLTemplateOutputGETHEARTBEATS>;
 }

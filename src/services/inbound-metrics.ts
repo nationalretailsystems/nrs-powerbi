@@ -10,21 +10,23 @@ export class InboundMetrics {
         });
     }
 
-    static getPromClient() {
+    public getPromClient() {
         return swStats.getPromClient();
     }
 
-    static getMetricsAsArray() {
+    public getMetricsAsArray() {
         return swStats.getPromClient().register.getMetricsAsArray();
     }
 
-    static getPromStats() {
+    public getPromStats() {
         return swStats.getPromStats();
     }
 
-    static async getMetricsAsJSON() {
+    public async getMetricsAsJSON() {
         return swStats.getPromClient().register.getMetricsAsJSON();
     }
 }
 
-export default InboundMetrics;
+const inbounddMetricsIns = new InboundMetrics();
+
+export { inbounddMetricsIns };

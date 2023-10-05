@@ -5,8 +5,8 @@ import bb from 'bluebird';
 const pm2 = bb.Promise.promisifyAll(pm2Cb);
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
-import { InboundMetrics } from 'src/services/inbound-metrics';
-import { OutboundMetrics } from 'src/services/outbound-metrics';
+import { InboundMetrics, inbounddMetricsIns } from 'src/services/inbound-metrics';
+import { outboundMetricsIns } from 'src/services/outbound-metrics';
 import config from 'config';
 
 /** Total timeout for workers, ms */
@@ -146,10 +146,10 @@ async function getAggregatedRegistry(instancesData: any[]) {
 export async function metricsDataArray(): Promise<any[]> {
     let metricsData: any[] = [];
     if (metrics.outbound) {
-        metricsData = await OutboundMetrics.getMetricsAsJSON();
+        metricsData = await outboundMetricsIns.getMetricsAsJSON();
     }
     if (metrics.inbound) {
-        metricsData = metricsData.concat(await InboundMetrics.getMetricsAsJSON());
+        metricsData = metricsData.concat(await inbounddMetricsIns.getMetricsAsJSON());
     }
     return metricsData;
 }
@@ -157,10 +157,10 @@ export async function metricsDataArray(): Promise<any[]> {
 export async function metricsDataString(): Promise<string> {
     let metricsData: string = '';
     if (metrics.outbound) {
-        metricsData = await OutboundMetrics.getPromStats();
+        metricsData = await outboundMetricsIns.getPromStats();
     }
     if (metrics.inbound) {
-        metricsData = metricsData.concat('\n' + (await InboundMetrics.getPromStats()));
+        metricsData = metricsData.concat('\n' + (await inbounddMetricsIns.getPromStats()));
     }
     return metricsData;
 }
@@ -188,7 +188,7 @@ export default async function getMetricsFromClusters(req: Request, res: Response
                     // Get current instances (threads) data
                     const instancesData = await pm2.listAsync();
                     res.set('Content-type', swStats.getPromClient().register.contentType);
-                    if (instancesData.length > 1) {
+                    if (instancesData.length > 0) {
                         // Multiple threads - aggregate
                         const register = await getAggregatedRegistry(instancesData);
                         resolve(register.metrics());

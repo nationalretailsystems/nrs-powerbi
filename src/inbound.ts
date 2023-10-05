@@ -13,14 +13,13 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
-import InOutMetrics from '@eradani-inc/ec-metrics';
+import getMetricsFromClusters, { metricsDataString } from './services/prom-client-pm2-cluster';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
 const generateSwagger = config?.swagger?.generate || process.env.GENERATE_SWAGGER === 'true';
 let _server: http.Server;
-let metricsConfig = config?.metrics || {};
-const metrics = new InOutMetrics(metricsConfig, swStats);
+let metrics = config?.metrics;
 
 export const start = () => {
     shutdownService.register('inbound', { close: () => stop() });
@@ -151,10 +150,11 @@ function setUpAPI(swaggerSpec?: any) {
         try {
             res.set('Content-type', swStats.getPromClient().register.contentType);
             // If PM2 is not running, return local metrics
+
             if (!process.env.PM2_HOME) {
-                res.write(await metrics.metricsDataString());
+                res.write(await metricsDataString());
             } else {
-                res.write(await metrics.pm2Metrics(res));
+                res.write(await getMetricsFromClusters(req, res));
             }
             res.end();
         } catch (e) {

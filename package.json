@@ -37,7 +37,6 @@
     "homepage": "https://github.com/eradani-inc/eradani-inout-template#readme",
     "dependencies": {
         "@eradani-inc/ec-client": "^3.7.0",
-        "@eradani-inc/ec-metrics": "file:../ec-metrics/dist",
         "@eradani-inc/ecc-router": "file:../ecc-router/dist",
         "@eradani-inc/eradani-connect": "^2.7.0-alpha.20",
         "@eradani-inc/gui-generator": "^0.12.4",

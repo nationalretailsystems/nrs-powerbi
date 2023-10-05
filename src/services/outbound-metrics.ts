@@ -4,11 +4,11 @@ import { ECCHandlerFunction } from '@eradani-inc/ecc-router/types';
 import { ECCCommand } from '@eradani-inc/ecc-router/types/ecc-handler';
 import * as uuid from 'uuid';
 
-export class OutboundMetricsClass {
+export class OutboundMetrics {
     public outboundRegister: client.Registry;
-    private uuid: string;
     private command_Num_Of_Command_Calls: client.Counter<string>;
     private command_Num_Of_Command_Errors: client.Counter<string>;
+    private command_Num_Of_Command_Success: client.Counter<string>;
     private command_Errors_Details: client.Counter<string>;
     private command_All_Request_Total: client.Counter<string>;
     private command_All_Success_Total: client.Counter<string>;
@@ -20,10 +20,11 @@ export class OutboundMetricsClass {
 
     constructor() {
         this.outboundRegister = new client.Registry();
-        this.uuid = uuid.v4();
+
         this.outboundRegister.setDefaultLabels({
             app: 'eradani-connect',
-            type: 'outbound'
+            type: 'outbound',
+            uuid: uuid.v4()
         });
 
         this.command_Num_Of_Command_Calls = new client.Counter({
@@ -36,6 +37,13 @@ export class OutboundMetricsClass {
         this.command_Num_Of_Command_Errors = new client.Counter({
             name: 'command_Num_Of_Command_Errors',
             help: 'Number of command ended in error',
+            labelNames: ['command'],
+            registers: [this.outboundRegister]
+        });
+
+        this.command_Num_Of_Command_Success = new client.Counter({
+            name: 'command_Num_Of_Command_Success',
+            help: 'Number of command succeded',
             labelNames: ['command'],
             registers: [this.outboundRegister]
         });
@@ -97,6 +105,7 @@ export class OutboundMetricsClass {
 
         this.outboundRegister.registerMetric(this.command_Num_Of_Command_Calls);
         this.outboundRegister.registerMetric(this.command_Num_Of_Command_Errors);
+        this.outboundRegister.registerMetric(this.command_Num_Of_Command_Success);
         this.outboundRegister.registerMetric(this.command_Errors_Details);
         this.outboundRegister.registerMetric(this.command_All_Request_Total);
         this.outboundRegister.registerMetric(this.command_All_Success_Total);
@@ -129,6 +138,7 @@ export class OutboundMetricsClass {
             this.command_Num_Of_Command_Errors.inc({ command: ecc.command }, 1);
             this.command_All_Errors_Total.inc(1);
         } else {
+            this.command_Num_Of_Command_Success.inc({ command: ecc.command }, 1);
             this.command_All_Success_Total.inc(1);
         }
     };
@@ -150,6 +160,6 @@ export class OutboundMetricsClass {
     };
 }
 
-const OutboundMetrics = new OutboundMetricsClass();
+const outboundMetricsIns = new OutboundMetrics();
 
-export { OutboundMetrics };
+export { outboundMetricsIns };

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { promisify } from 'es6-promisify';
 import config from 'config';
-import APIError from 'src/APIError';
+import APIError from 'src/api-error';
 import { JWTUserData } from 'src/types';
 const key = config.keys.privateKey;
 const options = config.jwt;

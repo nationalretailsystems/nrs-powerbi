@@ -7,7 +7,7 @@ DSPTRFC:CMD PROMPT('Get Best Road')
   PARM KWD(WAITTM) TYPE(*DEC) LEN(5 0) DFT(5) +
        PROMPT('Wait time')
 
-  PARM KWD(REQKEY) TYPE(*CHAR) LEN(6) DFT('0     ') +
+  PARM KWD(REQKEY) TYPE(*CHAR) LEN(10) DFT('0         ') +
        PROMPT('Request key')
 
   PARM KWD(TYPE) TYPE(*CHAR) LEN(10) RSTD(*YES) +

@@ -30,7 +30,8 @@
         "yzhang.markdown-all-in-one",
         "eg2.vscode-npm-script",
         "github.copilot",
-        "GajenderTyagi.ec-generators"
+        "GajenderTyagi.ec-generators",
+        "redhat.vscode-yaml"
     ],
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.

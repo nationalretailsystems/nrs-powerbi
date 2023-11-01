@@ -4,6 +4,12 @@ export PATH
 LIB=YOUR_DEVELOPMENT_LIBRARY
 export LIB
 
+CC=gcc-10
+export CC
+
+CXX=g++-10
+export CXX
+
 if [ -z "$QIBM_USE_DESCRIPTOR_STDIO" ]; then
     # If we're in an SSH session, use bash
     bash

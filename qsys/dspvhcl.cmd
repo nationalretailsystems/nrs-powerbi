@@ -7,7 +7,7 @@ DSPVHCL:CMD PROMPT('Get Vehicle Data')
   PARM KWD(WAITTM) TYPE(*DEC) LEN(5 0) DFT(5) +
        PROMPT('Wait time')
 
-  PARM KWD(REQKEY) TYPE(*CHAR) LEN(6) DFT('0     ') +
+  PARM KWD(REQKEY) TYPE(*CHAR) LEN(10) DFT('0         ') +
        PROMPT('Request key')
 
   PARM KWD(VIN) TYPE(*CHAR) LEN(17) DFT('5GAKRBKD9GJ289346') +

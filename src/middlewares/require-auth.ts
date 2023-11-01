@@ -23,6 +23,7 @@ export default function callback(req: any, res: any, next: any) {
         if (err || !user) {
             return res.status(401).json({ message: 'Authentication Failed' });
         }
+        req.user = user;
         return next();
     })(req, res, next);
 }

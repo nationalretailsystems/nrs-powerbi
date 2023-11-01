@@ -32,3 +32,4 @@ qsys/*.ts
 .gitconfig
 native
 .npmrc
+.eradani/**

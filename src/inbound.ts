@@ -13,7 +13,8 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import * as user from 'src/controllers/user';
 import * as shutdownService from 'src/services/shutdown';
-import getMetricsFromClusters, { metricsDataString } from './services/prom-client-pm2-cluster';
+import getMetricsFromClusters, { metricsDataString } from 'src/services/prom-client-pm2-cluster';
+import isPm2Running from 'src/services/pm2';
 
 // If you want realtime services: import socketIO from 'socket.io';
 const logger = createLogger('inbound');
@@ -151,10 +152,10 @@ function setUpAPI(swaggerSpec?: any) {
             res.set('Content-type', swStats.getPromClient().register.contentType);
             // If PM2 is not running, return local metrics
 
-            if (!process.env.PM2_HOME) {
-                res.write(await metricsDataString());
-            } else {
+            if (await isPm2Running()) {
                 res.write(await getMetricsFromClusters(req, res));
+            } else {
+                res.write(await metricsDataString());
             }
             res.end();
         } catch (e) {

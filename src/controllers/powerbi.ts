@@ -92,6 +92,8 @@ import SQLTemplateOL736DATA, {
 import SQLTemplateFED46R, {
     SQLTemplateInputFED46R, SQLTemplateOutputFED46R
 } from 'src/models/powerbi-fed46r';
+import SQLTemplateTRIPS, { SQLTemplateInputTRIPS, SQLTemplateOutputTRIPS } from 'src/models/powerbi-trips';
+import SQLTemplateDRIVPERF, { SQLTemplateInputDRIVPERF, SQLTemplateOutputDRIVPERF } from 'src/models/powerbi-psdrivperf';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -554,3 +556,20 @@ export async function getFed46r(inputs: JSONObject): Promise<SQLTemplateOutputFE
     };
     return powerbiTransports.wolf.execute(SQLTemplateFED46R, params) as Promise<SQLTemplateOutputFED46R>;
 }
+export async function getTrips(inputs: JSONObject): Promise<SQLTemplateOutputTRIPS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputTRIPS = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateTRIPS, params) as Promise<SQLTemplateOutputTRIPS>;
+}
+export async function getDrivperf(inputs: JSONObject): Promise<SQLTemplateOutputDRIVPERF> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputDRIVPERF = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateDRIVPERF, params) as Promise<SQLTemplateOutputDRIVPERF>;
+}
+

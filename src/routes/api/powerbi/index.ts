@@ -284,5 +284,15 @@ export default function mountPOWERBI(router: Router) {
         '/fed46r',
         validate(validators.getFed46r),
         respond((req: any) => sqlController.getFed46r(req.query))
-    );    
+    );
+    router.get(
+        '/trips',
+        validate(validators.getFed46r),
+        respond((req: any) => sqlController.getTrips(req.query))
+    );
+    router.get(
+        '/psdrivperf',
+        validate(validators.getDrivperf),
+        respond((req: any) => sqlController.getDrivperf(req.query))
+    );   
 }

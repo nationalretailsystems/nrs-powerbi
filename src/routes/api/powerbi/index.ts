@@ -290,9 +290,5 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getFed46r),
         respond((req: any) => sqlController.getTrips(req.query))
     );
-    router.get(
-        '/psdrivperf',
-        validate(validators.getDrivperf),
-        respond((req: any) => sqlController.getDrivperf(req.query))
-    );   
+   
 }

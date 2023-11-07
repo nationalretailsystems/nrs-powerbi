@@ -21,5 +21,10 @@ export default function mountPLATSCI(router: Router) {
         '/psdrivperf',
         validate(validators.getDrivperf),
         respond((req: any) => sqlController.getDrivperf(req.query))
-    );        
+    );  
+    router.get(
+        '/getskybitz',
+        validate(validators.getSkybitz),
+        respond((req: any) => sqlController.getSkybitz(req.query))
+    );           
 }

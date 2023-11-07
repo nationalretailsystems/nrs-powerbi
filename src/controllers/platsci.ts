@@ -5,6 +5,7 @@ import SQLTemplateHEARTBEATS, {
     SQLTemplateOutputGETHEARTBEATS
 } from 'src/models/platsci-getheartbeats';
 import SQLTemplateGETLATESTHB, { SQLTemplateOutputGETLATESTHB } from 'src/models/platsci-getlatesthb';
+import SQLTemplateDRIVPERF, { SQLTemplateInputDRIVPERF, SQLTemplateOutputDRIVPERF } from 'src/models/platsci-psdrivperf';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -39,4 +40,12 @@ export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutp
 export async function getLatestHB(): Promise<SQLTemplateOutputGETLATESTHB> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateGETLATESTHB) as Promise<SQLTemplateOutputGETLATESTHB>;
+}
+export async function getDrivperf(inputs: JSONObject): Promise<SQLTemplateOutputDRIVPERF> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputDRIVPERF = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateDRIVPERF, params) as Promise<SQLTemplateOutputDRIVPERF>;
 }

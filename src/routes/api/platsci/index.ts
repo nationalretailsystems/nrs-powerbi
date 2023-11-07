@@ -16,5 +16,10 @@ export default function mountPLATSCI(router: Router) {
     router.get(
         '/ps-getlatesthb',
         respond(() => sqlController.getLatestHB())
-    );    
+    );
+    router.get(
+        '/psdrivperf',
+        validate(validators.getDrivperf),
+        respond((req: any) => sqlController.getDrivperf(req.query))
+    );        
 }

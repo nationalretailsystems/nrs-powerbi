@@ -6,6 +6,7 @@ import SQLTemplateHEARTBEATS, {
 } from 'src/models/platsci-getheartbeats';
 import SQLTemplateGETLATESTHB, { SQLTemplateOutputGETLATESTHB } from 'src/models/platsci-getlatesthb';
 import SQLTemplateDRIVPERF, { SQLTemplateInputDRIVPERF, SQLTemplateOutputDRIVPERF } from 'src/models/platsci-psdrivperf';
+import SQLTemplateSKYBITZ, { SQLTemplateInputSKYBITZ, SQLTemplateOutputSKYBITZ } from 'src/models/platsci-skybitz';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -48,4 +49,12 @@ export async function getDrivperf(inputs: JSONObject): Promise<SQLTemplateOutput
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
     };
     return powerbiTransports.wolf.execute(SQLTemplateDRIVPERF, params) as Promise<SQLTemplateOutputDRIVPERF>;
+}
+export async function getSkybitz(inputs: JSONObject): Promise<SQLTemplateOutputSKYBITZ> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputSKYBITZ = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateSKYBITZ, params) as Promise<SQLTemplateOutputSKYBITZ>;
 }

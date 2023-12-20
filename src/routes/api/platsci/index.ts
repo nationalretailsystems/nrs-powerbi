@@ -26,5 +26,9 @@ export default function mountPLATSCI(router: Router) {
         '/getskybitz',
         validate(validators.getSkybitz),
         respond((req: any) => sqlController.getSkybitz(req.query))
-    );           
+    ); 
+    router.get(
+        '/getdvir',
+         respond((req: any) => sqlController.getDvir())
+    );          
 }

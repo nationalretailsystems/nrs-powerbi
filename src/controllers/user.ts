@@ -2,7 +2,7 @@ import * as jwt from 'src/services/jwt';
 import config from 'config';
 const credentials = config.credentials;
 const dashboardCredentials = config.swagger.auth;
-import APIError from 'src/APIError';
+import APIError from 'src/api-error';
 import { JWTUserData } from 'src/types';
 import bcrypt from 'bcrypt';
 const saltRounds = 10;

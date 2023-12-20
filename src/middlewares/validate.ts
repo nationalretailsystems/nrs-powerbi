@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator';
 import createLogger from 'src/services/logger';
 import { Response, NextFunction } from 'express';
-import APIError from 'src/APIError';
+import APIError from 'src/api-error';
 import { InputCheckChain } from 'src/types';
 const logger = createLogger('middlewares/validate');
 

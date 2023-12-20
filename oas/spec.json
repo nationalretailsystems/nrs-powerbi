@@ -1,290 +1,353 @@
 {
-    "definitions": {},
-    "host": "localhost:3001",
-    "info": {
-        "title": "eradani-connect-template",
-        "version": "2.5.2",
-        "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3).\n\nEradani Connect Template Application"
+  "definitions": {},
+  "host": "localhost:3001",
+  "info": {
+    "title": "eradani-connect-template",
+    "version": "2.5.2",
+    "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3).\n\nEradani Connect Template Application"
+  },
+  "paths": {
+    "/metrics": {
+      "get": {
+        "summary": "/metrics",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "example": "# HELP numOfCommandCalls Number of command calls made\n# TYPE numOfCommandCalls counter\nnumOfCommandCalls{command=\"nerdy\",app=\"outbound\"} 6\n\n# HELP numOfCommandErrors Number of command errors made\n# TYPE numOfCommandErrors counter\nnumOfCommandErrors{command=\"nerdy\",app=\"outbound\"} 3\n\n# HELP commandResponseTimeHistogram Command response time in millis\n# TYPE commandResponseTimeHistogram histogram\ncommandResponseTimeHistogram_bucket{le=\"0.1\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"5\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"15\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"50\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"100\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"500\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"+Inf\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_sum{command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeHistogram_count{command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"0.1\",command=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"5\",command=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"15\",command=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"50\",command=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"100\",command=\"nerdy\",app=\"outbound\"} 3\ncommandResponseTimeHistogram_bucket{le=\"500\",command=\"nerdy\",app=\"outbound\"} 3\ncommandResponseTimeHistogram_bucket{le=\"+Inf\",command=\"nerdy\",app=\"outbound\"} 3\ncommandResponseTimeHistogram_sum{command=\"nerdy\",app=\"outbound\"} 156.63415225\ncommandResponseTimeHistogram_count{command=\"nerdy\",app=\"outbound\"} 3\ncommandResponseTimeHistogram_bucket{le=\"0.1\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"5\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"15\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"50\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"100\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"500\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"+Inf\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_sum{command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeHistogram_count{command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"0.1\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"5\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 0\ncommandResponseTimeHistogram_bucket{le=\"15\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"50\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"100\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"500\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_bucket{le=\"+Inf\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeHistogram_sum{command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeHistogram_count{command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\n\n# HELP commandResponseTimeGauge Command response time in millis\n# TYPE commandResponseTimeGauge gauge\ncommandResponseTimeGauge{command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeGauge{command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeGauge{command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\n\n# HELP commandResponseTimeSummary Command response time in millis\n# TYPE commandResponseTimeSummary summary\ncommandResponseTimeSummary{quantile=\"0.01\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.05\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.5\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.9\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.95\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.99\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.999\",command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary_sum{command=\"500000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary_count{command=\"500000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeSummary{quantile=\"0.01\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.05\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.5\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.9\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.95\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.99\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.999\",command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary_sum{command=\"510000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary_count{command=\"510000\",status=\"nerdy\",app=\"outbound\"} 1\ncommandResponseTimeSummary{quantile=\"0.01\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.05\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.5\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.9\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.95\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.99\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary{quantile=\"0.999\",command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary_sum{command=\"520000\",status=\"nerdy\",app=\"outbound\"} 10\ncommandResponseTimeSummary_count{command=\"520000\",status=\"nerdy\",app=\"outbound\"} 1\n\n# HELP nodejs_process_memory_rss_bytes Node.js process resident memory (RSS) bytes \n# TYPE nodejs_process_memory_rss_bytes gauge\nnodejs_process_memory_rss_bytes{app=\"outbound\"} 120541184\n\n# HELP nodejs_process_memory_heap_total_bytes Node.js process memory heapTotal bytes\n# TYPE nodejs_process_memory_heap_total_bytes gauge\nnodejs_process_memory_heap_total_bytes{app=\"outbound\"} 37117952\n\n# HELP nodejs_process_memory_heap_used_bytes Node.js process memory heapUsed bytes\n# TYPE nodejs_process_memory_heap_used_bytes gauge\nnodejs_process_memory_heap_used_bytes{app=\"outbound\"} 33587424\n\n# HELP nodejs_process_memory_external_bytes Node.js process memory external bytes\n# TYPE nodejs_process_memory_external_bytes gauge\nnodejs_process_memory_external_bytes{app=\"outbound\"} 1895610\n\n# HELP nodejs_process_cpu_usage_percentage Node.js process CPU usage percentage\n# TYPE nodejs_process_cpu_usage_percentage gauge\nnodejs_process_cpu_usage_percentage{app=\"outbound\"} 0.7105575769922047\n\n# HELP api_all_request_total The total number of all API requests received\n# TYPE api_all_request_total counter\napi_all_request_total{app=\"outbound\"} 1\n\n# HELP api_all_success_total The total number of all API requests with success response\n# TYPE api_all_success_total counter\napi_all_success_total{app=\"outbound\"} 0\n\n# HELP api_all_errors_total The total number of all API requests with error response\n# TYPE api_all_errors_total counter\napi_all_errors_total{app=\"outbound\"} 0\n\n# HELP api_all_client_error_total The total number of all API requests with client error response\n# TYPE api_all_client_error_total counter\napi_all_client_error_total{app=\"outbound\"} 0\n\n# HELP api_all_server_error_total The total number of all API requests with server error response\n# TYPE api_all_server_error_total counter\napi_all_server_error_total{app=\"outbound\"} 0\n\n# HELP api_all_request_in_processing_total The total number of all API requests currently in processing (no response yet)\n# TYPE api_all_request_in_processing_total gauge\napi_all_request_in_processing_total{app=\"outbound\"} 1\n\n# HELP egress_api_all_request_total The total number of all API requests received\n# TYPE egress_api_all_request_total counter\negress_api_all_request_total{app=\"outbound\"} 0\n\n# HELP egress_api_all_success_total The total number of all API requests with success response\n# TYPE egress_api_all_success_total counter\negress_api_all_success_total{app=\"outbound\"} 0\n\n# HELP egress_api_all_errors_total The total number of all API requests with error response\n# TYPE egress_api_all_errors_total counter\negress_api_all_errors_total{app=\"outbound\"} 0\n\n# HELP egress_api_all_client_error_total The total number of all API requests with client error response\n# TYPE egress_api_all_client_error_total counter\negress_api_all_client_error_total{app=\"outbound\"} 0\n\n# HELP egress_api_all_server_error_total The total number of all API requests with server error response\n# TYPE egress_api_all_server_error_total counter\negress_api_all_server_error_total{app=\"outbound\"} 0\n\n# HELP egress_api_all_request_in_processing_total The total number of all API requests currently in processing (no response yet)\n# TYPE egress_api_all_request_in_processing_total gauge\negress_api_all_request_in_processing_total{app=\"outbound\"} 0\n\n# HELP api_request_total The total number of all API requests\n# TYPE api_request_total counter\n\n# HELP api_request_duration_milliseconds API requests duration\n# TYPE api_request_duration_milliseconds histogram\n\n# HELP api_request_size_bytes API requests size\n# TYPE api_request_size_bytes histogram\n\n# HELP api_response_size_bytes API requests size\n# TYPE api_response_size_bytes histogram\n"
+            }
+          },
+          "304": {},
+          "403": {},
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /dashboard/stats/metrics</pre>\n</body>\n</html>\n"
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "text/plain",
+          "text/html",
+          "application/json"
+        ]
+      }
     },
-    "paths": {
-        "/": {
-            "get": {
-                "summary": "/",
-                "consumes": ["application/json"],
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Up and running!"
-                                }
-                            }
-                        }
-                    },
-                    "304": {}
-                },
-                "tags": [],
-                "produces": ["application/json"]
+    "/": {
+      "get": {
+        "summary": "/",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Up and running!"
+                }
+              }
             }
-        },
-        "/api/rpg/simple-calc/{num}": {
-            "get": {
-                "summary": "/api/rpg/simple-calc/{num}",
-                "consumes": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "num",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer",
-                        "example": 5
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "input": {
-                                    "type": "number",
-                                    "example": 5
-                                },
-                                "output": {
-                                    "type": "number",
-                                    "example": 500
-                                }
-                            }
-                        }
-                    },
-                    "304": {},
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Bad Data Supplied to API"
-                                },
-                                "errors": {
-                                    "type": "object",
-                                    "properties": {
-                                        "num": {
-                                            "type": "object",
-                                            "properties": {
-                                                "value": {
-                                                    "type": "string",
-                                                    "example": "a"
-                                                },
-                                                "msg": {
-                                                    "type": "string",
-                                                    "example": "Invalid value"
-                                                },
-                                                "param": {
-                                                    "type": "string",
-                                                    "example": "num"
-                                                },
-                                                "location": {
-                                                    "type": "string",
-                                                    "example": "params"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Unknown Error"
-                                },
-                                "data": {
-                                    "type": "null",
-                                    "example": null
-                                }
-                            }
-                        }
-                    }
-                },
-                "tags": [],
-                "produces": ["application/json"]
+          },
+          "304": {},
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /dashboard/stats/</pre>\n</body>\n</html>\n"
             }
+          }
         },
-        "/api/sql/customers": {
-            "get": {
-                "summary": "/api/sql/customers",
-                "consumes": ["application/json"],
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "name": "minBaldue",
-                        "in": "query",
-                        "example": "100"
-                    },
-                    {
-                        "type": "integer",
-                        "name": "maxBaldue",
-                        "in": "query",
-                        "example": "500"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "CUSNUM": {
-                                        "type": "number"
-                                    },
-                                    "LSTNAM": {
-                                        "type": "string"
-                                    },
-                                    "INIT": {
-                                        "type": "string"
-                                    },
-                                    "STREET": {
-                                        "type": "string"
-                                    },
-                                    "CITY": {
-                                        "type": "string"
-                                    },
-                                    "STATE": {
-                                        "type": "string"
-                                    },
-                                    "ZIPCOD": {
-                                        "type": "number"
-                                    },
-                                    "CDTLMT": {
-                                        "type": "number"
-                                    },
-                                    "CHGCOD": {
-                                        "type": "number"
-                                    },
-                                    "BALDUE": {
-                                        "type": "number"
-                                    },
-                                    "CDTDUE": {
-                                        "type": "number"
-                                    }
-                                },
-                                "required": [
-                                    "CUSNUM",
-                                    "LSTNAM",
-                                    "INIT",
-                                    "STREET",
-                                    "CITY",
-                                    "STATE",
-                                    "ZIPCOD",
-                                    "CDTLMT",
-                                    "CHGCOD",
-                                    "BALDUE",
-                                    "CDTDUE"
-                                ]
-                            }
-                        }
-                    },
-                    "304": {}
+        "tags": [],
+        "produces": [
+          "application/json",
+          "text/html"
+        ]
+      }
+    },
+    "/api/rpg/simple-calc/{num}": {
+      "get": {
+        "summary": "/api/rpg/simple-calc/{num}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "num",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "number",
+                  "example": 5
                 },
-                "tags": [],
-                "produces": ["application/json"]
+                "output": {
+                  "type": "number",
+                  "example": 500
+                }
+              }
             }
-        },
-        "/auth": {
-            "post": {
-                "summary": "/auth",
-                "consumes": ["application/json"],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "username": {
-                                    "type": "string",
-                                    "example": "**PROTECTED FIELD**"
-                                },
-                                "password": {
-                                    "type": "string",
-                                    "example": "******"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "token": {
-                                    "type": "string",
-                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzcnByZiIsImlhdCI6MTYyNDY1ODcxNiwiZXhwIjoxNjI0NjYyMzE2fQ.LC5owsV5A5Llh2oNdgYAXYecbZBHoWSvIyAZY8l7JU0"
-                                }
-                            }
-                        }
-                    }
+          },
+          "304": {},
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Bad Data Supplied to API"
                 },
-                "tags": [],
-                "produces": ["application/json"]
+                "errors": {
+                  "type": "object",
+                  "properties": {
+                    "num": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "example": "a"
+                        },
+                        "msg": {
+                          "type": "string",
+                          "example": "Invalid value"
+                        },
+                        "param": {
+                          "type": "string",
+                          "example": "num"
+                        },
+                        "location": {
+                          "type": "string",
+                          "example": "params"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
-        },
-        "/auth/verify-jwt": {
-            "post": {
-                "summary": "/auth/verify-jwt",
-                "consumes": ["application/json"],
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "valid": {
-                                    "type": "boolean",
-                                    "example": true
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unknown Error"
                 },
-                "tags": [],
-                "produces": ["application/json"],
-                "security": [
-                    {
-                        "authorization": []
-                    }
+                "data": {
+                  "type": "null",
+                  "example": null
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/sql/customers": {
+      "get": {
+        "summary": "/api/sql/customers",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "minBaldue",
+            "in": "query",
+            "example": "100"
+          },
+          {
+            "type": "integer",
+            "name": "maxBaldue",
+            "in": "query",
+            "example": "500"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "CUSNUM": {
+                    "type": "number"
+                  },
+                  "LSTNAM": {
+                    "type": "string"
+                  },
+                  "INIT": {
+                    "type": "string"
+                  },
+                  "STREET": {
+                    "type": "string"
+                  },
+                  "CITY": {
+                    "type": "string"
+                  },
+                  "STATE": {
+                    "type": "string"
+                  },
+                  "ZIPCOD": {
+                    "type": "number"
+                  },
+                  "CDTLMT": {
+                    "type": "number"
+                  },
+                  "CHGCOD": {
+                    "type": "number"
+                  },
+                  "BALDUE": {
+                    "type": "number"
+                  },
+                  "CDTDUE": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "CUSNUM",
+                  "LSTNAM",
+                  "INIT",
+                  "STREET",
+                  "CITY",
+                  "STATE",
+                  "ZIPCOD",
+                  "CDTLMT",
+                  "CHGCOD",
+                  "BALDUE",
+                  "CDTDUE"
                 ]
+              }
             }
-        }
+          },
+          "304": {}
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      }
     },
-    "schemes": ["http"],
-    "swagger": "2.0",
-    "tags": [],
-    "securityDefinitions": {
-        "authorization": {
-            "name": "authorization",
-            "in": "header",
-            "type": "apiKey"
-        }
+    "/auth": {
+      "post": {
+        "summary": "/auth",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "**PROTECTED FIELD**"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "******"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzcnByZiIsImlhdCI6MTYyNDY1ODcxNiwiZXhwIjoxNjI0NjYyMzE2fQ.LC5owsV5A5Llh2oNdgYAXYecbZBHoWSvIyAZY8l7JU0"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/auth/verify-jwt": {
+      "post": {
+        "summary": "/auth/verify-jwt",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
     }
+  },
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "authorization": {
+      "name": "authorization",
+      "in": "header",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0",
+  "tags": []
 }

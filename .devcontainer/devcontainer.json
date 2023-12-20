@@ -13,26 +13,31 @@
         "context": ".."
     },
 
-    // Set *default* container specific settings.json values on container create.
-    "settings": {},
+    "customizations": {
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": {},
 
-    // Add the IDs of extensions you want installed when the container is created.
-    "extensions": [
-        "dbaeumer.vscode-eslint",
-        "MariusAlchimavicius.json-to-ts",
-        "HalcyonTechLtd.ibm-i-development-pack",
-        "HookyQR.beautify",
-        "Kelvin.vscode-sshfs",
-        "ExodiusStudios.comment-anchors",
-        "mhutchie.git-graph",
-        "streetsidesoftware.code-spell-checker",
-        "eamodio.gitlens",
-        "yzhang.markdown-all-in-one",
-        "eg2.vscode-npm-script",
-        "github.copilot",
-        "GajenderTyagi.ec-generators",
-        "redhat.vscode-yaml"
-    ],
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "MariusAlchimavicius.json-to-ts",
+                "HalcyonTechLtd.ibm-i-development-pack",
+                "HookyQR.beautify",
+                "Kelvin.vscode-sshfs",
+                "ExodiusStudios.comment-anchors",
+                "mhutchie.git-graph",
+                "streetsidesoftware.code-spell-checker",
+                "eamodio.gitlens",
+                "yzhang.markdown-all-in-one",
+                "eg2.vscode-npm-script",
+                "github.copilot",
+                "GajenderTyagi.ec-generators",
+                "redhat.vscode-yaml",
+                "sleistner.vscode-fileutils"
+            ]
+        }
+    },
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     "forwardPorts": [
@@ -45,6 +50,7 @@
     // git is customized after this command, so global author wont be used if this command fails
     // using `;` and `exit 0` allows git to be configured even if one of the commands fails
     // this also means that while this command is running git is not configured
+
     "postCreateCommand": "cp .gitconfig ~ ; npm install ; npm run package:dev ; npx shx ln -s qsys native",
 
     "postStartCommand": "sudo service nginx start",

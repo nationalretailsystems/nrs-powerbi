@@ -30,5 +30,10 @@ export default function mountPLATSCI(router: Router) {
     router.get(
         '/getdvir',
          respond((req: any) => sqlController.getDvir())
-    );          
+    ); 
+    router.get(
+        '/gethosmsgs',
+        validate(validators.getHosMsgs),
+         respond((req: any) => sqlController.getHosMsgs(req.query))
+    );             
 }

@@ -8,6 +8,10 @@ import SQLTemplateGETLATESTHB, { SQLTemplateOutputGETLATESTHB } from 'src/models
 import SQLTemplateDRIVPERF, { SQLTemplateInputDRIVPERF, SQLTemplateOutputDRIVPERF } from 'src/models/platsci-psdrivperf';
 import SQLTemplateSKYBITZ, { SQLTemplateInputSKYBITZ, SQLTemplateOutputSKYBITZ } from 'src/models/platsci-skybitz';
 import SQLTemplateGETDVIR, { SQLTemplateOutputGETDVIR } from 'src/models/platsci-psdvir';
+import SQLTemplateGETHOSMSGS, {
+    SQLTemplateInputGETHOSMSGS,
+    SQLTemplateOutputGETHOSMSGS
+} from 'src/models/platsci-psgethos';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
 import { DateTime } from 'luxon';
@@ -62,4 +66,13 @@ export async function getSkybitz(inputs: JSONObject): Promise<SQLTemplateOutputS
 export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateGETDVIR) as Promise<SQLTemplateOutputGETDVIR>;
+}
+export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputGETHOSMSGS = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        logType: inputs.logType
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
 }

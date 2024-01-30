@@ -4,17 +4,20 @@ import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
 export default new eradaniConnect.run.Sql(
-    `select DIV##T as "Division",  TRIP#T as "Trip#",
-    TRIDTT as "TripDate",DATEET as "TripEndDate", 
-    ORDEROR as "Order#", DRIV1T as "Driver",UNIT#T as "Unit",   
-    TRAL1OR as "Trailer", TRALOOR as "OriginalTrailer",
-    STRMIT as "Starting HubMiles", ENDMIT as "Ending Hub Miles",
-    PCMHET as "PCMiler Hub Miles", USRHET as "User Hub Miles",
-    MILESOR as "Contract Miles(ORDR)"     
-  from olfile5.trip
-join olfile5.ordr on TRIP#T = TRIP#OR and DIV##T= DIV##OR
-join olfile5.driv on DRIV1T = EMPNODR
-where tridtt between ? and ?`,
+    `with comment as (select orderoc, listagg(trim(commtoc),' \ ') as "Comments" from olfile5.ordc group by orderoc)  
+    select DIV##T as "Division",  TRIP#T as "Trip#",
+        TRIDTT as "TripDate",DATEET as "TripEndDate", 
+        ORDEROR as "Order#", DRIV1T as "Driver",UNIT#T as "Unit",   
+        TRAL1OR as "Trailer", TRALOOR as "OriginalTrailer",
+        STRMIT as "Starting HubMiles (TRIP)", ENDMIT as "Ending Hub Miles (TRIP)",
+        PCMHET as "PCMiler Hub Miles (TRIP)", USRHET as "User Hub Miles (TRIP)",
+        MILESOR as "Contract Miles(ORDR)",  EMPTYOR as "Empty Miles (ORDR)",
+        PCMILOR as "PC Miler Miles (ORDR)", "Comments"
+        from olfile5.trip
+    join olfile5.ordr on TRIP#T = TRIP#OR and DIV##T= DIV##OR
+    join olfile5.driv on DRIV1T = EMPNODR
+    join comment on orderoc = orderor
+    where tridtt between ? and ?`,
     {
         params: [
             {

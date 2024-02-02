@@ -16,7 +16,7 @@ export default new eradaniConnect.run.Sql(
         from olfile5.trip
     join olfile5.ordr on TRIP#T = TRIP#OR and DIV##T= DIV##OR
     join olfile5.driv on DRIV1T = EMPNODR
-    join comment on orderoc = orderor
+    left join comment on orderoc = orderor
     where tridtt between ? and ?`,
     {
         params: [

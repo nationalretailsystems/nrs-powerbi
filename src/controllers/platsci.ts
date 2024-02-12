@@ -18,9 +18,14 @@ import SQLTemplateGETHOSMSGS, {
 import { JSONObject } from 'src/types';
 import { powerbiTransports, transport as eradaniTransport } from 'src/services/connection';
 import { DateTime } from 'luxon';
+import odbc from 'odbc';
 // X import { transport } from 'winston';
+
+/*
 import { WatchDirectoryFlags, createUnparsedSourceFile } from 'typescript';
 import { transport } from 'winston';
+import odbc from 'odbc';
+*/
 /* eslint-disable capitalized-comments */
 // import { promises as fs } from 'fs';
 // import APIError from 'src/APIError';
@@ -82,39 +87,35 @@ export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
 // X     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
 // X }
 export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
-    const params = {
-        fromDate: inputs.fromDate,
-        toDate: inputs.toDate,
-        logType: inputs.logType
-    };
-
     const res = inputs.res;
     try {
-        const connection = await eradaniTransport.connect();
-        const cursor = await connection.query(
-            `select * from platsci.plsgqp
-        where date(plquets) bewteen $(inputs.fromDate) and $inputs(toDate)
-        and plapp = $(inputs.logType)
+        const connection: odbc.Connection = await eradaniTransport.connect();
+        const cursor = await connection.query(`select * from platsci.plmsgqp
+        where date(plquets) between ? and ?
+        and plapp = ?
         order by plquets`,
-            {
-                cursor: true,
-                fetchsize: 1000
-            }
-        );
+		[inputs.custNum, inputs.fromDate, inputs.logType],
+		{
+            cursor: true,
+            fetchSize: 1000
+        });
         res.status(200).type('application/json').write('[');
         while (!cursor.noData) {
-            const entdata = await cursor.fetch();
-            // Now have an entdata array of size 1000 (or less) that we can use
-            if (entdata?.length) {
-                for (let i = 0; i < entdata.length; i++) {
-                    res.send(JSON.stringify(entdata[i]) + (i < entdata.length - 1) ? ',' : '');
+            const chunk: odbc.Result<unknown> = await cursor.fetch();
+            let chunkToWrite: string = '';
+            if (chunk?.length) {
+                for (let i = 0; i < chunk.length; i++) {
+                    chunkToWrite += JSON.stringify(chunk[i]) + (i < chunk.length - 1 ? ',' : '');
                 }
+                res.write(chunkToWrite);
             }
         }
-        res.write(']').end();
         await cursor.close();
+        res.write(']');
+        res.end();
     } catch (error) {
         logger.debug(error);
     }
+
     return [];
 }

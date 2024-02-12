@@ -70,6 +70,7 @@
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
         "morgan": "^1.10.0",
+        "odbc": "^2.4.8",
         "passport": "^0.6.0",
         "passport-http-bearer": "^1.0.1",
         "safe-json-stringify": "^1.2.0",

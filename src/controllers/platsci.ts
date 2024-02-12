@@ -5,7 +5,10 @@ import SQLTemplateHEARTBEATS, {
     SQLTemplateOutputGETHEARTBEATS
 } from 'src/models/platsci-getheartbeats';
 import SQLTemplateGETLATESTHB, { SQLTemplateOutputGETLATESTHB } from 'src/models/platsci-getlatesthb';
-import SQLTemplateDRIVPERF, { SQLTemplateInputDRIVPERF, SQLTemplateOutputDRIVPERF } from 'src/models/platsci-psdrivperf';
+import SQLTemplateDRIVPERF, {
+    SQLTemplateInputDRIVPERF,
+    SQLTemplateOutputDRIVPERF
+} from 'src/models/platsci-psdrivperf';
 import SQLTemplateSKYBITZ, { SQLTemplateInputSKYBITZ, SQLTemplateOutputSKYBITZ } from 'src/models/platsci-skybitz';
 import SQLTemplateGETDVIR, { SQLTemplateOutputGETDVIR } from 'src/models/platsci-psdvir';
 import SQLTemplateGETHOSMSGS, {
@@ -13,15 +16,17 @@ import SQLTemplateGETHOSMSGS, {
     SQLTemplateOutputGETHOSMSGS
 } from 'src/models/platsci-psgethos';
 import { JSONObject } from 'src/types';
-import { powerbiTransports } from 'src/services/connection';
+import  { powerbiTransports, transport as eradaniTransport } from 'src/services/connection';
 import { DateTime } from 'luxon';
+// X import { transport } from 'winston';
+import { WatchDirectoryFlags, createUnparsedSourceFile } from 'typescript';
+import { transport } from 'winston';
 /* eslint-disable capitalized-comments */
 // import { promises as fs } from 'fs';
 // import APIError from 'src/APIError';
 /* eslint-enable capitalized-comments */
 
 const logger = createLogger('controllers/platsci');
-
 
 export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutputGETHEARTBEATS> {
     logger.debug('Calling SQLTemplate program');
@@ -35,12 +40,12 @@ export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutp
         unit2: inputs.unit2
     };
     if (inputs.unit === '000000') {
-        secondUnit = '999999'
-     } else {
-        secondUnit = inputs.unit 
+        secondUnit = '999999';
+    } else {
+        secondUnit = inputs.unit;
     }
-    params.unit2 = secondUnit;    
-    logger.debug('platsci.ts-' + params.toDate + ' ' + params.fromDate + ' ' + params.unit)
+    params.unit2 = secondUnit;
+    logger.debug('platsci.ts-' + params.toDate + ' ' + params.fromDate + ' ' + params.unit);
     return powerbiTransports.wolf.execute(SQLTemplateHEARTBEATS, params) as Promise<SQLTemplateOutputGETHEARTBEATS>;
 }
 export async function getLatestHB(): Promise<SQLTemplateOutputGETLATESTHB> {
@@ -67,12 +72,47 @@ export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateGETDVIR) as Promise<SQLTemplateOutputGETDVIR>;
 }
+// X export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
+// X     logger.debug('Calling SQLTemplate program');
+// X     const params: SQLTemplateInputGETHOSMSGS = {
+// X         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+// X         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+// X         logType: inputs.logType
+// X     };
+// X     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
+// X }
 export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
-    logger.debug('Calling SQLTemplate program');
-    const params: SQLTemplateInputGETHOSMSGS = {
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+
+    const params = {
+        fromDate: inputs.fromDate,
+        toDate: inputs.toDate,
         logType: inputs.logType
     };
-    return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
+
+    const res = inputs.res;
+    try {
+        const connection = await eradaniTransport.connect();
+        const cursor = await connection.query(`select * from platsci.plsgqp
+        where date(plquets) bewteen $(inputs.fromDate) and $inputs(toDate)
+        and plapp = $(inputs.logType)
+        order by plquets`, {
+            cursor: true,
+            fetchsize: 1000
+        });
+    res.status(200).type('application/json').write('[');
+    while (!cursor.noData) {
+        const entdata = await cursor.fetch();
+        // Now have an entdata array of size 1000 (or less) that we can use
+        if (entdata?.length) {
+            for (let i = 0; i < entdata.length; i++) {
+                res.send(JSON.stringify(entdata[i]) + (i < entdata.length -1) ? ',' : '');
+                }
+            }
+        }
+        res.write(']').end();
+        await cursor.close();
+    } catch (error) {
+        logger.debug(error)
+    }
+    return [];
 }

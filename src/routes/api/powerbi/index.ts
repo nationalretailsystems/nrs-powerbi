@@ -290,5 +290,4 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getFed46r),
         respond((req: any) => sqlController.getTrips(req.query))
     );
-   
 }

@@ -16,7 +16,7 @@ import SQLTemplateGETHOSMSGS, {
     SQLTemplateOutputGETHOSMSGS
 } from 'src/models/platsci-psgethos';
 import { JSONObject } from 'src/types';
-import  { powerbiTransports, transport as eradaniTransport } from 'src/services/connection';
+import { powerbiTransports, transport as eradaniTransport } from 'src/services/connection';
 import { DateTime } from 'luxon';
 // X import { transport } from 'winston';
 import { WatchDirectoryFlags, createUnparsedSourceFile } from 'typescript';
@@ -82,7 +82,6 @@ export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
 // X     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
 // X }
 export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
-
     const params = {
         fromDate: inputs.fromDate,
         toDate: inputs.toDate,
@@ -92,27 +91,30 @@ export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputG
     const res = inputs.res;
     try {
         const connection = await eradaniTransport.connect();
-        const cursor = await connection.query(`select * from platsci.plsgqp
+        const cursor = await connection.query(
+            `select * from platsci.plsgqp
         where date(plquets) bewteen $(inputs.fromDate) and $inputs(toDate)
         and plapp = $(inputs.logType)
-        order by plquets`, {
-            cursor: true,
-            fetchsize: 1000
-        });
-    res.status(200).type('application/json').write('[');
-    while (!cursor.noData) {
-        const entdata = await cursor.fetch();
-        // Now have an entdata array of size 1000 (or less) that we can use
-        if (entdata?.length) {
-            for (let i = 0; i < entdata.length; i++) {
-                res.send(JSON.stringify(entdata[i]) + (i < entdata.length -1) ? ',' : '');
+        order by plquets`,
+            {
+                cursor: true,
+                fetchsize: 1000
+            }
+        );
+        res.status(200).type('application/json').write('[');
+        while (!cursor.noData) {
+            const entdata = await cursor.fetch();
+            // Now have an entdata array of size 1000 (or less) that we can use
+            if (entdata?.length) {
+                for (let i = 0; i < entdata.length; i++) {
+                    res.send(JSON.stringify(entdata[i]) + (i < entdata.length - 1) ? ',' : '');
                 }
             }
         }
         res.write(']').end();
         await cursor.close();
     } catch (error) {
-        logger.debug(error)
+        logger.debug(error);
     }
     return [];
 }

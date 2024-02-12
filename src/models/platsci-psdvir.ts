@@ -3,10 +3,7 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-export default new eradaniConnect.run.Sql(
-    `select * from platsci.plmsgql3a`,
-
-);
+export default new eradaniConnect.run.Sql(`select * from platsci.plmsgql3a`);
 
 /**
  * Structure of records outputted by SQLTemplate SQL query

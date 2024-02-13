@@ -103,7 +103,8 @@ export async function getHosMsgs(inputs: JSONObject) {
                 DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
                 inputs.logType
             ],
-            res
+            res,
+            { fetchSize: 100 }
         );
     } catch (error) {
         logger.debug(error);

@@ -90,15 +90,17 @@ export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputG
     const res = inputs.res;
     try {
         const connection: odbc.Connection = await eradaniTransport.connect();
-        const cursor = await connection.query(`select * from platsci.plmsgqp
+        const cursor = await connection.query(
+            `select * from platsci.plmsgqp
         where date(plquets) between ? and ?
         and plapp = ?
         order by plquets`,
-		[inputs.custNum, inputs.fromDate, inputs.logType],
-		{
-            cursor: true,
-            fetchSize: 1000
-        });
+            [inputs.custNum, inputs.fromDate, inputs.logType],
+            {
+                cursor: true,
+                fetchSize: 1000
+            }
+        );
         res.status(200).type('application/json').write('[');
         while (!cursor.noData) {
             const chunk: odbc.Result<unknown> = await cursor.fetch();

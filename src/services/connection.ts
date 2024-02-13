@@ -11,12 +11,12 @@ export const transport = new eradaniConnect.transports.Odbc(config.eradaniConnec
 
 export const powerbiTransports = {
     wolf: new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc, {
-        ...config.eradaniConnect.odbcOptions,
+        ..._.cloneDeep(config.eradaniConnect.odbcOptions),
         logger
     }),
 
     lawson: new eradaniConnect.transports.Odbc(config.eradaniConnect.odbc2, {
-        ...config.eradaniConnect.odbcOptions,
+        ..._.cloneDeep(config.eradaniConnect.odbcOptions),
         logger
     })
 };

@@ -19,6 +19,7 @@ import { JSONObject } from 'src/types';
 import { powerbiTransports, transport as eradaniTransport } from 'src/services/connection';
 import { DateTime } from 'luxon';
 import odbc from 'odbc';
+import { sendCursorResult } from 'src/services/cursor';
 // X import { transport } from 'winston';
 
 /*
@@ -86,38 +87,25 @@ export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
 // X     };
 // X     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
 // X }
-export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
+export async function getHosMsgs(inputs: JSONObject) {
     const res = inputs.res;
     try {
-        const connection: odbc.Connection = await eradaniTransport.connect();
-        const cursor = await connection.query(
-            `select * from platsci.plmsgqp
-        where date(plquets) between ? and ?
-        and plapp = ?
-        order by plquets`,
-            [inputs.custNum, inputs.fromDate, inputs.logType],
-            {
-                cursor: true,
-                fetchSize: 1000
-            }
+        await sendCursorResult(
+            eradaniTransport,
+            `
+                select * from platsci.plmsgqp
+                where date(plquets) between ? and ?
+                and plapp = ?
+                order by plquets
+            `,
+            [
+                DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+                DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+                inputs.logType
+            ],
+            res
         );
-        res.status(200).type('application/json').write('[');
-        while (!cursor.noData) {
-            const chunk: odbc.Result<unknown> = await cursor.fetch();
-            let chunkToWrite: string = '';
-            if (chunk?.length) {
-                for (let i = 0; i < chunk.length; i++) {
-                    chunkToWrite += JSON.stringify(chunk[i]) + (i < chunk.length - 1 ? ',' : '');
-                }
-                res.write(chunkToWrite);
-            }
-        }
-        await cursor.close();
-        res.write(']');
-        res.end();
     } catch (error) {
         logger.debug(error);
     }
-
-    return [];
 }

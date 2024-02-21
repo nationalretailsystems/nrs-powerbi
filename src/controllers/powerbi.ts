@@ -89,9 +89,7 @@ import SQLTemplateOL736DATA, {
     SQLTemplateInputOL736DATA,
     SQLTemplateOutputOL736DATA
 } from 'src/models/powerbi-ol736data';
-import SQLTemplateFED46R, {
-    SQLTemplateInputFED46R, SQLTemplateOutputFED46R
-} from 'src/models/powerbi-fed46r';
+import SQLTemplateFED46R, { SQLTemplateInputFED46R, SQLTemplateOutputFED46R } from 'src/models/powerbi-fed46r';
 import SQLTemplateTRIPS, { SQLTemplateInputTRIPS, SQLTemplateOutputTRIPS } from 'src/models/powerbi-trips';
 import { JSONObject } from 'src/types';
 import { powerbiTransports } from 'src/services/connection';
@@ -563,5 +561,3 @@ export async function getTrips(inputs: JSONObject): Promise<SQLTemplateOutputTRI
     };
     return powerbiTransports.wolf.execute(SQLTemplateTRIPS, params) as Promise<SQLTemplateOutputTRIPS>;
 }
-
-

@@ -2,7 +2,6 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 
 import { JSONObject } from 'src/types';
 
-
 export default new eradaniConnect.run.Sql(
     `with maximum as (select max(plthloga) as key,  plthtruck as truck from platsci.pltmhbdp
     group by plthtruck)

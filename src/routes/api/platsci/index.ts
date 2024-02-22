@@ -21,19 +21,17 @@ export default function mountPLATSCI(router: Router) {
         '/psdrivperf',
         validate(validators.getDrivperf),
         respond((req: any) => sqlController.getDrivperf(req.query))
-    );  
+    );
     router.get(
         '/getskybitz',
         validate(validators.getSkybitz),
         respond((req: any) => sqlController.getSkybitz(req.query))
-    ); 
+    );
     router.get(
         '/getdvir',
-         respond((req: any) => sqlController.getDvir())
-    ); 
-    router.get(
-        '/gethosmsgs',
-        validate(validators.getHosMsgs),
-         respond((req: any) => sqlController.getHosMsgs(req.query))
-    );             
+        respond((req: any) => sqlController.getDvir())
+    );
+    router.get('/gethosmsgs', validate(validators.getHosMsgs), async (req: any, res: any) => {
+        await sqlController.getHosMsgs(Object.assign({ res }, req.params, req.body, req.query));
+    });
 }

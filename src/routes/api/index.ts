@@ -23,8 +23,8 @@ export default function mountAPI(router: Router) {
     const keycap = express.Router();
     mountKEYCAP(keycap);
     router.use('/keycap', keycap);
-    
+
     const platsci = express.Router();
     mountPLATSCI(platsci);
-    router.use('/platsci', platsci);    
-}    
+    router.use('/platsci', platsci);
+}

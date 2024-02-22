@@ -2,12 +2,13 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 
 import { JSONObject } from 'src/types';
 
-
 export default new eradaniConnect.run.Sql(
     `SELECT *
     FROM PLATSCI.PLTMHBDP 
     WHERE substr(PLTHLOGA,1,10) BETWEEN ?  AND ?  
     AND PLTHTRUCK between ? and ? 
+    and (( ? = 'IG' and plthtype in ('ignition_on','ignition_off')) or
+    ( ? = 'ALL' and plthtype <> ' '))
     `,
     {
         params: [
@@ -22,6 +23,12 @@ export default new eradaniConnect.run.Sql(
             },
             {
                 name: 'unit2'
+            },
+            {
+                name: 'type'
+            },
+            {
+                name: 'type2'
             }
         ]
     }
@@ -45,6 +52,8 @@ export interface SQLTemplateInputGETHEARTBEATS {
      */
     unit: string | string;
     unit2: string | string;
+    type: string | string;
+    type2: string | string;
 }
 
 /**

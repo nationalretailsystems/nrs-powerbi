@@ -2,7 +2,6 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 
 import { JSONObject } from 'src/types';
 
-
 export default new eradaniConnect.run.Sql(
     `SELECT SBMTSN, SBASSETID, SBASSETTYP, SBOWNER, SBTTLMILES, SBTIMESTMP
     FROM mgrplus.sbttlmilep 

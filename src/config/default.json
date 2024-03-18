@@ -16,7 +16,12 @@
     "debug": true,
 
     "jwt": {
-        "expiresIn": "12h"
+        "dataLib": "ECITST",
+        "metadata": {
+            "audience": "api://default",
+            "issuer": "https://auth.example.com",
+            "expiresIn": "12h"
+        }
     },
 
     "credentials": {

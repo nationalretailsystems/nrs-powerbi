@@ -2,33 +2,53 @@ import * as jwt from 'src/services/jwt';
 import config from 'config';
 const credentials = config.credentials;
 const dashboardCredentials = config.swagger.auth;
+import eradaniConnect from '@eradani-inc/eradani-connect';
+import transport from 'src/services/connection';
 import APIError from 'src/api-error';
 import { JWTUserData } from 'src/types';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 const saltRounds = 10;
 const hashPassword = bcrypt.hashSync(dashboardCredentials.password, saltRounds);
 const hashLoginPassword = bcrypt.hashSync(credentials.password, saltRounds);
 import scmp from 'scmp';
 
-export function login(username: string, password: string) {
-    return new Promise((resolve, reject) => {
-        const passwordMatch = bcrypt.compareSync(password, hashLoginPassword);
-        if (scmp(Buffer.from(username), Buffer.from(credentials.username)) && passwordMatch) {
-            resolve(generateJWT({ username }));
+export function login(clientId: string, clientSecret: string) {
+    return new Promise(async (resolve, reject) => {
+        const authSql = `select *
+            from ${config.jwt.dataLib}.USERS
+            where clientId = ?
+        `;
+
+        const authStmt = new eradaniConnect.run.Sql(authSql, { params: [{ name: 'clientId' }] });
+        const authRslt: ArrayLike<any> = await (transport.execute(authStmt, {
+            clientId: clientId
+        }) as Promise<ArrayLike<any>>);
+
+        if (authRslt.length != 1) {
+            return reject(new APIError(401, 'Access Denied'));
+        }
+
+        const auth = authRslt[0];
+
+        const subject = auth.CLIENTID;
+        const scope = auth.SCOPE;
+
+        if (bcrypt.compareSync(clientSecret, auth.CLIENTSECRET)) {
+            const jwtDetails = await generateJWT({ subject, scope });
+            resolve(jwtDetails);
         } else {
-            reject(new APIError(400, 'Username / Password Combination Not Found'));
+            reject(new APIError(401, 'Access Denied'));
         }
     });
 }
 
-export function generateJWT(userData: JWTUserData) {
+export async function generateJWT(userData: JWTUserData) {
     const user = {
-        username: userData.username
+        subject: userData.subject,
+        scope: userData.scope
     };
 
-    return jwt.sign(user).then((token: string) => {
-        return { token };
-    });
+    return await jwt.sign(user);
 }
 
 export function dashboardLoginCredentialsCheck(req: object, username: any, password: any) {

@@ -208,6 +208,9 @@ library:
 	-system "CRTSRCPF FILE($(LIB)/QCMDSRC)"
 	-system "CRTSRCPF FILE($(LIB)/QRPGLESRC)"
 
+.PHONY: tables
+tables:
+	-system "RUNSQLSTM SRCSTMF('createauthtable.sql')"
 
 .PHONY: clean
 clean:

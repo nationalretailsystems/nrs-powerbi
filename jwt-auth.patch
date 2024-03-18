@@ -1,0 +1,730 @@
+diff --git a/README-auth.md b/README-auth.md
+new file mode 100644
+index 0000000..96bfa7b
+--- /dev/null
++++ b/README-auth.md
+@@ -0,0 +1,93 @@
++# Eradani Connect JWT Authentication Module
++
++## Introduction
++
++The Eradani Connect JWT Authentication Module provides a simplified OAuth-like authenticatio mechanism for quick, secure API authentication on IBM i.
++
++This guide includes instructions on how to set up the module and how to use it to secure your APIs.
++
++## Setup
++
++### Authorizing Users
++
++To access the system, users need to go through an authentication process using the OAuth2.0 `client_credentials` flow, described in the "Usage" section of this guide. Here's how you can set up a new user:
++
++1. Users must be added to the USERS table in the IBM i database.
++
++2. The USERS table contains three columns:
++   - **clientId:** This is the user's Client ID (username).
++   - **clientSecret:** The Client Secret (password) for this user is stored as a bcrypt hash in the database.
++   - **scope:** Users are assigned a space-separated list of allowed scopes. You may define whatever custom scopes you want. Note that the text of the scope in the database must match exactly with the text of the scope in your API configuration in order to be valid.
++
++3. Use the provided script, `npm run generate-password`, with Node.js to generate a randomized client secret and its bcrypt hash. Give the plaintext secret to the user, and store the bcrypt hash in the database.
++
++4. Add a record for the new user which includes a clientId of your choice, the bcrypt hash generated in step 3, and appropriate scopes as a space-separated list.
++
++5. Once the user's record is added to the database, their credentials are immediately usable with the API.
++
++> *Note: Due to the use of bcrypt hashes in the database, passwords cannot be retrieved once saved. If a user loses their password, a new one must be generated.*
++
++## Usage
++
++### Requiring Authentication and Scopes
++
++Authentication and Authorization are handled by API plugins (middlewares) within Eradani Connect. These plugins can be attached to a single API endpoint or to a group of API endpoints based on a shared URL pattern. Plugins are attached in the API definition (index.ts).
++
++There are two plugins that are important to understand to secure your APIs:
++1. `requireAuth` - requires users to have a token to access a given API endpoint
++2. `requireScope` - requires specific scopes to be present in the token to access the API endpoint
++
++Attaching plugins to an API is easy - given the following unsecured API definition:
++```ts
++router.get(
++    '/customers',
++    validate(validators.getCustomers),
++    respond((req: any) => sqlController.getCustomers(req.query))
++);
++```
++
++We can add a token requirement by attaching the `requireAuth` plugin like so:
++```ts
++router.get(
++    '/customers',
++    requireAuth,
++    validate(validators.getCustomers),
++    respond((req: any) => sqlController.getCustomers(req.query))
++);
++```
++
++From there, we can require the `billing` and `admin` scopes to both be present in the token by attaching the `requireScope` plugin like so:
++```ts
++router.get(
++    '/customers',
++    requireAuth,
++    requireScope(['billing', 'admin']),
++    validate(validators.getCustomers),
++    respond((req: any) => sqlController.getCustomers(req.query))
++);
++```
++
++Once this API is recompiled and re-run, users will need a valid JWT issued by the system and will have to have the `billing` and `admin` scopes granted to them in order to access this endpoint.
++
++### Authenticating via the API
++
++To authenticate via the API, follow these steps:
++
++1. The API uses OAuth2.0 client_credentials authorization flow.
++
++2. Start by calling the `POST /auth` endpoint and provide your clientId and clientSecret to retrieve a token in the following JSON format:
++
++   ```json
++   {
++       "clientid": "abc123",
++       "clientsecret": "xxxxxxxxxxxxxxxxxxx"
++   }
++   ```
++
++3. Then, use the token to call the actual API endpoint you want to call. Attach your token from step 3 in the `Authorization` header of your request with the value `Bearer <token>` (Bearer scheme). 
++   
++4. If your token is valid, the system will run the requested operation. Otherwise, you will receive an HTTP 401 or 403 response code indicating that you are not authorized to perform your requested action.
++
++## Maintenance
++
++For general system operation details, refer to your Eradani Next-Gen Application Administration Guide. To stay updated and inquire about system changes, contact Eradani Support through eradani.com by clicking the green button at the bottom of the page to submit a support ticket. We will get back to you as soon as possible.
+diff --git a/generate-password.js b/generate-password.js
+new file mode 100644
+index 0000000..1bdebe9
+--- /dev/null
++++ b/generate-password.js
+@@ -0,0 +1,14 @@
++var generator = require('generate-password');
++var bcrypt = require('bcryptjs');
++
++var password = generator.generate({
++    length: 36,
++    numbers: true
++});
++
++var salt = bcrypt.genSaltSync(10);
++var hash = bcrypt.hashSync(password, salt);
++
++console.log(`Password generated successfully!
++    Password: ${password}
++    Hash: ${hash}`);
+diff --git a/package-lock.json b/package-lock.json
+index 889390f..8081099 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -13,13 +13,13 @@
+                 "@eradani-inc/eradani-connect": "^2.9.4",
+                 "@eradani-inc/gui-generator": "^0.12.9",
+                 "@eradani-inc/gui-generator-outbound": "^0.10.1",
+-                "@types/bcrypt": "^5.0.0",
+                 "@types/cors": "^2.8.12",
+                 "@types/es6-promisify": "^6.0.1",
+                 "@types/express": "^4.17.13",
+                 "@types/express-validator": "^3.0.0",
+                 "@types/jsonwebtoken": "^9.0.2",
+                 "@types/morgan": "^1.9.3",
++                "@types/ms": "^0.7.34",
+                 "@types/passport-http-bearer": "^1.0.37",
+                 "@types/response-time": "^2.3.5",
+                 "@types/safe-json-stringify": "^1.1.2",
+@@ -30,7 +30,7 @@
+                 "@typescript-eslint/eslint-plugin-tslint": "^5.25.0",
+                 "@typescript-eslint/parser": "^5.25.0",
+                 "axios": "^0.27.2",
+-                "bcrypt": "^5.0.1",
++                "bcryptjs": "^2.4.3",
+                 "bluebird": "^3.7.2",
+                 "body-parser": "^1.20.0",
+                 "config": "^3.3.7",
+@@ -41,11 +41,13 @@
+                 "express-oas-generator": "^1.0.41",
+                 "express-prom-bundle": "^6.6.0",
+                 "express-validator": "^6.14.0",
++                "generate-password": "^1.7.1",
+                 "https-proxy-agent": "^5.0.1",
+                 "i": "^0.3.7",
+                 "jsonwebtoken": "^9.0.0",
+                 "lodash": "^4.17.21",
+                 "morgan": "^1.10.0",
++                "ms": "^2.1.3",
+                 "passport": "^0.6.0",
+                 "passport-http-bearer": "^1.0.1",
+                 "pm2": "^5.3.0",
+@@ -61,6 +63,7 @@
+             },
+             "devDependencies": {
+                 "@eradani-inc/ec-generate": "^3.6.1",
++                "@types/bcryptjs": "^2.4.6",
+                 "@types/bluebird": "^3.5.38",
+                 "@types/chai": "^4.3.1",
+                 "@types/config": "0.0.41",
+@@ -961,13 +964,11 @@
+                 "@types/node": "*"
+             }
+         },
+-        "node_modules/@types/bcrypt": {
+-            "version": "5.0.0",
+-            "resolved": "https://registry.npmjs.org/@types/bcrypt/-/bcrypt-5.0.0.tgz",
+-            "integrity": "sha512-agtcFKaruL8TmcvqbndlqHPSJgsolhf/qPWchFlgnW1gECTN/nKbFcoFnvKAQRFfKbh+BO6A3SWdJu9t+xF3Lw==",
+-            "dependencies": {
+-                "@types/node": "*"
+-            }
++        "node_modules/@types/bcryptjs": {
++            "version": "2.4.6",
++            "resolved": "https://registry.npmjs.org/@types/bcryptjs/-/bcryptjs-2.4.6.tgz",
++            "integrity": "sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==",
++            "dev": true
+         },
+         "node_modules/@types/bluebird": {
+             "version": "3.5.41",
+@@ -1241,6 +1242,11 @@
+                 "@types/node": "*"
+             }
+         },
++        "node_modules/@types/ms": {
++            "version": "0.7.34",
++            "resolved": "https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz",
++            "integrity": "sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g=="
++        },
+         "node_modules/@types/node": {
+             "version": "16.11.41",
+             "resolved": "https://registry.npmjs.org/@types/node/-/node-16.11.41.tgz",
+@@ -2057,19 +2063,6 @@
+                 "node": ">=10.0.0"
+             }
+         },
+-        "node_modules/bcrypt": {
+-            "version": "5.0.1",
+-            "resolved": "https://registry.npmjs.org/bcrypt/-/bcrypt-5.0.1.tgz",
+-            "integrity": "sha512-9BTgmrhZM2t1bNuDtrtIMVSmmxZBrJ71n8Wg+YgdjHuIWYF7SjjmCPZFB+/5i/o/PIeRpwVJR3P+NrpIItUjqw==",
+-            "hasInstallScript": true,
+-            "dependencies": {
+-                "@mapbox/node-pre-gyp": "^1.0.0",
+-                "node-addon-api": "^3.1.0"
+-            },
+-            "engines": {
+-                "node": ">= 10.0.0"
+-            }
+-        },
+         "node_modules/bcrypt-pbkdf": {
+             "version": "1.0.2",
+             "resolved": "https://registry.npmjs.org/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz",
+@@ -2078,6 +2071,11 @@
+                 "tweetnacl": "^0.14.3"
+             }
+         },
++        "node_modules/bcryptjs": {
++            "version": "2.4.3",
++            "resolved": "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.3.tgz",
++            "integrity": "sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ=="
++        },
+         "node_modules/binary-extensions": {
+             "version": "2.2.0",
+             "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz",
+@@ -2708,6 +2706,11 @@
+                 }
+             }
+         },
++        "node_modules/debug/node_modules/ms": {
++            "version": "2.1.2",
++            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz",
++            "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
++        },
+         "node_modules/decamelize": {
+             "version": "1.2.0",
+             "resolved": "https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz",
+@@ -4228,6 +4231,11 @@
+                 "node": ">=10"
+             }
+         },
++        "node_modules/generate-password": {
++            "version": "1.7.1",
++            "resolved": "https://registry.npmjs.org/generate-password/-/generate-password-1.7.1.tgz",
++            "integrity": "sha512-9bVYY+16m7W7GczRBDqXE+VVuCX+bWNrfYKC/2p2JkZukFb2sKxT6E3zZ3mJGz7GMe5iRK0A/WawSL3jQfJuNQ=="
++        },
+         "node_modules/generate-schema": {
+             "version": "2.6.0",
+             "resolved": "https://registry.npmjs.org/generate-schema/-/generate-schema-2.6.0.tgz",
+@@ -5710,12 +5718,6 @@
+                 "balanced-match": "^1.0.0"
+             }
+         },
+-        "node_modules/mocha/node_modules/ms": {
+-            "version": "2.1.3",
+-            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-            "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+-            "dev": true
+-        },
+         "node_modules/mocha/node_modules/p-limit": {
+             "version": "3.1.0",
+             "resolved": "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz",
+@@ -5940,6 +5942,12 @@
+                 "node": ">=0.6.19"
+             }
+         },
++        "node_modules/mongoose/node_modules/ms": {
++            "version": "2.1.2",
++            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz",
++            "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==",
++            "peer": true
++        },
+         "node_modules/mongoose/node_modules/safe-buffer": {
+             "version": "5.2.1",
+             "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+@@ -6046,9 +6054,9 @@
+             "peer": true
+         },
+         "node_modules/ms": {
+-            "version": "2.1.2",
+-            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz",
+-            "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
++            "version": "2.1.3",
++            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
++            "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
+         },
+         "node_modules/mute-stream": {
+             "version": "0.0.8",
+@@ -8126,11 +8134,6 @@
+             "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+             "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="
+         },
+-        "node_modules/send/node_modules/ms": {
+-            "version": "2.1.3",
+-            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-            "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
+-        },
+         "node_modules/serialize-javascript": {
+             "version": "6.0.0",
+             "resolved": "https://registry.npmjs.org/serialize-javascript/-/serialize-javascript-6.0.0.tgz",
+@@ -10790,13 +10793,11 @@
+                 "@types/node": "*"
+             }
+         },
+-        "@types/bcrypt": {
+-            "version": "5.0.0",
+-            "resolved": "https://registry.npmjs.org/@types/bcrypt/-/bcrypt-5.0.0.tgz",
+-            "integrity": "sha512-agtcFKaruL8TmcvqbndlqHPSJgsolhf/qPWchFlgnW1gECTN/nKbFcoFnvKAQRFfKbh+BO6A3SWdJu9t+xF3Lw==",
+-            "requires": {
+-                "@types/node": "*"
+-            }
++        "@types/bcryptjs": {
++            "version": "2.4.6",
++            "resolved": "https://registry.npmjs.org/@types/bcryptjs/-/bcryptjs-2.4.6.tgz",
++            "integrity": "sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==",
++            "dev": true
+         },
+         "@types/bluebird": {
+             "version": "3.5.41",
+@@ -11069,6 +11070,11 @@
+                 "@types/node": "*"
+             }
+         },
++        "@types/ms": {
++            "version": "0.7.34",
++            "resolved": "https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz",
++            "integrity": "sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g=="
++        },
+         "@types/node": {
+             "version": "16.11.41",
+             "resolved": "https://registry.npmjs.org/@types/node/-/node-16.11.41.tgz",
+@@ -11658,15 +11664,6 @@
+             "resolved": "https://registry.npmjs.org/basic-ftp/-/basic-ftp-5.0.3.tgz",
+             "integrity": "sha512-QHX8HLlncOLpy54mh+k/sWIFd0ThmRqwe9ZjELybGZK+tZ8rUb9VO0saKJUROTbE+KhzDUT7xziGpGrW8Kmd+g=="
+         },
+-        "bcrypt": {
+-            "version": "5.0.1",
+-            "resolved": "https://registry.npmjs.org/bcrypt/-/bcrypt-5.0.1.tgz",
+-            "integrity": "sha512-9BTgmrhZM2t1bNuDtrtIMVSmmxZBrJ71n8Wg+YgdjHuIWYF7SjjmCPZFB+/5i/o/PIeRpwVJR3P+NrpIItUjqw==",
+-            "requires": {
+-                "@mapbox/node-pre-gyp": "^1.0.0",
+-                "node-addon-api": "^3.1.0"
+-            }
+-        },
+         "bcrypt-pbkdf": {
+             "version": "1.0.2",
+             "resolved": "https://registry.npmjs.org/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz",
+@@ -11675,6 +11672,11 @@
+                 "tweetnacl": "^0.14.3"
+             }
+         },
++        "bcryptjs": {
++            "version": "2.4.3",
++            "resolved": "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.3.tgz",
++            "integrity": "sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ=="
++        },
+         "binary-extensions": {
+             "version": "2.2.0",
+             "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz",
+@@ -12166,6 +12168,13 @@
+             "integrity": "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==",
+             "requires": {
+                 "ms": "2.1.2"
++            },
++            "dependencies": {
++                "ms": {
++                    "version": "2.1.2",
++                    "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz",
++                    "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
++                }
+             }
+         },
+         "decamelize": {
+@@ -13332,6 +13341,11 @@
+                 "wide-align": "^1.1.2"
+             }
+         },
++        "generate-password": {
++            "version": "1.7.1",
++            "resolved": "https://registry.npmjs.org/generate-password/-/generate-password-1.7.1.tgz",
++            "integrity": "sha512-9bVYY+16m7W7GczRBDqXE+VVuCX+bWNrfYKC/2p2JkZukFb2sKxT6E3zZ3mJGz7GMe5iRK0A/WawSL3jQfJuNQ=="
++        },
+         "generate-schema": {
+             "version": "2.6.0",
+             "resolved": "https://registry.npmjs.org/generate-schema/-/generate-schema-2.6.0.tgz",
+@@ -14429,12 +14443,6 @@
+                         }
+                     }
+                 },
+-                "ms": {
+-                    "version": "2.1.3",
+-                    "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-                    "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+-                    "dev": true
+-                },
+                 "p-limit": {
+                     "version": "3.1.0",
+                     "resolved": "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz",
+@@ -14571,6 +14579,12 @@
+                     "integrity": "sha512-EvVNVeGo4tHxwi8L6bPj3y3itEvStdwvvlojVxxbyYfoaxJ6keLgrTuKdyfEAszFK+H3olzBuafE0yoh0D1gdg==",
+                     "peer": true
+                 },
++                "ms": {
++                    "version": "2.1.2",
++                    "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz",
++                    "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==",
++                    "peer": true
++                },
+                 "safe-buffer": {
+                     "version": "5.2.1",
+                     "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+@@ -14670,9 +14684,9 @@
+             }
+         },
+         "ms": {
+-            "version": "2.1.2",
+-            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz",
+-            "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
++            "version": "2.1.3",
++            "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
++            "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
+         },
+         "mute-stream": {
+             "version": "0.0.8",
+@@ -16237,11 +16251,6 @@
+                             "integrity": "sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A=="
+                         }
+                     }
+-                },
+-                "ms": {
+-                    "version": "2.1.3",
+-                    "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-                    "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
+                 }
+             }
+         },
+diff --git a/package.json b/package.json
+index b10b971..c5cc604 100644
+--- a/package.json
++++ b/package.json
+@@ -27,7 +27,8 @@
+         "clean": "npx shx rm -rf dist",
+         "install-npm": "cd dist && (npx shx ln -s ../node_modules node_modules || echo \"NPM Module Link Skipped\") && cd ..",
+         "link-keys": "(ls /QOpenSys/opt && npx shx ln -s /QOpenSys/opt/eradani/.npmrc .npmrc) || npx shx echo \"Product Key Link Skipped. Consult terminal output for details.\"",
+-        "copy": "(npx shx ln -s ../logs dist/logs || npx shx echo \"Logs Directory Creation Skipped\") && npx shx cp -r tests qsys LICENSE README.md package.json package-lock.json dist && npx shx cp -r src/interfaces dist/src"
++        "copy": "(npx shx ln -s ../logs dist/logs || npx shx echo \"Logs Directory Creation Skipped\") && npx shx cp -r tests qsys LICENSE README.md package.json package-lock.json dist && npx shx cp -r src/interfaces dist/src",
++        "generate-password": "node generate-password.js"
+     },
+     "repository": {
+         "type": "git",
+@@ -41,13 +42,13 @@
+         "@eradani-inc/eradani-connect": "^2.9.4",
+         "@eradani-inc/gui-generator": "^0.12.9",
+         "@eradani-inc/gui-generator-outbound": "^0.10.1",
+-        "@types/bcrypt": "^5.0.0",
+         "@types/cors": "^2.8.12",
+         "@types/es6-promisify": "^6.0.1",
+         "@types/express": "^4.17.13",
+         "@types/express-validator": "^3.0.0",
+         "@types/jsonwebtoken": "^9.0.2",
+         "@types/morgan": "^1.9.3",
++        "@types/ms": "^0.7.34",
+         "@types/passport-http-bearer": "^1.0.37",
+         "@types/response-time": "^2.3.5",
+         "@types/safe-json-stringify": "^1.1.2",
+@@ -58,7 +59,7 @@
+         "@typescript-eslint/eslint-plugin-tslint": "^5.25.0",
+         "@typescript-eslint/parser": "^5.25.0",
+         "axios": "^0.27.2",
+-        "bcrypt": "^5.0.1",
++        "bcryptjs": "^2.4.3",
+         "bluebird": "^3.7.2",
+         "body-parser": "^1.20.0",
+         "config": "^3.3.7",
+@@ -69,11 +70,13 @@
+         "express-oas-generator": "^1.0.41",
+         "express-prom-bundle": "^6.6.0",
+         "express-validator": "^6.14.0",
++        "generate-password": "^1.7.1",
+         "https-proxy-agent": "^5.0.1",
+         "i": "^0.3.7",
+         "jsonwebtoken": "^9.0.0",
+         "lodash": "^4.17.21",
+         "morgan": "^1.10.0",
++        "ms": "^2.1.3",
+         "passport": "^0.6.0",
+         "passport-http-bearer": "^1.0.1",
+         "pm2": "^5.3.0",
+@@ -89,6 +92,7 @@
+     },
+     "devDependencies": {
+         "@eradani-inc/ec-generate": "^3.6.1",
++        "@types/bcryptjs": "^2.4.6",
+         "@types/bluebird": "^3.5.38",
+         "@types/chai": "^4.3.1",
+         "@types/config": "0.0.41",
+diff --git a/qsys/Makefile b/qsys/Makefile
+index a3b98bc..7552c7a 100644
+--- a/qsys/Makefile
++++ b/qsys/Makefile
+@@ -208,6 +208,9 @@ library:
+ 	-system "CRTSRCPF FILE($(LIB)/QCMDSRC)"
+ 	-system "CRTSRCPF FILE($(LIB)/QRPGLESRC)"
+ 
++.PHONY: tables
++tables:
++	-system "RUNSQLSTM SRCSTMF('createauthtable.sql')"
+ 
+ .PHONY: clean
+ clean:
+diff --git a/qsys/createauthtable.sql b/qsys/createauthtable.sql
+new file mode 100644
+index 0000000..e85494d
+--- /dev/null
++++ b/qsys/createauthtable.sql
+@@ -0,0 +1,6 @@
++CREATE OR REPLACE TABLE ECIDEV.USERS (
++    clientId varchar(36) not null,
++    clientSecret varchar(72) not null,
++    scope varchar(360),
++    primary key (clientId)
++)
+diff --git a/src/config/default.json b/src/config/default.json
+index 7ed0122..c8ee008 100644
+--- a/src/config/default.json
++++ b/src/config/default.json
+@@ -16,7 +16,12 @@
+     "debug": true,
+ 
+     "jwt": {
+-        "expiresIn": "12h"
++        "dataLib": "ECITST",
++        "metadata": {
++            "audience": "api://default",
++            "issuer": "https://auth.example.com",
++            "expiresIn": "12h"
++        }
+     },
+ 
+     "credentials": {
+diff --git a/src/controllers/user.ts b/src/controllers/user.ts
+index 7897855..bb6f822 100644
+--- a/src/controllers/user.ts
++++ b/src/controllers/user.ts
+@@ -2,33 +2,53 @@ import * as jwt from 'src/services/jwt';
+ import config from 'config';
+ const credentials = config.credentials;
+ const dashboardCredentials = config.swagger.auth;
++import eradaniConnect from '@eradani-inc/eradani-connect';
++import transport from 'src/services/connection';
+ import APIError from 'src/api-error';
+ import { JWTUserData } from 'src/types';
+-import bcrypt from 'bcrypt';
++import * as bcrypt from 'bcryptjs';
+ const saltRounds = 10;
+ const hashPassword = bcrypt.hashSync(dashboardCredentials.password, saltRounds);
+ const hashLoginPassword = bcrypt.hashSync(credentials.password, saltRounds);
+ import scmp from 'scmp';
+ 
+-export function login(username: string, password: string) {
+-    return new Promise((resolve, reject) => {
+-        const passwordMatch = bcrypt.compareSync(password, hashLoginPassword);
+-        if (scmp(Buffer.from(username), Buffer.from(credentials.username)) && passwordMatch) {
+-            resolve(generateJWT({ username }));
++export function login(clientId: string, clientSecret: string) {
++    return new Promise(async (resolve, reject) => {
++        const authSql = `select *
++            from ${config.jwt.dataLib}.USERS
++            where clientId = ?
++        `;
++
++        const authStmt = new eradaniConnect.run.Sql(authSql, { params: [{ name: 'clientId' }] });
++        const authRslt: ArrayLike<any> = await (transport.execute(authStmt, {
++            clientId: clientId
++        }) as Promise<ArrayLike<any>>);
++
++        if (authRslt.length != 1) {
++            return reject(new APIError(401, 'Access Denied'));
++        }
++
++        const auth = authRslt[0];
++
++        const subject = auth.CLIENTID;
++        const scope = auth.SCOPE;
++
++        if (bcrypt.compareSync(clientSecret, auth.CLIENTSECRET)) {
++            const jwtDetails = await generateJWT({ subject, scope });
++            resolve(jwtDetails);
+         } else {
+-            reject(new APIError(400, 'Username / Password Combination Not Found'));
++            reject(new APIError(401, 'Access Denied'));
+         }
+     });
+ }
+ 
+-export function generateJWT(userData: JWTUserData) {
++export async function generateJWT(userData: JWTUserData) {
+     const user = {
+-        username: userData.username
++        subject: userData.subject,
++        scope: userData.scope
+     };
+ 
+-    return jwt.sign(user).then((token: string) => {
+-        return { token };
+-    });
++    return await jwt.sign(user);
+ }
+ 
+ export function dashboardLoginCredentialsCheck(req: object, username: any, password: any) {
+diff --git a/src/middlewares/require-scope.ts b/src/middlewares/require-scope.ts
+new file mode 100644
+index 0000000..b05f216
+--- /dev/null
++++ b/src/middlewares/require-scope.ts
+@@ -0,0 +1,37 @@
++import createLogger from 'src/services/logger';
++const logger = createLogger('middlewares/require-scope');
++
++export default function requireScope(scopes: string[]) {
++    return function (req: any, res: any, next: any) {
++        // Process scopes based on the `scopes` variable in here
++        // Ensure that all of the scopes listed in the scopes parameter
++        // to the requireScope middleware are present in the user's scopes.
++        // It is OK if the user has additional scopes beyond what is
++        // required for this API.
++        // If the user has the required scopes, call next()
++
++        try {
++            const userScopes = req.user.scope.split(' ');
++
++            let okay = true;
++            scopes.forEach((scope) => {
++                if (userScopes.indexOf(scope) < 0) {
++                    okay = false;
++                }
++            });
++
++            if (okay) {
++                return next();
++            }
++
++            return res.status(403).send({
++                message: 'Access Denied'
++            });
++        } catch (e) {
++            logger.verbose('Require Scope Failed', e);
++            return res.status(403).send({
++                message: 'Access Denied'
++            });
++        }
++    };
++}
+diff --git a/src/routes/auth/index.ts b/src/routes/auth/index.ts
+index 04862ff..9a15b62 100644
+--- a/src/routes/auth/index.ts
++++ b/src/routes/auth/index.ts
+@@ -9,7 +9,7 @@ export default function mountAuth(router: Router) {
+     router.post(
+         '/',
+         validate(validators.login),
+-        respond((req: any) => user.login(req.body.username, req.body.password))
++        respond((req: any) => user.login(req.body.clientid, req.body.clientsecret))
+     );
+ 
+     router.post(
+diff --git a/src/routes/auth/validators.ts b/src/routes/auth/validators.ts
+index 9f306a3..93b65ce 100644
+--- a/src/routes/auth/validators.ts
++++ b/src/routes/auth/validators.ts
+@@ -2,6 +2,6 @@ import { body } from 'express-validator';
+ import { InputCheckChain } from 'src/types';
+ 
+ export const login: InputCheckChain[] = [
+-    body('username').exists().isString(),
+-    body('password').exists().isString().matches(/^.{2,}$/)
++    body('clientid').exists().isString(),
++    body('clientsecret').exists().isString()
+ ];
+diff --git a/src/services/jwt.ts b/src/services/jwt.ts
+index a66fa5d..98ee084 100644
+--- a/src/services/jwt.ts
++++ b/src/services/jwt.ts
+@@ -4,9 +4,10 @@ import config from 'config';
+ import APIError from 'src/api-error';
+ import { JWTUserData } from 'src/types';
+ const key = config.keys.privateKey;
+-const options = config.jwt;
++const options = config.jwt.metadata;
+ const jwtSign = promisify(jwt.sign);
+ const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promise<any>;
++import ms from 'ms';
+ 
+ /**
+  * Generates a secure JSON Web Token to control access to the API. Any data
+@@ -15,9 +16,13 @@ const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promi
+  *
+  * @param data An arbitrary object with user data to be encoded in the token
+  */
+-export async function sign(data: JWTUserData): Promise<string> {
++export async function sign(data: JWTUserData) {
+     const encodedToken = await jwtSign(data, key, options);
+-    return encodedToken;
++    return {
++        access_token: encodedToken,
++        token_type: 'Bearer',
++        expires_in: ms(config.jwt.metadata.expiresIn)
++    };
+ }
+ 
+ /**
+diff --git a/src/types/jwt-user-data.ts b/src/types/jwt-user-data.ts
+index f8e1271..a208cb1 100644
+--- a/src/types/jwt-user-data.ts
++++ b/src/types/jwt-user-data.ts
+@@ -2,5 +2,6 @@
+  * Structure for JWTUserData outputs from login process
+  */
+ export interface JWTUserData {
+-    username: string;
++    subject: string;
++    scope: string;
+ }

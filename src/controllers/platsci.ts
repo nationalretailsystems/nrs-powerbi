@@ -81,16 +81,16 @@ export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
     logger.debug('Calling SQLTemplate program');
     return powerbiTransports.wolf.execute(SQLTemplateGETDVIR) as Promise<SQLTemplateOutputGETDVIR>;
 }
-// X export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
-// X     logger.debug('Calling SQLTemplate program');
-// X     const params: SQLTemplateInputGETHOSMSGS = {
-// X         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
-// X         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
-// X         logType: inputs.logType
-// X     };
-// X     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
-// X }
-export async function getHosMsgs(inputs: JSONObject) {
+export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
+    logger.debug('Calling SQLTemplate program');
+    const params: SQLTemplateInputGETHOSMSGS = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
+        logType: inputs.logType
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
+ }
+export async function getHosMsgs2(inputs: JSONObject) {
     const res = inputs.res;
     try {
         await sendCursorResult(

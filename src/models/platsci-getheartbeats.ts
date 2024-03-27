@@ -7,7 +7,7 @@ export default new eradaniConnect.run.Sql(
     FROM PLATSCI.PLTMHBDP 
     WHERE substr(PLTHLOGA,1,10) BETWEEN ?  AND ?  
     AND PLTHTRUCK between ? and ? 
-    and (( ? = 'IG' and plthtype in ('ignition_on','ignition_off')) or
+    and (( ? = 'IG' and plthtype in ('ignition_on','ignition_off','startup','shutdown')) or
     ( ? = 'ALL' and plthtype <> ' '))
     `,
     {

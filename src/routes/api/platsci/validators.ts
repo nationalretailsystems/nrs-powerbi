@@ -22,5 +22,11 @@ export const getSkybitz: InputCheckChain[] = [
 export const getHosMsgs: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
     query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
-    query('logType').isIn(['HP','HE','HT','HA']).exists().isAlpha().isUppercase().isLength({ min: 2, max: 4 }).withMessage('App Type must be HP,HE, HA or HT')
+    query('logType').isIn(['HE','HT','HA']).exists().isAlpha().isUppercase().isLength({ min: 2, max: 4 }).withMessage('App Type must be HE, HA or HT-Use getHosMsgs2 for HP')
 ];
+export const getHosMsgs2: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('logType').isIn(['HP']).exists().isAlpha().isUppercase().isLength({ min: 2, max: 4 }).withMessage('App Type must be HP Only')
+];
+

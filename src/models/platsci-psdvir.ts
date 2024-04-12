@@ -3,8 +3,30 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import { JSONObject } from 'src/types';
 // XXX const config = configService.get().eradaniConnect.native;
 
-export default new eradaniConnect.run.Sql(`select * from platsci.plmsgql3a`);
-
+export default new eradaniConnect.run.Sql(
+    `select * from platsci.plmsgql3a
+    where date(plquets) between ? and ?`,
+    {
+        params: [
+            {
+                name: 'fromDate'
+            },
+            {
+                name: 'toDate'
+            }
+        ]
+    }
+);
+export interface SQLTemplateInputGETDVIR {
+    /**
+     * @description From Date
+     */
+    fromDate: number | string;
+    /**
+     * @description From Date
+     */
+    toDate: number | string;
+}
 /**
  * Structure of records outputted by SQLTemplate SQL query
  *

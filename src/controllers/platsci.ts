@@ -10,7 +10,7 @@ import SQLTemplateDRIVPERF, {
     SQLTemplateOutputDRIVPERF
 } from 'src/models/platsci-psdrivperf';
 import SQLTemplateSKYBITZ, { SQLTemplateInputSKYBITZ, SQLTemplateOutputSKYBITZ } from 'src/models/platsci-skybitz';
-import SQLTemplateGETDVIR, { SQLTemplateOutputGETDVIR } from 'src/models/platsci-psdvir';
+import SQLTemplateGETDVIR, { SQLTemplateInputGETDVIR, SQLTemplateOutputGETDVIR } from 'src/models/platsci-psdvir';
 import SQLTemplateGETHOSMSGS, {
     SQLTemplateInputGETHOSMSGS,
     SQLTemplateOutputGETHOSMSGS
@@ -77,9 +77,13 @@ export async function getSkybitz(inputs: JSONObject): Promise<SQLTemplateOutputS
     };
     return powerbiTransports.wolf.execute(SQLTemplateSKYBITZ, params) as Promise<SQLTemplateOutputSKYBITZ>;
 }
-export async function getDvir(): Promise<SQLTemplateOutputGETDVIR> {
+export async function getDvir(inputs: JSONObject): Promise<SQLTemplateOutputGETDVIR> {
     logger.debug('Calling SQLTemplate program');
-    return powerbiTransports.wolf.execute(SQLTemplateGETDVIR) as Promise<SQLTemplateOutputGETDVIR>;
+    const params: SQLTemplateInputGETDVIR = {
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    };    
+    return powerbiTransports.wolf.execute(SQLTemplateGETDVIR,params) as Promise<SQLTemplateOutputGETDVIR>;
 }
 export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
     logger.debug('Calling SQLTemplate program');

@@ -29,4 +29,7 @@ export const getHosMsgs2: InputCheckChain[] = [
     query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
     query('logType').isIn(['HP']).exists().isAlpha().isUppercase().isLength({ min: 2, max: 4 }).withMessage('App Type must be HP Only')
 ];
-
+export const getDvir: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),    
+];

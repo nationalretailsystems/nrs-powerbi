@@ -34,7 +34,7 @@ import { sendCursorResult } from 'src/services/cursor';
 const logger = createLogger('controllers/platsci');
 
 export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutputGETHEARTBEATS> {
-    logger.debug('Calling SQLTemplate program');
+    logger.debug('Calling SQLTemplate program-getHeartBeats');
     let secondUnit;
     let finaltype;
     const params: SQLTemplateInputGETHEARTBEATS = {
@@ -58,11 +58,11 @@ export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutp
     return powerbiTransports.wolf.execute(SQLTemplateHEARTBEATS, params) as Promise<SQLTemplateOutputGETHEARTBEATS>;
 }
 export async function getLatestHB(): Promise<SQLTemplateOutputGETLATESTHB> {
-    logger.debug('Calling SQLTemplate program');
+    logger.debug('Calling SQLTemplate program-getLatestHB');
     return powerbiTransports.wolf.execute(SQLTemplateGETLATESTHB) as Promise<SQLTemplateOutputGETLATESTHB>;
 }
 export async function getDrivperf(inputs: JSONObject): Promise<SQLTemplateOutputDRIVPERF> {
-    logger.debug('Calling SQLTemplate program');
+    logger.debug('Calling SQLTemplate program-getDrivperf');
     const params: SQLTemplateInputDRIVPERF = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
@@ -70,7 +70,7 @@ export async function getDrivperf(inputs: JSONObject): Promise<SQLTemplateOutput
     return powerbiTransports.wolf.execute(SQLTemplateDRIVPERF, params) as Promise<SQLTemplateOutputDRIVPERF>;
 }
 export async function getSkybitz(inputs: JSONObject): Promise<SQLTemplateOutputSKYBITZ> {
-    logger.debug('Calling SQLTemplate program');
+    logger.debug('Calling SQLTemplate program-getSkybitz');
     const params: SQLTemplateInputSKYBITZ = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
@@ -78,7 +78,7 @@ export async function getSkybitz(inputs: JSONObject): Promise<SQLTemplateOutputS
     return powerbiTransports.wolf.execute(SQLTemplateSKYBITZ, params) as Promise<SQLTemplateOutputSKYBITZ>;
 }
 export async function getDvir(inputs: JSONObject): Promise<SQLTemplateOutputGETDVIR> {
-    logger.debug('Calling SQLTemplate program');
+    logger.debug('Calling SQLTemplate program-getDvir');
     const params: SQLTemplateInputGETDVIR = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
@@ -86,7 +86,7 @@ export async function getDvir(inputs: JSONObject): Promise<SQLTemplateOutputGETD
     return powerbiTransports.wolf.execute(SQLTemplateGETDVIR,params) as Promise<SQLTemplateOutputGETDVIR>;
 }
 export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
-    logger.debug('Calling SQLTemplate program');
+    logger.debug('Calling SQLTemplate program-getHosMsgs');
     const params: SQLTemplateInputGETHOSMSGS = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
@@ -95,6 +95,7 @@ export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputG
     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
  }
 export async function getHosMsgs2(inputs: JSONObject) {
+    logger.debug('Calling SQLTemplate program-getHosMsgs2');    
     const res = inputs.res;
     try {
         await sendCursorResult(

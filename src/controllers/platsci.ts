@@ -82,8 +82,8 @@ export async function getDvir(inputs: JSONObject): Promise<SQLTemplateOutputGETD
     const params: SQLTemplateInputGETDVIR = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
         toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
-    };    
-    return powerbiTransports.wolf.execute(SQLTemplateGETDVIR,params) as Promise<SQLTemplateOutputGETDVIR>;
+    };
+    return powerbiTransports.wolf.execute(SQLTemplateGETDVIR, params) as Promise<SQLTemplateOutputGETDVIR>;
 }
 export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputGETHOSMSGS> {
     logger.debug('Calling SQLTemplate program-getHosMsgs');
@@ -93,9 +93,9 @@ export async function getHosMsgs(inputs: JSONObject): Promise<SQLTemplateOutputG
         logType: inputs.logType
     };
     return powerbiTransports.wolf.execute(SQLTemplateGETHOSMSGS, params) as Promise<SQLTemplateOutputGETHOSMSGS>;
- }
+}
 export async function getHosMsgs2(inputs: JSONObject) {
-    logger.debug('Calling SQLTemplate program-getHosMsgs2');    
+    logger.debug('Calling SQLTemplate program-getHosMsgs2');
     const res = inputs.res;
     try {
         await sendCursorResult(

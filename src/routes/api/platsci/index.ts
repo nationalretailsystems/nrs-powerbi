@@ -32,12 +32,10 @@ export default function mountPLATSCI(router: Router) {
         validate(validators.getDvir),
         respond((req: any) => sqlController.getDvir(req.query))
     );
-    router.get(
-        '/gethosmsgs', 
-        validate(validators.getHosMsgs), 
-        respond((req: any) => sqlController.getHosMsgs(req.query))
-    );
+    router.get('/gethosmsgs', validate(validators.getHosMsgs), async (req: any, res: any) => {
+        await sqlController.getHosMsgs2(Object.assign({ res }, req.params, req.body, req.query));
+    });
     router.get('/gethosmsgs2', validate(validators.getHosMsgs2), async (req: any, res: any) => {
         await sqlController.getHosMsgs2(Object.assign({ res }, req.params, req.body, req.query));
-    });    
+    });
 }

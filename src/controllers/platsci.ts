@@ -4,6 +4,10 @@ import SQLTemplateHEARTBEATS, {
     SQLTemplateInputGETHEARTBEATS,
     SQLTemplateOutputGETHEARTBEATS
 } from 'src/models/platsci-getheartbeats';
+import SQLTemplateGETONEHB, {
+    SQLTemplateInputGETONEHB,
+    SQLTemplateOutputGETONEHB
+} from 'src/models/platsci-getonehb';
 import SQLTemplateGETLATESTHB, { SQLTemplateOutputGETLATESTHB } from 'src/models/platsci-getlatesthb';
 import SQLTemplateDRIVPERF, {
     SQLTemplateInputDRIVPERF,
@@ -56,6 +60,17 @@ export async function getHeartBeats(inputs: JSONObject): Promise<SQLTemplateOutp
     params.type2 = params.type;
     logger.debug('platsci.ts-' + params.toDate + ' ' + params.fromDate + ' ' + params.unit);
     return powerbiTransports.wolf.execute(SQLTemplateHEARTBEATS, params) as Promise<SQLTemplateOutputGETHEARTBEATS>;
+}
+export async function getOneHB(inputs: JSONObject): Promise<SQLTemplateOutputGETONEHB> {
+    logger.debug('Calling SQLTemplate program-getOneHB');
+    const params: SQLTemplateInputGETONEHB = {
+        // X fromDate: inputs.fromDate,
+        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+        // X toDate: inputs.toDate,
+        toDate: DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate()
+    }
+     logger.debug('platsci.ts-' + params.toDate + ' ' + params.fromDate );
+    return powerbiTransports.wolf.execute(SQLTemplateGETONEHB, params) as Promise<SQLTemplateOutputGETONEHB>;
 }
 export async function getLatestHB(): Promise<SQLTemplateOutputGETLATESTHB> {
     logger.debug('Calling SQLTemplate program-getLatestHB');

@@ -14,6 +14,11 @@ export default function mountPLATSCI(router: Router) {
         respond((req: any) => sqlController.getHeartBeats(req.query))
     );
     router.get(
+        '/ps-getonehb',
+        validate(validators.getOneHB),
+        respond((req: any) => sqlController.getOneHB(req.query))
+    );
+    router.get(
         '/ps-getlatesthb',
         respond(() => sqlController.getLatestHB())
     );

@@ -11,6 +11,10 @@ export const getHeartBeats: InputCheckChain[] = [
     query('type').optional().isIn(['IG','ALL']).isAlpha().isUppercase().isLength({ min:2, max:3}).withMessage('Type must be IG for Ignition or ALL'),
     query('type2').optional()
 ];
+export const getOneHB: InputCheckChain[] = [
+    query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
+    query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd')
+];
 export const getDrivperf: InputCheckChain[] = [
     query('fromDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),
     query('toDate').exists().isNumeric().isLength({ min: 6, max: 6 }).withMessage('Must be date yymmdd'),    

@@ -15,7 +15,7 @@ export default new eradaniConnect.run.Sql(
        from platsci.pltmhbdp where  plthtype = 'hourly_periodic'  and substr(plthloga,12,2) = '23' 
        and date(plthrecv) between ? and ?
        order by plthtruck,substr(PLTHLOGA,1,19)`,
-       {
+    {
         params: [
             {
                 name: 'fromDate'
@@ -27,14 +27,14 @@ export default new eradaniConnect.run.Sql(
     }
 );
 export interface SQLTemplateInputGETONEHB {
-  /**
-   * @description From Manifest Date
-   */
-  fromDate: number | string;
-  /**
-   * @description To Manifest Date
-   */
-  toDate: number | string;
+    /**
+     * @description From Manifest Date
+     */
+    fromDate: number | string;
+    /**
+     * @description To Manifest Date
+     */
+    toDate: number | string;
 }
 /**
  * Structure of records outputted by SQLTemplate SQL query

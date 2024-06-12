@@ -1,3 +1,4 @@
+/* eslint-disable capitalized-comments */
 import createLogger from 'src/services/logger';
 import SQLTemplate, { SQLTemplateInput, SQLTemplateOutput } from 'src/models/powerbi-template';
 import SQLTemplate2, { SQLTemplateInput2, SQLTemplateOutput2 } from 'src/models/powerbi-template2';
@@ -92,9 +93,11 @@ import SQLTemplateOL736DATA, {
 import SQLTemplateFED46R, { SQLTemplateInputFED46R, SQLTemplateOutputFED46R } from 'src/models/powerbi-fed46r';
 import SQLTemplateTRIPS, { SQLTemplateInputTRIPS, SQLTemplateOutputTRIPS } from 'src/models/powerbi-trips';
 import { JSONObject } from 'src/types';
-import { powerbiTransports } from 'src/services/connection';
+import { powerbiTransports, transport as eradaniTransport } from 'src/services/connection';
 import { DateTime } from 'luxon';
 import { promises as fs } from 'fs';
+import odbc from 'odbc';
+import { sendCursorResult } from 'src/services/cursor';
 import APIError from 'src/APIError';
 
 const logger = createLogger('controllers/powerbi');
@@ -199,14 +202,48 @@ export async function getSalesProDsc(inputs: JSONObject): Promise<SQLTemplateOut
     };
     return powerbiTransports.wolf.execute(SQLTemplateSALESPRODSC, params) as Promise<SQLTemplateOutputSALESPRODSC>;
 }
-export async function getBlhd2Ar(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2AR> {
-    logger.debug('Calling SQLTemplate program');
-    const params: SQLTemplateInputBLHD2AR = {
-        // X fromDate: inputs.fromDate,
-        fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
-    };
-    return powerbiTransports.wolf.execute(SQLTemplateBLHD2AR, params) as Promise<SQLTemplateOutputBLHD2AR>;
+// export async function getBlhd2Ar(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2AR> {
+//     logger.debug('Calling SQLTemplate program');
+//     const params: SQLTemplateInputBLHD2AR = {
+//         // X fromDate: inputs.fromDate,
+//         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+//     };
+//     return powerbiTransports.wolf.execute(SQLTemplateBLHD2AR, params) as Promise<SQLTemplateOutputBLHD2AR>;
+// }
+export async function getBlhd2Ar(inputs: JSONObject) {
+    logger.debug('Calling SQLTemplate program-getBlhd2Ar');
+    const res = inputs.res;
+    try {
+        await sendCursorResult(
+            eradaniTransport,
+            `SELECT PRODTH,"PRO##H","ACCT#H",SDESCD,NAMEAA,CONSNH,
+ DESCRD,ORICCH,DSTCCH,ORIGNH,DESTNH,TOTALD,QTYL1D,RATESD,
+ WGTACD,MONTHNAME(PRODTH) AS PRODTH_1,YEAR(PRODTH) AS PRODTH_2,
+ PRODTH + ( 7 - DAYOFWEEK( PRODTH ) ) DAY AS COLUMN0000,DESCRC,AMTPDH,
+ ORDERH,TOTALH,ORDEROR,TTYPET,"DIV##OR"
+ FROM WOLFIASP.WSFILE2.BLHD BLHD
+ INNER JOIN WOLFIASP.WSFILE2.BLDT BLDT
+ ON BLHD."PRO##H" = BLDT."PRO##D"
+ LEFT OUTER JOIN WOLFIASP.OLFILE5.CUST CUST
+ ON BLHD."ACCT#H" = CUST."ACCT#A"
+ LEFT OUTER JOIN WOLFIASP.WSFILE2."DESC" TDESC
+ ON BLDT.SDESCD = TDESC.DCODEC
+ LEFT OUTER JOIN WOLFIASP.OLFILE5.ORDR ORDR
+ ON BLHD."PRO##H" = ORDR."PRO##OR"
+ LEFT OUTER JOIN WOLFIASP.OLFILE5.TRIP TRIP
+ ON ORDR."TRIP#OR" = TRIP."TRIP#T"
+ WHERE ( PRODTH > ? )`,
+            [
+                DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
+            ],
+            res,
+            { fetchSize: 1000 }
+        );
+    } catch (error) {
+        logger.debug(error);
+    }
 }
+
 export async function getBlhd2ArKy(inputs: JSONObject): Promise<SQLTemplateOutputBLHD2ARKY> {
     logger.debug('Calling SQLTemplate program');
     const params: SQLTemplateInputBLHD2ARKY = {

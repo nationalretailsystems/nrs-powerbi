@@ -1,3 +1,4 @@
+/* eslint-disable capitalized-comments */
 import { Router } from 'express';
 import * as sqlController from 'src/controllers/powerbi';
 import validate from 'src/middlewares/validate';
@@ -46,11 +47,14 @@ export default function mountPOWERBI(router: Router) {
         validate(validators.getSalesProDsc),
         respond((req: any) => sqlController.getSalesProDsc(req.query))
     );
-    router.get(
-        '/blhd-to-ar',
-        validate(validators.getBlhd2Ar),
-        respond((req: any) => sqlController.getBlhd2Ar(req.query))
-    );
+    // router.get(
+    //     '/blhd-to-ar',
+    //     validate(validators.getBlhd2Ar),
+    //     respond((req: any) => sqlController.getBlhd2Ar(req.query))
+    // );
+    router.get('/blhd-to-ar', validate(validators.getBlhd2Ar), async (req: any, res: any) => {
+            await sqlController.getBlhd2Ar(Object.assign({ res },req.params, req.body, req.query));
+    });
     router.get(
         '/blhd-to-arky',
         validate(validators.getBlhd2ArKy),

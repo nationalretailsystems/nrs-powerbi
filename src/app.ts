@@ -12,7 +12,7 @@ import ec from '@eradani-inc/eradani-connect';
 import createLogger from 'src/services/logger';
 const logger = createLogger('app');
 // Log memory usage every 500ms
-setInterval(() => logger.debug('Process Stats', { memory: process.memoryUsage() }), 500)
+setInterval(() => logger.debug('Process Stats', { memory: process.memoryUsage() }), 500);
 const modules: any[] = [];
 if (config.app.inbound) {
     modules.push(inbound.start());

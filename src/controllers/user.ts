@@ -4,7 +4,7 @@ const credentials = config.credentials;
 const dashboardCredentials = config.swagger.auth;
 import APIError from 'src/api-error';
 import { JWTUserData } from 'src/types';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 const saltRounds = 10;
 const hashPassword = bcrypt.hashSync(dashboardCredentials.password, saltRounds);
 const hashLoginPassword = bcrypt.hashSync(credentials.password, saltRounds);

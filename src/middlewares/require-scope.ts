@@ -3,7 +3,7 @@ const logger = createLogger('middlewares/require-scope');
 
 export default function requireScope(scopes: string[]) {
     return function (req: any, res: any, next: any) {
-        /* 
+        /*
          * Process scopes based on the `scopes` variable in here
          * Ensure that all of the scopes listed in the scopes parameter
          * to the requireScope middleware are present in the user's scopes.

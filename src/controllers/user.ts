@@ -12,34 +12,32 @@ const hashPassword = bcrypt.hashSync(dashboardCredentials.password, saltRounds);
 const hashLoginPassword = bcrypt.hashSync(credentials.password, saltRounds);
 import scmp from 'scmp';
 
-export function login(clientId: string, clientSecret: string) {
-    return new Promise(async (resolve, reject) => {
-        const authSql = `select *
-            from ${config.jwt.dataLib}.USERS
-            where clientId = ?
-        `;
+export async function login(clientId: string, clientSecret: string) {
+    const authSql = `select *
+        from ${config.jwt.dataLib}.USERS
+        where clientId = ?
+    `;
 
-        const authStmt = new eradaniConnect.run.Sql(authSql, { params: [{ name: 'clientId' }] });
-        const authRslt: ArrayLike<any> = await (transport.execute(authStmt, {
-            clientId: clientId
-        }) as Promise<ArrayLike<any>>);
+    const authStmt = new eradaniConnect.run.Sql(authSql, { params: [{ name: 'clientId' }] });
+    const authRslt: ArrayLike<any> = await (transport.execute(authStmt, {
+        clientId: clientId
+    }) as Promise<ArrayLike<any>>);
 
-        if (authRslt.length != 1) {
-            return reject(new APIError(401, 'Access Denied'));
-        }
+    if (authRslt.length != 1) {
+        throw new APIError(401, 'Access Denied');
+    }
 
-        const auth = authRslt[0];
+    const auth = authRslt[0];
 
-        const subject = auth.CLIENTID;
-        const scope = auth.SCOPE;
+    const subject = auth.CLIENTID;
+    const scope = auth.SCOPE;
 
-        if (bcrypt.compareSync(clientSecret, auth.CLIENTSECRET)) {
-            const jwtDetails = await generateJWT({ subject, scope });
-            resolve(jwtDetails);
-        } else {
-            reject(new APIError(401, 'Access Denied'));
-        }
-    });
+    if (await bcrypt.compare(clientSecret, auth.CLIENTSECRET)) {
+        const jwtDetails = await generateJWT({ subject, scope });
+        return jwtDetails;
+    } else {
+        throw new APIError(401, 'Access Denied');
+    }
 }
 
 export async function generateJWT(userData: JWTUserData) {

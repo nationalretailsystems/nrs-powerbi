@@ -16,7 +16,7 @@
     "debug": true,
 
     "jwt": {
-        "dataLib": "ECITST",
+        "dataLib": "ECIDEV",
         "metadata": {
             "audience": "api://default",
             "issuer": "https://auth.example.com",

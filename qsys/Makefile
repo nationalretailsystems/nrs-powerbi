@@ -210,7 +210,10 @@ library:
 
 .PHONY: tables
 tables:
-	-system "RUNSQLSTM SRCSTMF('createauthtable.sql')"
+	-cp createauthtable.sql createauthtable-temp-make.sql
+	-sed -i 's/@LIBRARY@/$(LIB)/g' createauthtable-temp-make.sql
+	-system "RUNSQLSTM SRCSTMF('createauthtable-temp-make.sql')" || :
+	-rm createauthtable-temp-make.sql
 
 .PHONY: clean
 clean:

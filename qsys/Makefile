@@ -212,7 +212,7 @@ library:
 tables:
 	-cp create-auth-table.sql create-auth-table-temp-make.sql
 	-sed -i 's/@LIBRARY@/$(LIB)/g' create-auth-table-temp-make.sql
-	-system "RUNSQLSTM SRCSTMF('create-auth-table-temp-make.sql')" || :
+	-system "RUNSQLSTM SRCSTMF('create-auth-table-temp-make.sql')"
 	-rm create-auth-table-temp-make.sql
 	-cp create-auth-user.sql create-auth-user-temp-make.sql
 	-sed -i 's/@LIBRARY@/$(LIB)/g' create-auth-user-temp-make.sql

@@ -23,7 +23,7 @@ export async function login(clientId: string, clientSecret: string) {
         clientId: clientId
     }) as Promise<ArrayLike<any>>);
 
-    if (authRslt.length != 1) {
+    if (authRslt.length !== 1) {
         throw new APIError(401, 'Access Denied');
     }
 
@@ -46,7 +46,7 @@ export async function generateJWT(userData: JWTUserData) {
         scope: userData.scope
     };
 
-    return await jwt.sign(user);
+    return jwt.sign(user);
 }
 
 export function dashboardLoginCredentialsCheck(req: object, username: any, password: any) {

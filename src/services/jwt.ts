@@ -9,6 +9,7 @@ const jwtSign = promisify(jwt.sign);
 const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promise<any>;
 import ms from 'ms';
 
+/* eslint-disable camelcase */
 /**
  * Generates a secure JSON Web Token to control access to the API. Any data
  * encoded in the token can be verified and retrieved by the `jwt.verify`
@@ -24,6 +25,7 @@ export async function sign(data: JWTUserData) {
         expires_in: ms(config.jwt.metadata.expiresIn)
     };
 }
+/* eslint-enable camelcase */
 
 /**
  * Decodes a JSON Web Token and returns its user data. An error will be thrown

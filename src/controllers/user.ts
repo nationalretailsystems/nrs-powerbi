@@ -6,7 +6,7 @@ import eradaniConnect from '@eradani-inc/eradani-connect';
 import transport from 'src/services/connection';
 import APIError from 'src/api-error';
 import { JWTUserData } from 'src/types';
-import * as bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 const saltRounds = 10;
 const hashPassword = bcrypt.hashSync(dashboardCredentials.password, saltRounds);
 const hashLoginPassword = bcrypt.hashSync(credentials.password, saltRounds);

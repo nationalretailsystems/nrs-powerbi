@@ -81,8 +81,8 @@
 
     "ecclient": {
         "appLibrary": "ECNCTAPP",
-        "responseLen": 1024,
-        "requestLen": 1024,
+        "responseLen": 32767,
+        "requestLen": 32767,
         "debug": false,
         "pooling": false,
         "connectionString": "DSN=*LOCAL;NAM=1;CCSID=1208",

@@ -2,7 +2,7 @@ import { Response, NextFunction } from 'express';
 import safeJSONStringify from 'safe-json-stringify';
 import createLogger from 'src/services/logger';
 import config from 'config';
-import APIError from 'src/APIError';
+import APIError from 'src/api-error';
 import { RedirectResponse } from 'src/types';
 const protectedFields = config.protectedFields;
 const logger = createLogger('middlewares/respond');

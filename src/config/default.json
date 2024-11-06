@@ -16,7 +16,12 @@
     "debug": true,
 
     "jwt": {
-        "expiresIn": "12h"
+        "dataLib": "ECIDEV",
+        "metadata": {
+            "audience": "api://default",
+            "issuer": "https://auth.example.com",
+            "expiresIn": "12h"
+        }
     },
 
     "credentials": {
@@ -76,8 +81,8 @@
 
     "ecclient": {
         "appLibrary": "ECNCTAPP",
-        "responseLen": 1024,
-        "requestLen": 1024,
+        "responseLen": 32767,
+        "requestLen": 32767,
         "debug": false,
         "pooling": false,
         "connectionString": "DSN=*LOCAL;NAM=1;CCSID=1208",
@@ -93,6 +98,12 @@
             "username": "changethisusername",
             "password": "changethispassword"
         }
+    },
+
+    "metrics": {
+        "enabled": true,
+        "inbound": true,
+        "outbound": true
     },
 
     "eradaniConnect": {

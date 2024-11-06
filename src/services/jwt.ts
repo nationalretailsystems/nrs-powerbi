@@ -1,13 +1,15 @@
 import jwt from 'jsonwebtoken';
 import { promisify } from 'es6-promisify';
 import config from 'config';
-import APIError from 'src/APIError';
+import APIError from 'src/api-error';
 import { JWTUserData } from 'src/types';
 const key = config.keys.privateKey;
-const options = config.jwt;
-const jwtSign = promisify(jwt.sign) as (data: any, key: string, options?: any) => Promise<string>;
+const options = config.jwt.metadata;
+const jwtSign = promisify(jwt.sign);
 const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promise<any>;
+import ms from 'ms';
 
+/* eslint-disable camelcase */
 /**
  * Generates a secure JSON Web Token to control access to the API. Any data
  * encoded in the token can be verified and retrieved by the `jwt.verify`
@@ -15,10 +17,15 @@ const jwtVerify = promisify(jwt.verify) as (token: string, key: string) => Promi
  *
  * @param data An arbitrary object with user data to be encoded in the token
  */
-export async function sign(data: JWTUserData): Promise<string> {
+export async function sign(data: JWTUserData) {
     const encodedToken = await jwtSign(data, key, options);
-    return encodedToken;
+    return {
+        access_token: encodedToken,
+        token_type: 'Bearer',
+        expires_in: ms(config.jwt.metadata.expiresIn)
+    };
 }
+/* eslint-enable camelcase */
 
 /**
  * Decodes a JSON Web Token and returns its user data. An error will be thrown

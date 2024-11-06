@@ -7,3 +7,6 @@ package-lock.json
 docs/**
 **/validators.ts
 oas/**
+src/interfaces/**
+src/models/**
+qsys/**

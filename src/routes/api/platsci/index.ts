@@ -33,10 +33,13 @@ export default function mountPLATSCI(router: Router) {
         respond((req: any) => sqlController.getSkybitz(req.query))
     );
     router.get(
-        '/getdvir',
+        '/getdvirx',
         validate(validators.getDvir),
         respond((req: any) => sqlController.getDvir(req.query))
     );
+    router.get('/getdvir', validate(validators.getDvir), async (req: any, res: any) => {
+        await sqlController.getDvir(Object.assign({ res }, req.params, req.body, req.query));    
+    });    
     router.get('/gethosmsgs', validate(validators.getHosMsgs), async (req: any, res: any) => {
         await sqlController.getHosMsgs2(Object.assign({ res }, req.params, req.body, req.query));
     });

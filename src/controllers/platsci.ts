@@ -89,7 +89,7 @@ export async function getSkybitz(inputs: JSONObject): Promise<SQLTemplateOutputS
     };
     return powerbiTransports.wolf.execute(SQLTemplateSKYBITZ, params) as Promise<SQLTemplateOutputSKYBITZ>;
 }
-export async function getDvir(inputs: JSONObject): Promise<SQLTemplateOutputGETDVIR> {
+export async function getDvirX(inputs: JSONObject): Promise<SQLTemplateOutputGETDVIR> {
     logger.debug('Calling SQLTemplate program-getDvir');
     const params: SQLTemplateInputGETDVIR = {
         fromDate: DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
@@ -122,6 +122,27 @@ export async function getHosMsgs2(inputs: JSONObject) {
                 DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
                 DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
                 inputs.logType
+            ],
+            res,
+            { fetchSize: 100 }
+        );
+    } catch (error) {
+        logger.debug(error);
+    }
+}
+export async function getDvir(inputs: JSONObject) {
+    logger.debug('Calling SQLTemplate program-getDvir');
+    const res = inputs.res;
+    try {
+        await sendCursorResult(
+            eradaniTransport,
+            `
+                select * from platsci.plmsgql3a
+                where date(plquets) between ? and ?
+            `,
+            [
+                DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate(),
+                DateTime.fromFormat('' + inputs.toDate, 'yyMMdd').toISODate(),
             ],
             res,
             { fetchSize: 100 }

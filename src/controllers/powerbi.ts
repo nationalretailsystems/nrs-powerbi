@@ -98,7 +98,7 @@ import { DateTime } from 'luxon';
 import { promises as fs } from 'fs';
 import odbc from 'odbc';
 import { sendCursorResult } from 'src/services/cursor';
-import APIError from 'src/APIError';
+import APIError from 'src/api-error';
 
 const logger = createLogger('controllers/powerbi');
 
@@ -233,9 +233,7 @@ export async function getBlhd2Ar(inputs: JSONObject) {
  LEFT OUTER JOIN WOLFIASP.OLFILE5.TRIP TRIP
  ON ORDR."TRIP#OR" = TRIP."TRIP#T"
  WHERE ( PRODTH > ? )`,
-            [
-                DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()
-            ],
+            [DateTime.fromFormat('' + inputs.fromDate, 'yyMMdd').toISODate()],
             res,
             { fetchSize: 1000 }
         );

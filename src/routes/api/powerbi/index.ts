@@ -53,7 +53,7 @@ export default function mountPOWERBI(router: Router) {
     //     respond((req: any) => sqlController.getBlhd2Ar(req.query))
     // );
     router.get('/blhd-to-ar', validate(validators.getBlhd2Ar), async (req: any, res: any) => {
-            await sqlController.getBlhd2Ar(Object.assign({ res },req.params, req.body, req.query));
+        await sqlController.getBlhd2Ar(Object.assign({ res }, req.params, req.body, req.query));
     });
     router.get(
         '/blhd-to-arky',

@@ -9,7 +9,7 @@ export default function mountAuth(router: Router) {
     router.post(
         '/',
         validate(validators.login),
-        respond((req: any) => user.login(req.body.username, req.body.password))
+        respond((req: any) => user.login(req.body.clientid, req.body.clientsecret))
     );
 
     router.post(

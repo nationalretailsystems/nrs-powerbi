@@ -4,7 +4,6 @@ import { regexes } from 'src/services/regexes';
 
 
 export const login: InputCheckChain[] = [
-        body('username').exists().isString(),
-        body('password').exists().isString().matches(regexes.password)
-]
-
+    body('clientid').exists().isString(),
+    body('clientsecret').exists().isString()
+];

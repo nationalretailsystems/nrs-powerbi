@@ -31,3 +31,5 @@ qsys/*.js
 qsys/*.ts
 .gitconfig
 native
+.npmrc
+.eradani/**
